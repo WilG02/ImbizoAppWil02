@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ImbizoAppWil02">
         <activity
+            android:name=".Category"
+            android:exported="false" />
+        <activity
+            android:name=".Categories"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
