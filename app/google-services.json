@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "589837323767",
+    "project_id": "wil2-imbizoapp",
+    "storage_bucket": "wil2-imbizoapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:589837323767:android:4b649063afc2c24374b2f2",
+        "android_client_info": {
+          "package_name": "com.varsitycollege.imbizoappwil02"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "589837323767-qeps961fq048hh40br7v9fv73pr1lp2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRvY0qH93AsERWk7w-Zhxb8EmLKx-092g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "589837323767-qeps961fq048hh40br7v9fv73pr1lp2h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

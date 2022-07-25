@@ -8,7 +8,7 @@
     tools:context=".Login">
 
     <EditText
-        android:id="@+id/loginEmail_edtx"
+        android:id="@+id/edt_emailLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -17,7 +17,7 @@
         android:hint="Email"
         android:inputType="textPersonName"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/loginPassword_edtx"
+        app:layout_constraintBottom_toTopOf="@+id/edt_passwordLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,7 +37,7 @@
         app:layout_constraintVertical_bias="0.549" />
 
     <Button
-        android:id="@+id/login_btn"
+        android:id="@+id/btn_Login"
         android:layout_width="196dp"
         android:layout_height="59dp"
         android:text="LOGIN"
@@ -63,7 +63,7 @@
         app:layout_constraintVertical_bias="0.44" />
 
     <EditText
-        android:id="@+id/loginPassword_edtx"
+        android:id="@+id/edt_passwordLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_baseline_https_24"
