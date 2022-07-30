@@ -63,11 +63,20 @@
 
     <ImageView
         android:id="@+id/img_emailLogin"
-        android:layout_width="62dp"
-        android:layout_height="51dp"
+        android:layout_width="80dp"
+        android:layout_height="71dp"
         android:layout_marginStart="86dp"
         android:layout_marginTop="37dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:srcCompat="@drawable/ic_email_icon" />
+
+    <ImageView
+        android:id="@+id/img_googleLogin"
+        android:layout_width="71dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="37dp"
+        app:layout_constraintStart_toEndOf="@+id/img_emailLogin"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:srcCompat="@drawable/googlelogo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
