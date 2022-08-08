@@ -22,7 +22,7 @@
             android:name=".Category"
             android:exported="false" />
         <activity
-            android:name=".Categories"
+            android:name=".Splash"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -31,7 +31,7 @@
             android:name=".Login"
             android:exported="false" />
         <activity
-            android:name=".Splash"
+            android:name=".Categories"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
