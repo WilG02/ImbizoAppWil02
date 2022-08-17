@@ -5,7 +5,7 @@ public class User {
     private String userName;
     private String userEmail;
     private String userID;
-
+    //private String userRole;
 
     public User() {
     }
@@ -14,8 +14,8 @@ public class User {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userID = userID;
+        //this.userRole = userRole;
     }
-
 
     public String getUserName() {
         return userName;
@@ -41,4 +41,11 @@ public class User {
         this.userID = userID;
     }
 
+    /*public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
+    }*/
 }

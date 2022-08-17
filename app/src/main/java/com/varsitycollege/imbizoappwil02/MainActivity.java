@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String SERVER_CLIENT_ID = "589837323767-h1qb0bjrlqkvphphlbad08kg2k8lamee.apps.googleusercontent.com";
     private SignInClient oneTapClient;
     private FirebaseAuth mAuth;
-    ImageView imgIntroWelcome_GoogleSignIn;
     private static final int REQ_ONE_TAP = 2;
     private BeginSignInRequest signInRequest;
     public static ArrayList<User> usersList = new ArrayList<>();

@@ -17,18 +17,34 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class Categories extends AppCompatActivity {
 //-------------------------------------------MUHAMMAD-----------------------------------------------
 //--------------------------------------------START-------------------------------------------------
 
-//navigation drawer components
+    //navigation drawer components
     DrawerLayout navi;
     Button btnMenu;
     NavigationView navView;
 
 
     RecyclerView rcyCollection;
+    ArrayList<User> userList;
+    ArrayList<Collection> collectionList;
+
+    //Firebase Realtime Database reference
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef;
+
+    Collection collect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +73,7 @@ public class Categories extends AppCompatActivity {
                 int id = item.getItemId();
                 navi.closeDrawer(GravityCompat.START);
 
-                switch (id){
+                switch (id) {
                     case R.id.manage_profile:
                         Toast.makeText(Categories.this, "Managing Profile", Toast.LENGTH_SHORT).show();
                         break;
@@ -75,6 +91,11 @@ public class Categories extends AppCompatActivity {
                         break;
 
                     case R.id.sign_out:
+                        //-------------------------------------------Kimaya-----------------------------------------------
+                        FirebaseAuth.getInstance().signOut();
+                        Intent returnLogin = new Intent(Categories.this, MainActivity.class);
+                        startActivity(returnLogin);
+                        //-------------------------------------------Kimaya-----------------------------------------------
                         Toast.makeText(Categories.this, "Goodbye", Toast.LENGTH_SHORT).show();
                         break;
                     default:
@@ -83,41 +104,76 @@ public class Categories extends AppCompatActivity {
                 return true;
             }
         });
-    }
-}
 //----------------------------------------------END-------------------------------------------------
 //-------------------------------------------MUHAMMAD-----------------------------------------------
+        CategoriesData();
 
-       /* //---------------------------------------Code Attribution------------------------------------------------
-        //Author:Ben O'Brien
-        //Uses:set the recycleCollectionAdapter and display users data in the recyclerview
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        rcyCollection.setLayoutManager(layoutManager);
-        rcyCollection.setItemAnimator(new DefaultItemAnimator());
-        recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(ListUtils.collectionList,getApplicationContext());
-        rcyCollection.setAdapter(adapter);
-        //Link:https://www.youtube.com/watch?v=__OMnFR-wZU
-        //-----------------------------------------------End------------------------------------------------------
+ }
 
+    private void CategoriesData() {
         //---------------------------------------Code Attribution------------------------------------------------
-        //Author:Coding in Flow
-        //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
-        adapter.setOnCollectionClickListerner(new recyclerCollectionAdapter.OnCollectionClickListerner() {
+        //Author:Sarina Till
+        //Uses:Read data from firebase realtime database
+        // reference for data in firebase
+        myRef = database.getReference().child("Categories");
+
+        //get data from firebase whilst using reference
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onCollectionClick(int position) {
-                Intent i = new Intent(Categories.this,Category.class);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                // instance of collection class
+                collect = new Collection();
+
+                //pulling data from realtime firebase
+                for (DataSnapshot collectFirebase : snapshot.getChildren()) {
+                    // snapshot is assigned to the collection instance
+                    collect = collectFirebase.getValue(Collection.class);
+                    //Add instance to arraylist collectionList
+                    collectionList.add(collect);
+                }
+                //Link:https://www.youtube.com/watch?v=Ydn5cXn1j-0&list=PL480DYS-b_kdor_f0IFgS7iiEsOwxdx6w&index=26
+                //-----------------------------------------------End------------------------------------------------------
+
+                //---------------------------------------Code Attribution------------------------------------------------
+                //Author:Ben O'Brien
+                //Uses:set the recycleCollectionAdapter and display users data in the recyclerview
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                rcyCollection.setLayoutManager(layoutManager);
+                rcyCollection.setItemAnimator(new DefaultItemAnimator());
+                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
+                rcyCollection.setAdapter(adapter);
+                //Link:https://www.youtube.com/watch?v=__OMnFR-wZU
+                //-----------------------------------------------End------------------------------------------------------
 
                 //---------------------------------------Code Attribution------------------------------------------------
                 //Author:Coding in Flow
-                //Uses:Passing a collection object to the CollectionItem class using an intent
-                i.putExtra("Collection",ListUtils.collectionList.get(position));
-                //Link:https://www.youtube.com/watch?v=WBbsvqSu0is
-                //-----------------------------------------------End------------------------------------------------------
+                //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
+                adapter.setOnCollectionClickListerner(new recyclerCollectionAdapter.OnCollectionClickListerner() {
+                    @Override
+                    public void onCollectionClick(int position) {
+                        Intent i = new Intent(Categories.this, Category.class);
 
-                startActivity(i);
+                        //---------------------------------------Code Attribution------------------------------------------------
+                        //Author:Coding in Flow
+                        //Uses:Passing a collection object to the CollectionItem class using an intent
+                        i.putExtra("Collection",collectionList.get(position));
+                        //Link:https://www.youtube.com/watch?v=WBbsvqSu0is
+                        //-----------------------------------------------End------------------------------------------------------
+
+                        startActivity(i);
+                    }
+                });
+                //Link:https://www.youtube.com/watch?v=bhhs4bwYyhc&list=PLrnPJCHvNZuBtTYUuc5Pyo4V7xZ2HNtf4&index=4
+                //-----------------------------------------------End------------------------------------------------------
             }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
         });
-        //Link:https://www.youtube.com/watch?v=bhhs4bwYyhc&list=PLrnPJCHvNZuBtTYUuc5Pyo4V7xZ2HNtf4&index=4
-        //-----------------------------------------------End------------------------------------------------------*/
- //   }
-//}
+    }
+}

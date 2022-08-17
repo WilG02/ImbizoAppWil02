@@ -44,7 +44,7 @@ public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerColl
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        String name = tempCollectionList.get(position).getCollectionName();
+        String name = tempCollectionList.get(position).getName();
         holder.txt_categoryName.setText(name);
     }
 
