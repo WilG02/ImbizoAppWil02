@@ -8,4 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#4CAF50</color>
+
+
+        <color name="colorPrimaryWhite">#FFFFFF</color>
+        <color name="colorBlueOne">#8AC8D8</color>
+        <color name="colorBlueTwo">#76B5C5</color>
+        <color name="SaddleBrown">#8B4513</color>
+        <color name="brown">#C58676</color>
+        <color name="red">#FF0000</color>
+
 </resources>
