@@ -5,9 +5,9 @@
     android:id="@+id/activity_splash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Splash"
+    android:background="#9C9F69"
     android:orientation="vertical"
-    android:background="@color/green">
+    tools:context=".Splash">
 
     <ImageView
         android:id="@+id/imageView"

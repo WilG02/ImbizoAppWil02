@@ -14,7 +14,8 @@
         android:layout_marginTop="28dp"
         android:gravity="center"
         android:text="Category"
-        android:textSize="34sp"
+        android:textColor="@color/black"
+        android:textSize="42sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

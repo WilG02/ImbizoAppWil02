@@ -3,13 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#9C9F69"
     tools:context=".categoryfragments.VideoFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="YouTube Video"
         android:layout_centerInParent="true"
-        android:textSize="30sp"/>
+        android:background="#9C9F69"
+        android:backgroundTint="#9C9F69"
+        android:text="YouTube Video"
+        android:textSize="42sp" />
 
 </RelativeLayout>
