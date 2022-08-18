@@ -93,7 +93,7 @@ public class Categories extends AppCompatActivity {
                     case R.id.sign_out:
                         //-------------------------------------------Kimaya-----------------------------------------------
                         FirebaseAuth.getInstance().signOut();
-                        Intent returnLogin = new Intent(Categories.this, MainActivity.class);
+                        Intent returnLogin = new Intent(Categories.this, Splash.class);
                         startActivity(returnLogin);
                         //-------------------------------------------Kimaya-----------------------------------------------
                         Toast.makeText(Categories.this, "Goodbye", Toast.LENGTH_SHORT).show();

@@ -46,7 +46,7 @@ public class Register extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-
+                                    Toast.makeText(Register.this, "Welcome "+ name +" !", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             }).addOnFailureListener(new OnFailureListener() {

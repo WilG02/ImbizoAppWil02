@@ -29,22 +29,7 @@
         <entry key="..\:/Users/lab_services_student/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/fragment_podcast.xml" value="0.21014492753623187" />
         <entry key="..\:/Users/lab_services_student/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/fragment_video.xml" value="0.21014492753623187" />
         <entry key="..\:/Users/lab_services_student/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/individual_category.xml" value="0.12360688956433637" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/drawable-v24/btn_bg.xml" value="0.1615" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/drawable-v24/button_background.xml" value="0.1615" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/drawable-v24/ic__google_logo.xml" value="0.1845" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/drawable-v24/input_background.xml" value="0.1" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/activity_about.xml" value="0.16032608695652173" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/activity_categories.xml" value="0.2" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/activity_category.xml" value="0.2" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/activity_login.xml" value="0.25" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/activity_ratings.xml" value="0.2" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/activity_register.xml" value="0.21" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/activity_splash.xml" value="0.16032608695652173" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/fragment_content.xml" value="0.2" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/fragment_podcast.xml" value="0.2" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/fragment_video.xml" value="0.2" />
-        <entry key="..\:/Users/sriya/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/individual_category.xml" value="0.2" />
+        <entry key="..\:/Users/lab_services_student/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/nav_header.xml" value="0.2441123188405797" />
       </map>
     </option>
   </component>
