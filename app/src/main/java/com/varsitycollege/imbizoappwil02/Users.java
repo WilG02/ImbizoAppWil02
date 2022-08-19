@@ -1,9 +1,18 @@
 package com.varsitycollege.imbizoappwil02;
 
 public class Users {
+    private String id;
     private String name;
     private String email;
     private String password;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -29,7 +38,8 @@ public class Users {
         this.password = password;
     }
 
-    public Users(String name, String email, String password) {
+    public Users(String id, String name, String email, String password) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;

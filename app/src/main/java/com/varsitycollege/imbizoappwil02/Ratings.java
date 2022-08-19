@@ -21,7 +21,7 @@ public class Ratings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ratings);
 
-        /*img_backFromFeedback.findViewById(R.id.img_returnFromFeedback);
+       /* img_backFromFeedback.findViewById(R.id.img_returnFromFeedback);
         img_backFromFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
