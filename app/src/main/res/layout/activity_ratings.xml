@@ -8,17 +8,26 @@
     tools:context=".Ratings">
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/txt_ratingHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please Rate Us:"
+        android:text="Feedback"
         android:textColor="@color/black"
         android:textSize="42sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.445"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046" />
+        app:layout_constraintVertical_bias="0.04" />
+
+    <ImageView
+        android:id="@+id/img_returnFromFeedback"
+        android:layout_width="50dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="42dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_back" />
 </androidx.constraintlayout.widget.ConstraintLayout>

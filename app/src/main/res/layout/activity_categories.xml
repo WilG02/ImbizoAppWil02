@@ -7,6 +7,22 @@
     android:background="#9C9F69"
     tools:context=".Categories">
 
+    <ImageView
+        android:id="@+id/img_next"
+        android:layout_width="65dp"
+        android:layout_height="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_forward" />
+
+    <ImageView
+        android:id="@+id/img_menu_icon"
+        android:layout_width="69dp"
+        android:layout_height="49dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_menu_icon" />
+
     <TextView
         android:id="@+id/txt_categoriesHeading"
         android:layout_width="wrap_content"
@@ -34,8 +50,7 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <Button
@@ -55,8 +70,8 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"

@@ -3,10 +3,12 @@ package com.varsitycollege.imbizoappwil02;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +23,7 @@ public class Register extends AppCompatActivity {
     Button btn_Register;
     private FirebaseAuth mAuth;
     String name, email,password;
+    TextView txt_LoginMessage;
 
 
     @Override
@@ -33,6 +36,15 @@ public class Register extends AppCompatActivity {
         edt_password = findViewById(R.id.edt_password);
         btn_Register = findViewById(R.id.btn_register);
         mAuth = FirebaseAuth.getInstance();
+        txt_LoginMessage=findViewById(R.id.txt_existingAccountMessage);
+
+        txt_LoginMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent redirectToLogin = new Intent(Register.this,Login.class);
+                startActivity(redirectToLogin);
+            }
+        });
 
 
         btn_Register.setOnClickListener(new View.OnClickListener() {
@@ -45,8 +57,15 @@ public class Register extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(Register.this, "Welcome "+ name +" !", Toast.LENGTH_SHORT).show();
+                                if (!email.isEmpty() && !password.isEmpty())
+                                {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(Register.this, "Welcome "+ name +" !", Toast.LENGTH_SHORT).show();
+                                        Intent i = new Intent(Register.this,Categories.class);
+                                        startActivity(i);
+                                    }else{
+                                        Toast.makeText(Register.this, "Failed to login!", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                             }).addOnFailureListener(new OnFailureListener() {
@@ -61,13 +80,4 @@ public class Register extends AppCompatActivity {
 
 
     }
-   /* @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
-    }*/
-   /*private void updateUI(FirebaseUser user) {
-   }*/
 }

@@ -32,11 +32,16 @@ public class Categories extends AppCompatActivity {
 
     //navigation drawer components
     DrawerLayout navi;
-    Button btnMenu;
     NavigationView navView;
+    ImageView img_menuIcon;
+    Button btnMenu;
 
+    ImageView img_next;
 
+    //Recycler Component
     RecyclerView rcyCollection;
+
+    //Arraylist
     ArrayList<User> userList;
     ArrayList<Collection> collectionList;
 
@@ -51,13 +56,34 @@ public class Categories extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-//Linking component with User interface
+        //Linking component with User interface
         navi = findViewById(R.id.drawer_layout);
         btnMenu = findViewById(R.id.button);
+
+/*
+        img_menuIcon = findViewById(R.id.img_menu_icon);
+*/
         navView = findViewById(R.id.nav_view);
         View v = navView.getHeaderView(0);
         ImageView img = v.findViewById(R.id.imageView);
         img.setImageResource(R.drawable.imbizo_logo_splash);
+
+       /* img_menuIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navi.openDrawer(GravityCompat.START);
+            }
+        });*/
+
+        img_next = findViewById(R.id.img_next);
+
+        img_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent next = new Intent(Categories.this,Category.class);
+                startActivity(next);
+            }
+        });
 
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +108,20 @@ public class Categories extends AppCompatActivity {
                         Toast.makeText(Categories.this, "Redirecting to aptitude test", Toast.LENGTH_SHORT).show();
                         break;
 
+                    case R.id.about:
+                        Toast.makeText(Categories.this, "About", Toast.LENGTH_SHORT).show();
+                        Intent redirectToAbout = new Intent(Categories.this,About.class);
+                        startActivity(redirectToAbout);
+                        break;
+
+                    case R.id.feedback:
+                        Toast.makeText(Categories.this, "Feedback", Toast.LENGTH_SHORT).show();
+                        Intent redirectToFeedback = new Intent(Categories.this,Ratings.class);
+                        startActivity(redirectToFeedback);
+                        break;
+
                     case R.id.privacy_policy:
-                        Toast.makeText(Categories.this, "Viewing Privacy Policy", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Categories.this, "Privacy Policy", Toast.LENGTH_SHORT).show();
                         break;
 
                     case R.id.contact_us:

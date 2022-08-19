@@ -79,9 +79,10 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="345dp"
-        android:layout_height="74dp"
+        android:layout_width="325dp"
+        android:layout_height="64dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="38dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_background"
         android:backgroundTint="#6C7031"
@@ -91,35 +92,34 @@
         android:textColor="@color/colorPrimaryWhite"
         android:textSize="24sp"
         app:backgroundTint="#6C7031"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.272"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.52" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_loginPassword" />
 
     <TextView
         android:id="@+id/txt_registerMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="20dp"
         android:text="Don't Have An Account? Register!"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintHorizontal_bias="0.562"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.781" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_google" />
 
     <Button
         android:id="@+id/btn_google"
-        android:layout_width="345dp"
-        android:layout_height="74dp"
+        android:layout_width="328dp"
+        android:layout_height="58dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="436dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="44dp"
         android:background="@drawable/input_background"
         android:drawableLeft="@drawable/ic__google_logo"
         android:text="Google"
@@ -130,7 +130,10 @@
         android:textStyle="bold"
         app:backgroundTint="#6C7031"
         app:iconPadding="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_registerMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.214"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

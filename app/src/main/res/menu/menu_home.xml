@@ -8,6 +8,10 @@
         android:title="Manage Profile" />
     <item   android:id="@+id/aptitude"
         android:title="Link to Aptitude Test" />
+    <item android:id="@+id/about"
+        android:title="About"/>
+    <item android:id="@+id/feedback"
+        android:title="Feedback"/>
     <item   android:id="@+id/privacy_policy"
         android:title="Privacy Policy" />
     <item   android:id="@+id/contact_us"

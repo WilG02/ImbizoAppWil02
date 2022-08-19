@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -38,8 +39,6 @@ public class Login extends AppCompatActivity {
     Button btn_Login,btn_googleLogin;
     private FirebaseAuth mAuth;
 
-
-
     public static final String DEFUALT_IMAGE = "https://firebasestorage.googleapis.com/v0/b/vinyl-warehouse.appspot.com/o/default%2Ficon.png?alt=media&token=6495156e-9304-4be2-b2aa-06110afe1bee";
     public static final String SERVER_CLIENT_ID = "589837323767-h1qb0bjrlqkvphphlbad08kg2k8lamee.apps.googleusercontent.com";
     private SignInClient oneTapClient;
@@ -48,17 +47,28 @@ public class Login extends AppCompatActivity {
     private BeginSignInRequest signInRequest;
     public static ArrayList<User> usersList = new ArrayList<>();
 
+    TextView txt_registerMessage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        txt_registerMessage=findViewById(R.id.txt_registerMessage);
         edt_email = findViewById(R.id.edt_loginEmail);
         edt_password = findViewById(R.id.edt_loginPassword);
         btn_Login = findViewById(R.id.btn_login);
         btn_googleLogin = findViewById(R.id.btn_google);
 
         mAuth = FirebaseAuth.getInstance();
+
+        txt_registerMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent redirectToRegister = new Intent(Login.this,Register.class);
+                startActivity(redirectToRegister);
+            }
+        });
 
         btn_Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +87,7 @@ public class Login extends AppCompatActivity {
                                 Toast.makeText(Login.this,"Welcome "+ mAuth.getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
                                 Intent i = new Intent(Login.this,Categories.class);
                                 startActivity(i);
-                                // Toast.makeText(MainActivity.this,"user logged in",Toast.LENGTH_SHORT).show();
+
                             }else
                             {
                                 Toast.makeText(Login.this,"Login Failed!"+ mAuth.getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
