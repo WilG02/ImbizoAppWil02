@@ -5,11 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
 public class Ratings extends AppCompatActivity {
 
     ImageView img_backFromFeedback;
+
+    RatingBar ratingBar;
+    Button btnRate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +29,19 @@ public class Ratings extends AppCompatActivity {
                 startActivity(i);
             }
         });*/
+
+        //-----------------------------------Lunga-------------------------
+        ratingBar = findViewById(R.id.rating_Bar);
+        btnRate = findViewById(R.id.btn_Rate);
+
+        btnRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s = String.valueOf(ratingBar.getRating());
+                Toast.makeText(getApplicationContext(),s+"Star", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //-----------------------------------Lunga--------------------------
 
     }
 }

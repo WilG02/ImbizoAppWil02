@@ -11,15 +11,45 @@
         android:id="@+id/txt_ratingHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Feedback"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="145dp"
+        android:text="Rating"
         android:textColor="@color/black"
         android:textSize="42sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_Rate"
+        android:layout_width="191dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="145dp"
+        android:background="@drawable/button_background"
+        android:backgroundTint="#6C7031"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="Submit Ratings"
+        android:textColor="#F8F6F6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintTop_toBottomOf="@+id/rating_Bar" />
+
+    <RatingBar
+        android:id="@+id/rating_Bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="143dp"
+        android:backgroundTint="#EDE59F"
+        android:numStars="5"
+        android:progressTint="#CDDD2A"
+        android:stepSize="0.5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_ratingHeading" />
 
     <ImageView
         android:id="@+id/img_returnFromFeedback"
