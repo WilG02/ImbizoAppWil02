@@ -51,6 +51,8 @@ public class Categories extends AppCompatActivity {
 
     Collection collect;
 
+    ArrayList<Collection> data= new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,20 +62,22 @@ public class Categories extends AppCompatActivity {
         navi = findViewById(R.id.drawer_layout);
         btnMenu = findViewById(R.id.button);
 
-/*
         img_menuIcon = findViewById(R.id.img_menu_icon);
-*/
         navView = findViewById(R.id.nav_view);
         View v = navView.getHeaderView(0);
         ImageView img = v.findViewById(R.id.imageView);
         img.setImageResource(R.drawable.imbizo_logo_splash);
 
-       /* img_menuIcon.setOnClickListener(new View.OnClickListener() {
+        rcyCollection=findViewById(R.id.rcy_Collection);
+        data.add(new Collection("sdertyu","Marketing Skills","advertising","axcgvbh","sdfg","sedf"));
+        data.add(new Collection("wertyu","Communication","tips","asdg","sadfgt","dfg"));
+
+        img_menuIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navi.openDrawer(GravityCompat.START);
             }
-        });*/
+        });
 
         img_next = findViewById(R.id.img_next);
 
@@ -144,11 +148,123 @@ public class Categories extends AppCompatActivity {
         });
 //----------------------------------------------END-------------------------------------------------
 //-------------------------------------------MUHAMMAD-----------------------------------------------
-     //   CategoriesData();
+        //CategoriesData();
 
- }
+        //---------------------------------------Code Attribution------------------------------------------------
+        //Author:Ben O'Brien
+        //Uses:set the recycleCollectionAdapter and display users data in the recyclerview
 
-    private void CategoriesData() {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        rcyCollection.setLayoutManager(layoutManager);
+        rcyCollection.setItemAnimator(new DefaultItemAnimator());
+        recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(data,getApplicationContext());
+        //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
+        rcyCollection.setAdapter(adapter);
+              /*  recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList);
+                //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
+                rcyCollection.setAdapter(adapter);*/
+        //Link:https://www.youtube.com/watch?v=__OMnFR-wZU
+        //-----------------------------------------------End------------------------------------------------------
+
+        //---------------------------------------Code Attribution------------------------------------------------
+        //Author:Coding in Flow
+        //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
+                adapter.setOnCollectionClickListerner(new recyclerCollectionAdapter.OnCollectionClickListerner() {
+                    @Override
+                    public void onCollectionClick(int position) {
+                        Intent i = new Intent(Categories.this, Category.class);
+
+                        //---------------------------------------Code Attribution------------------------------------------------
+                        //Author:Coding in Flow
+                        //Uses:Passing a collection object to the CollectionItem class using an intent
+                        //i.putExtra("Collection",collectionList.get(position));
+                        //Link:https://www.youtube.com/watch?v=WBbsvqSu0is
+                        //-----------------------------------------------End------------------------------------------------------
+
+                        startActivity(i);
+                    }
+                });
+        //Link:https://www.youtube.com/watch?v=bhhs4bwYyhc&list=PLrnPJCHvNZuBtTYUuc5Pyo4V7xZ2HNtf4&index=4
+        //-----------------------------------------------End------------------------------------------------------
+
+     /*   //---------------------------------------Code Attribution------------------------------------------------
+        //Author:Sarina Till
+        //Uses:Read data from firebase realtime database
+        // reference for data in firebase
+        myRef = database.getReference().child("Categories");
+
+        //get data from firebase whilst using reference
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                // instance of collection class
+                collect = new Collection();
+
+                //pulling data from realtime firebase
+                for (DataSnapshot collectFirebase : snapshot.getChildren()) {
+                    // snapshot is assigned to the collection instance
+                    collect = collectFirebase.getValue(Collection.class);
+                    //Add instance to arraylist collectionList
+                    collectionList.add(collect);
+                }
+                //Link:https://www.youtube.com/watch?v=Ydn5cXn1j-0&list=PL480DYS-b_kdor_f0IFgS7iiEsOwxdx6w&index=26
+                //-----------------------------------------------End------------------------------------------------------
+
+              }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
+        //for (Collection c: collectionList) {
+        if (collectionList.size()>0) {
+//---------------------------------------Code Attribution------------------------------------------------
+            //Author:Ben O'Brien
+            //Uses:set the recycleCollectionAdapter and display users data in the recyclerview
+            recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList);
+            //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
+            rcyCollection.setAdapter(adapter);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+            rcyCollection.setLayoutManager(layoutManager);
+            rcyCollection.setItemAnimator(new DefaultItemAnimator());
+              *//* recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList);
+                //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
+                rcyCollection.setAdapter(adapter);*//*
+            //Link:https://www.youtube.com/watch?v=__OMnFR-wZU
+            //-----------------------------------------------End------------------------------------------------------
+
+            //---------------------------------------Code Attribution------------------------------------------------
+            //Author:Coding in Flow
+            //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
+              *//*  adapter.setOnCollectionClickListerner(new recyclerCollectionAdapter.OnCollectionClickListerner() {
+                    @Override
+                    public void onCollectionClick(int position) {
+                        Intent i = new Intent(Categories.this, Category.class);
+
+                        //---------------------------------------Code Attribution------------------------------------------------
+                        //Author:Coding in Flow
+                        //Uses:Passing a collection object to the CollectionItem class using an intent
+                        //i.putExtra("Collection",collectionList.get(position));
+                        //Link:https://www.youtube.com/watch?v=WBbsvqSu0is
+                        //-----------------------------------------------End------------------------------------------------------
+
+                        startActivity(i);
+                    }
+                });*//*
+            //Link:https://www.youtube.com/watch?v=bhhs4bwYyhc&list=PLrnPJCHvNZuBtTYUuc5Pyo4V7xZ2HNtf4&index=4
+            //-----------------------------------------------End------------------------------------------------------
+        }
+      //  }
+*/
+
+    }
+
+   /* private void CategoriesData() {
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:Sarina Till
         //Uses:Read data from firebase realtime database
@@ -176,18 +292,23 @@ public class Categories extends AppCompatActivity {
                 //---------------------------------------Code Attribution------------------------------------------------
                 //Author:Ben O'Brien
                 //Uses:set the recycleCollectionAdapter and display users data in the recyclerview
+
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 rcyCollection.setLayoutManager(layoutManager);
                 rcyCollection.setItemAnimator(new DefaultItemAnimator());
-                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
+                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(data);
+                //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
                 rcyCollection.setAdapter(adapter);
+              *//*  recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList);
+                //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
+                rcyCollection.setAdapter(adapter);*//*
                 //Link:https://www.youtube.com/watch?v=__OMnFR-wZU
                 //-----------------------------------------------End------------------------------------------------------
 
                 //---------------------------------------Code Attribution------------------------------------------------
                 //Author:Coding in Flow
                 //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
-                adapter.setOnCollectionClickListerner(new recyclerCollectionAdapter.OnCollectionClickListerner() {
+              *//*  adapter.setOnCollectionClickListerner(new recyclerCollectionAdapter.OnCollectionClickListerner() {
                     @Override
                     public void onCollectionClick(int position) {
                         Intent i = new Intent(Categories.this, Category.class);
@@ -195,13 +316,13 @@ public class Categories extends AppCompatActivity {
                         //---------------------------------------Code Attribution------------------------------------------------
                         //Author:Coding in Flow
                         //Uses:Passing a collection object to the CollectionItem class using an intent
-                        i.putExtra("Collection",collectionList.get(position));
+                        //i.putExtra("Collection",collectionList.get(position));
                         //Link:https://www.youtube.com/watch?v=WBbsvqSu0is
                         //-----------------------------------------------End------------------------------------------------------
 
                         startActivity(i);
                     }
-                });
+                });*//*
                 //Link:https://www.youtube.com/watch?v=bhhs4bwYyhc&list=PLrnPJCHvNZuBtTYUuc5Pyo4V7xZ2HNtf4&index=4
                 //-----------------------------------------------End------------------------------------------------------
             }
@@ -213,5 +334,5 @@ public class Categories extends AppCompatActivity {
             }
 
         });
-    }
+    }*/
 }

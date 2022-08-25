@@ -21,14 +21,14 @@ public class Ratings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ratings);
 
-       /* img_backFromFeedback.findViewById(R.id.img_returnFromFeedback);
+        img_backFromFeedback=findViewById(R.id.img_returnFromFeedback);
         img_backFromFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Ratings.this,Categories.class);
                 startActivity(i);
             }
-        });*/
+        });
 
         //-----------------------------------Lunga-------------------------
         ratingBar = findViewById(R.id.rating_Bar);

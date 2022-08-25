@@ -13,6 +13,41 @@ import java.util.ArrayList;
 
 public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerCollectionAdapter.MyViewHolder> {
 
+    //private ArrayList<Collection> collectionList;
+
+   /* public recyclerCollectionAdapter(ArrayList<Collection> collectionList) {
+        this.collectionList = collectionList;
+    }
+
+
+
+    public class MyViewHolder extends RecyclerView.ViewHolder{
+        private TextView txtName;
+
+        public MyViewHolder(final View view){
+            super(view);
+            txtName = view.findViewById(R.id.txt_category);
+        }
+    }
+
+
+    @NonNull
+    @Override
+    public recyclerCollectionAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.individual_category,parent,false);
+        return new MyViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull recyclerCollectionAdapter.MyViewHolder holder, int position) {
+        String name = collectionList.get(position).getName();
+        holder.txtName.setText(name);
+    }
+
+    @Override
+    public int getItemCount() {
+        return collectionList.size();
+    }*/
     //Global Variable
     private ArrayList<Collection> tempCollectionList;
     Context context;
