@@ -5,7 +5,7 @@
     android:id="@+id/activity_splash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9C9F69"
+    android:background="@drawable/pop_bg"
     android:orientation="vertical"
     tools:context=".Splash">
 

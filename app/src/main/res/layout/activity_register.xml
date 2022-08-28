@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#9C9F69"
-    android:background="#9C9F69"
+    android:background="@drawable/pop_bg"
     tools:context=".Register">
 
     <TextView
@@ -108,13 +107,13 @@
         android:layout_marginTop="48dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_background"
-        android:backgroundTint="#6C7031"
-        android:shadowColor="#6C7031"
+        android:backgroundTint="#043C1A"
+        android:shadowColor="#043C1A"
         android:text="Register"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimaryWhite"
         android:textSize="24sp"
-        app:backgroundTint="#6C7031"
+        app:backgroundTint="#043C1A"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

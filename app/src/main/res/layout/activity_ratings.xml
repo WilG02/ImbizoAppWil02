@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9C9F69"
+    android:background="@drawable/pop_bg"
     tools:context=".Ratings">
 
     <TextView
@@ -28,10 +28,11 @@
         android:layout_marginTop="52dp"
         android:layout_marginEnd="145dp"
         android:background="@drawable/button_background"
-        android:backgroundTint="#6C7031"
+        android:backgroundTint="#043C1A"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:text="Submit Ratings"
+        android:text="Submit "
+        android:textAllCaps="false"
         android:textColor="#F8F6F6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

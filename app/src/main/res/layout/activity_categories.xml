@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9C9F69"
+    android:background="@drawable/pop_bg"
     tools:context=".Categories">
 
     <TextView
@@ -25,7 +25,7 @@
         android:id="@+id/layoutToolBar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="#4A9E77"
+        android:background="#48BF91"
         android:orientation="horizontal"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
@@ -61,18 +61,15 @@
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
-        android:layout_width="501dp"
-        android:layout_height="829dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_width="700dp"
+        android:layout_height="1500dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/layoutToolBar"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/layoutToolBar">
+
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
-            android:layout_width="303dp"
+            android:layout_width="440dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:visibility="invisible"
