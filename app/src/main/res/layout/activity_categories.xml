@@ -7,80 +7,75 @@
     android:background="#9C9F69"
     tools:context=".Categories">
 
-    <ImageView
-        android:id="@+id/img_next"
-        android:layout_width="65dp"
-        android:layout_height="56dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_arrow_forward" />
-
-    <ImageView
-        android:id="@+id/img_menu_icon"
-        android:layout_width="69dp"
-        android:layout_height="49dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_menu_icon" />
-
     <TextView
         android:id="@+id/txt_categoriesHeading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="206dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="12dp"
         android:text="Categories"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         android:textSize="42sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.456"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutToolBar" />
+
+    <LinearLayout
+        android:id="@+id/layoutToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="#4A9E77"
+        android:orientation="horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_menu_icon"
+            android:layout_width="69dp"
+            android:layout_height="49dp"
+            app:srcCompat="@drawable/ic_menu_icon" />
+
+        <ImageView
+            android:id="@+id/img_next"
+            android:layout_width="118dp"
+            android:layout_height="49dp"
+            app:srcCompat="@drawable/ic_arrow_forward" />
+
+    </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcy_Collection"
         android:layout_width="360dp"
         android:layout_height="455dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="67dp"
-        android:layout_marginBottom="63dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="26dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="450dp"
-        android:text="Test"
-
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_categoriesHeading" />
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
+        android:layout_width="414dp"
+        android:layout_height="734dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/layoutToolBar"
+        app:layout_constraintVertical_bias="0.142">
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="303dp"
-
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:headerLayout="@layout/nav_header"
             app:menu="@menu/menu_home"
             tools:ignore="MissingConstraints"

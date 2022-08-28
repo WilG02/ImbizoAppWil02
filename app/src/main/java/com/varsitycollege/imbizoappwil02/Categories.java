@@ -60,7 +60,7 @@ public class Categories extends AppCompatActivity {
 
         //Linking component with User interface
         navi = findViewById(R.id.drawer_layout);
-        btnMenu = findViewById(R.id.button);
+        /*btnMenu = findViewById(R.id.button);*/
 
         img_menuIcon = findViewById(R.id.img_menu_icon);
         navView = findViewById(R.id.nav_view);
@@ -89,12 +89,12 @@ public class Categories extends AppCompatActivity {
             }
         });
 
-        btnMenu.setOnClickListener(new View.OnClickListener() {
+       /* btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navi.openDrawer(GravityCompat.START);
             }
-        });
+        });*/
 
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
