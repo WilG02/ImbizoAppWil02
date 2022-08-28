@@ -48,6 +48,7 @@ public class IndividualCategory extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(IndividualCategory.this,Categories.class);
+                ListUtils.collectionList.clear();
                 startActivity(i);
             }
         });

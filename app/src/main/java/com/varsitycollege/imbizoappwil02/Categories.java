@@ -77,6 +77,7 @@ public class Categories extends AppCompatActivity {
         img.setImageResource(R.drawable.imbizo_logo_splash);
 
         rcyCollection=findViewById(R.id.rcy_Collection);
+        ListUtils.collectionList.clear();
 
         img_menuIcon.setOnClickListener(new View.OnClickListener() {
             @Override
