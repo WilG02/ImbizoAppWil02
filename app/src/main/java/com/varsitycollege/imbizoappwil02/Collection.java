@@ -5,34 +5,34 @@ import android.os.Parcelable;
 
 public class Collection implements Parcelable {
     //Class Variables
-    private String id;
-    private String name;
-    private String description;
-    private String imageUrl;
-    private String videoUrl;
-    private String podcastUrl;
+    private String CategoryId;
+    private String CategoryName;
+    private String CategoryInformation;
+    private String CategoryImageUrl;
+    private String CategoryVideoUrl;
+    private String CategoryPodcastUrl;
 
     //Default Constructor
     public Collection() {
 
     }
 
-    public Collection(String id, String name, String description, String imageUrl, String videoUrl, String podcastUrl) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.videoUrl = videoUrl;
-        this.podcastUrl = podcastUrl;
+    public Collection(String categoryId, String categoryName, String categoryInformation, String categoryImageUrl, String categoryVideoUrl, String categoryPodcastUrl) {
+        CategoryId = categoryId;
+        CategoryName = categoryName;
+        CategoryInformation = categoryInformation;
+        CategoryImageUrl = categoryImageUrl;
+        CategoryVideoUrl = categoryVideoUrl;
+        CategoryPodcastUrl = categoryPodcastUrl;
     }
 
     protected Collection(Parcel in) {
-        id = in.readString();
-        name = in.readString();
-        description = in.readString();
-        imageUrl = in.readString();
-        videoUrl = in.readString();
-        podcastUrl = in.readString();
+        CategoryId = in.readString();
+        CategoryName = in.readString();
+        CategoryInformation = in.readString();
+        CategoryImageUrl = in.readString();
+        CategoryVideoUrl = in.readString();
+        CategoryPodcastUrl = in.readString();
     }
 
     public static final Creator<Collection> CREATOR = new Creator<Collection>() {
@@ -47,54 +47,53 @@ public class Collection implements Parcelable {
         }
     };
 
-    public String getId() {
-        return id;
+    public String getCategoryId() {
+        return CategoryId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCategoryId(String categoryId) {
+        CategoryId = categoryId;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryName() {
+        return CategoryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryName(String categoryName) {
+        CategoryName = categoryName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCategoryInformation() {
+        return CategoryInformation;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCategoryInformation(String categoryInformation) {
+        CategoryInformation = categoryInformation;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getCategoryImageUrl() {
+        return CategoryImageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setCategoryImageUrl(String categoryImageUrl) {
+        CategoryImageUrl = categoryImageUrl;
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
+    public String getCategoryVideoUrl() {
+        return CategoryVideoUrl;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+    public void setCategoryVideoUrl(String categoryVideoUrl) {
+        CategoryVideoUrl = categoryVideoUrl;
     }
 
-    public String getPodcastUrl() {
-        return podcastUrl;
+    public String getCategoryPodcastUrl() {
+        return CategoryPodcastUrl;
     }
 
-    public void setPodcastUrl(String podcastUrl) {
-        this.podcastUrl = podcastUrl;
+    public void setCategoryPodcastUrl(String categoryPodcastUrl) {
+        CategoryPodcastUrl = categoryPodcastUrl;
     }
-
 
     @Override
     public int describeContents() {
@@ -103,11 +102,11 @@ public class Collection implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(id);
-        parcel.writeString(name);
-        parcel.writeString(description);
-        parcel.writeString(imageUrl);
-        parcel.writeString(videoUrl);
-        parcel.writeString(podcastUrl);
+        parcel.writeString(CategoryId);
+        parcel.writeString(CategoryName);
+        parcel.writeString(CategoryInformation);
+        parcel.writeString(CategoryImageUrl);
+        parcel.writeString(CategoryVideoUrl);
+        parcel.writeString(CategoryPodcastUrl);
     }
 }

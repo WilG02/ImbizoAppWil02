@@ -148,27 +148,54 @@ public class Categories extends AppCompatActivity {
         });
 //----------------------------------------------END-------------------------------------------------
 //-------------------------------------------MUHAMMAD-----------------------------------------------
-        //CategoriesData();
+        //Display category data
+        CategoriesData();
+    }
 
+    private void CategoriesData() {
         //---------------------------------------Code Attribution------------------------------------------------
-        //Author:Ben O'Brien
-        //Uses:set the recycleCollectionAdapter and display users data in the recyclerview
+        //Author:Sarina Till
+        //Uses:Read data from firebase realtime database
+        // reference for data in firebase
+        myRef = database.getReference().child("Categories");
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        rcyCollection.setLayoutManager(layoutManager);
-        rcyCollection.setItemAnimator(new DefaultItemAnimator());
-        recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(data,getApplicationContext());
-        //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
-        rcyCollection.setAdapter(adapter);
-              /*  recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList);
+        //get data from firebase whilst using reference
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                // instance of collection class
+                collect = new Collection();
+
+                //pulling data from realtime firebase
+                for (DataSnapshot collectFirebase : snapshot.getChildren()) {
+                    // snapshot is assigned to the collection instance
+                    collect = collectFirebase.getValue(Collection.class);
+                    //Add instance to arraylist collectionList
+                    ListUtils.collectionList.add(collect);
+                }
+                //Link:https://www.youtube.com/watch?v=Ydn5cXn1j-0&list=PL480DYS-b_kdor_f0IFgS7iiEsOwxdx6w&index=26
+                //-----------------------------------------------End------------------------------------------------------
+
+                //---------------------------------------Code Attribution------------------------------------------------
+                //Author:Ben O'Brien
+                //Uses:set the recycleCollectionAdapter and display users data in the recyclerview
+
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                rcyCollection.setLayoutManager(layoutManager);
+                rcyCollection.setItemAnimator(new DefaultItemAnimator());
+                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(ListUtils.collectionList, getApplicationContext());
                 //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
-                rcyCollection.setAdapter(adapter);*/
-        //Link:https://www.youtube.com/watch?v=__OMnFR-wZU
-        //-----------------------------------------------End------------------------------------------------------
+                rcyCollection.setAdapter(adapter);
+                //recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList);
+                //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
+                //rcyCollection.setAdapter(adapter);
+                //Link:https://www.youtube.com/watch?v=__OMnFR-wZU
+                //-----------------------------------------------End------------------------------------------------------
 
-        //---------------------------------------Code Attribution------------------------------------------------
-        //Author:Coding in Flow
-        //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
+                //---------------------------------------Code Attribution------------------------------------------------
+                //Author:Coding in Flow
+                //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
                 adapter.setOnCollectionClickListerner(new recyclerCollectionAdapter.OnCollectionClickListerner() {
                     @Override
                     public void onCollectionClick(int position) {
@@ -184,147 +211,10 @@ public class Categories extends AppCompatActivity {
                         startActivity(i);
                     }
                 });
-        //Link:https://www.youtube.com/watch?v=bhhs4bwYyhc&list=PLrnPJCHvNZuBtTYUuc5Pyo4V7xZ2HNtf4&index=4
-        //-----------------------------------------------End------------------------------------------------------
-
-     /*   //---------------------------------------Code Attribution------------------------------------------------
-        //Author:Sarina Till
-        //Uses:Read data from firebase realtime database
-        // reference for data in firebase
-        myRef = database.getReference().child("Categories");
-
-        //get data from firebase whilst using reference
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                // instance of collection class
-                collect = new Collection();
-
-                //pulling data from realtime firebase
-                for (DataSnapshot collectFirebase : snapshot.getChildren()) {
-                    // snapshot is assigned to the collection instance
-                    collect = collectFirebase.getValue(Collection.class);
-                    //Add instance to arraylist collectionList
-                    collectionList.add(collect);
-                }
-                //Link:https://www.youtube.com/watch?v=Ydn5cXn1j-0&list=PL480DYS-b_kdor_f0IFgS7iiEsOwxdx6w&index=26
-                //-----------------------------------------------End------------------------------------------------------
-
-              }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-
-        //for (Collection c: collectionList) {
-        if (collectionList.size()>0) {
-//---------------------------------------Code Attribution------------------------------------------------
-            //Author:Ben O'Brien
-            //Uses:set the recycleCollectionAdapter and display users data in the recyclerview
-            recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList);
-            //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
-            rcyCollection.setAdapter(adapter);
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-            rcyCollection.setLayoutManager(layoutManager);
-            rcyCollection.setItemAnimator(new DefaultItemAnimator());
-              *//* recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList);
-                //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
-                rcyCollection.setAdapter(adapter);*//*
-            //Link:https://www.youtube.com/watch?v=__OMnFR-wZU
-            //-----------------------------------------------End------------------------------------------------------
-
-            //---------------------------------------Code Attribution------------------------------------------------
-            //Author:Coding in Flow
-            //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
-              *//*  adapter.setOnCollectionClickListerner(new recyclerCollectionAdapter.OnCollectionClickListerner() {
-                    @Override
-                    public void onCollectionClick(int position) {
-                        Intent i = new Intent(Categories.this, Category.class);
-
-                        //---------------------------------------Code Attribution------------------------------------------------
-                        //Author:Coding in Flow
-                        //Uses:Passing a collection object to the CollectionItem class using an intent
-                        //i.putExtra("Collection",collectionList.get(position));
-                        //Link:https://www.youtube.com/watch?v=WBbsvqSu0is
-                        //-----------------------------------------------End------------------------------------------------------
-
-                        startActivity(i);
-                    }
-                });*//*
-            //Link:https://www.youtube.com/watch?v=bhhs4bwYyhc&list=PLrnPJCHvNZuBtTYUuc5Pyo4V7xZ2HNtf4&index=4
-            //-----------------------------------------------End------------------------------------------------------
-        }
-      //  }
-*/
-
-    }
-
-   /* private void CategoriesData() {
-        //---------------------------------------Code Attribution------------------------------------------------
-        //Author:Sarina Till
-        //Uses:Read data from firebase realtime database
-        // reference for data in firebase
-        myRef = database.getReference().child("Categories");
-
-        //get data from firebase whilst using reference
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                // instance of collection class
-                collect = new Collection();
-
-                //pulling data from realtime firebase
-                for (DataSnapshot collectFirebase : snapshot.getChildren()) {
-                    // snapshot is assigned to the collection instance
-                    collect = collectFirebase.getValue(Collection.class);
-                    //Add instance to arraylist collectionList
-                    collectionList.add(collect);
-                }
-                //Link:https://www.youtube.com/watch?v=Ydn5cXn1j-0&list=PL480DYS-b_kdor_f0IFgS7iiEsOwxdx6w&index=26
-                //-----------------------------------------------End------------------------------------------------------
-
-                //---------------------------------------Code Attribution------------------------------------------------
-                //Author:Ben O'Brien
-                //Uses:set the recycleCollectionAdapter and display users data in the recyclerview
-
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                rcyCollection.setLayoutManager(layoutManager);
-                rcyCollection.setItemAnimator(new DefaultItemAnimator());
-                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(data);
-                //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
-                rcyCollection.setAdapter(adapter);
-              *//*  recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList);
-                //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
-                rcyCollection.setAdapter(adapter);*//*
-                //Link:https://www.youtube.com/watch?v=__OMnFR-wZU
-                //-----------------------------------------------End------------------------------------------------------
-
-                //---------------------------------------Code Attribution------------------------------------------------
-                //Author:Coding in Flow
-                //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
-              *//*  adapter.setOnCollectionClickListerner(new recyclerCollectionAdapter.OnCollectionClickListerner() {
-                    @Override
-                    public void onCollectionClick(int position) {
-                        Intent i = new Intent(Categories.this, Category.class);
-
-                        //---------------------------------------Code Attribution------------------------------------------------
-                        //Author:Coding in Flow
-                        //Uses:Passing a collection object to the CollectionItem class using an intent
-                        //i.putExtra("Collection",collectionList.get(position));
-                        //Link:https://www.youtube.com/watch?v=WBbsvqSu0is
-                        //-----------------------------------------------End------------------------------------------------------
-
-                        startActivity(i);
-                    }
-                });*//*
                 //Link:https://www.youtube.com/watch?v=bhhs4bwYyhc&list=PLrnPJCHvNZuBtTYUuc5Pyo4V7xZ2HNtf4&index=4
                 //-----------------------------------------------End------------------------------------------------------
+
+
             }
 
 
@@ -334,5 +224,5 @@ public class Categories extends AppCompatActivity {
             }
 
         });
-    }*/
+    }
 }
