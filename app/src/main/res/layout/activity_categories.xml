@@ -61,8 +61,8 @@
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
-        android:layout_width="414dp"
-        android:layout_height="734dp"
+        android:layout_width="501dp"
+        android:layout_height="829dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -75,7 +75,7 @@
             android:layout_width="303dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:headerLayout="@layout/nav_header"
             app:menu="@menu/menu_home"
             tools:ignore="MissingConstraints"

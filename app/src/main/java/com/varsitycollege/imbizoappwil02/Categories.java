@@ -69,8 +69,6 @@ public class Categories extends AppCompatActivity {
         img.setImageResource(R.drawable.imbizo_logo_splash);
 
         rcyCollection=findViewById(R.id.rcy_Collection);
-        data.add(new Collection("sdertyu","Marketing Skills","advertising","axcgvbh","sdfg","sedf"));
-        data.add(new Collection("wertyu","Communication","tips","asdg","sadfgt","dfg"));
 
         img_menuIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,11 +211,7 @@ public class Categories extends AppCompatActivity {
                 });
                 //Link:https://www.youtube.com/watch?v=bhhs4bwYyhc&list=PLrnPJCHvNZuBtTYUuc5Pyo4V7xZ2HNtf4&index=4
                 //-----------------------------------------------End------------------------------------------------------
-
-
             }
-
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
