@@ -34,8 +34,6 @@ public class Categories extends AppCompatActivity {
     DrawerLayout navi;
     NavigationView navView;
     ImageView img_menuIcon;
-    Button btnMenu;
-
     ImageView img_next;
 
     //Recycler Component
@@ -82,18 +80,10 @@ public class Categories extends AppCompatActivity {
         img_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent next = new Intent(Categories.this,Category.class);
+                Intent next = new Intent(Categories.this,IndividualCategory.class);
                 startActivity(next);
             }
         });
-
-       /* btnMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navi.openDrawer(GravityCompat.START);
-            }
-        });*/
-
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -178,7 +168,6 @@ public class Categories extends AppCompatActivity {
                 //---------------------------------------Code Attribution------------------------------------------------
                 //Author:Ben O'Brien
                 //Uses:set the recycleCollectionAdapter and display users data in the recyclerview
-
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 rcyCollection.setLayoutManager(layoutManager);
                 rcyCollection.setItemAnimator(new DefaultItemAnimator());
@@ -197,7 +186,7 @@ public class Categories extends AppCompatActivity {
                 adapter.setOnCollectionClickListerner(new recyclerCollectionAdapter.OnCollectionClickListerner() {
                     @Override
                     public void onCollectionClick(int position) {
-                        Intent i = new Intent(Categories.this, Category.class);
+                        Intent i = new Intent(Categories.this, IndividualCategory.class);
 
                         //---------------------------------------Code Attribution------------------------------------------------
                         //Author:Coding in Flow

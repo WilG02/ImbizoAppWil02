@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerCollectionAdapter.MyViewHolder> {
 
-
     //Global Variable
     private ArrayList<Collection> tempCollectionList;
     Context context;
