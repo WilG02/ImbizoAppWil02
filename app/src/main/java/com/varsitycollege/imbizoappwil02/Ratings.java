@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 public class Ratings extends AppCompatActivity {
 
     ImageView img_backFromFeedback;
+    private WebView Feedbackwebview;
 
     RatingBar ratingBar;
     Button btnRate;
@@ -53,5 +56,34 @@ public class Ratings extends AppCompatActivity {
         });
         //-----------------------------------Lunga--------------------------
 
+
+        //---------------------------------------Code Attribution------------------------------------------------
+        //Author:Coding in Flow
+        //Uses:Opening feeback google form in the application
+
+        WebView myWebView = (WebView) findViewById(R.id.Feedbackwebview);
+        myWebView.setWebViewClient(new WebViewClient()); //Loads in the application
+        myWebView.loadUrl("https://forms.gle/kmxWg66fgqd3xMXc7"); //Url of the loaded website
+
+        myWebView = new WebView(Ratings.this);
+        setContentView(myWebView);
+
+        myWebView.loadUrl("https://forms.gle/Ga14csS5QXu6ABzq6");
+
+
     }
+    @Override
+    public void onBackPressed() {
+        if (Feedbackwebview.canGoBack()) {
+            Feedbackwebview.goBack();
+        } else {
+            super.onBackPressed();
+            {
+
+            }
+        }}
+
+//Link:https://www.youtube.com/watch?v=TUXui5ItBkM
+//-----------------------------------------------End------------------------------------------------------
+
 }

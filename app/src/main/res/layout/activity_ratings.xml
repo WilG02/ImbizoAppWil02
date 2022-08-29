@@ -24,6 +24,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <WebView
+        android:id="@+id/Feedbackwebview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_Rate"
         android:layout_width="191dp"

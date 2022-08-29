@@ -111,13 +111,13 @@ public class Categories extends AppCompatActivity {
                         break;
 
                     case R.id.about:
-                        Toast.makeText(Categories.this, "About", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Categories.this, "About", Toast.LENGTH_SHORT).show();
                         Intent redirectToAbout = new Intent(Categories.this,About.class);
                         startActivity(redirectToAbout);
                         break;
 
                     case R.id.feedback:
-                        Toast.makeText(Categories.this, "Feedback", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Categories.this, "Feedback", Toast.LENGTH_SHORT).show();
                         Intent redirectToFeedback = new Intent(Categories.this,Ratings.class);
                         startActivity(redirectToFeedback);
                         break;
@@ -135,6 +135,8 @@ public class Categories extends AppCompatActivity {
                         FirebaseAuth.getInstance().signOut();
                         Intent returnLogin = new Intent(Categories.this, Splash.class);
                         startActivity(returnLogin);
+                        /*Intent feedback = new Intent(Categories.this, Ratings.class);
+                        startActivity(feedback);*/
                         //-------------------------------------------Kimaya-----------------------------------------------
                         Toast.makeText(Categories.this, "Goodbye", Toast.LENGTH_SHORT).show();
                         break;
