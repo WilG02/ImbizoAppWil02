@@ -106,14 +106,14 @@ public class IndividualCategory extends AppCompatActivity {
                 //---------------------------------------Code Attribution------------------------------------------------
                 //Author:CodingSTUFF
                 //Uses:Display image fore firebase storage using url
-                Glide.with(getApplicationContext()).load(ListUtils.CategoryDataList.get(1).getCategoryImageUrl()).into(categoryImage);
+                Glide.with(getApplicationContext()).load(ListUtils.CategoryDataList.get(0).getCategoryImageUrl()).into(categoryImage);
                 //Link:https://www.youtube.com/watch?v=iEcokZOv5UY
                 //-----------------------------------------------End------------------------------------------------------
 
-                txt_heading.setText(ListUtils.CategoryDataList.get(1).getCategoryName());
-                txt_info.setText(ListUtils.CategoryDataList.get(1).getCategoryInformation());
+                txt_heading.setText(ListUtils.CategoryDataList.get(0).getCategoryName());
+                txt_info.setText(ListUtils.CategoryDataList.get(0).getCategoryInformation());
 
-                String link= ListUtils.CategoryDataList.get(1).getCategoryVideoUrl();
+                String link= ListUtils.CategoryDataList.get(0).getCategoryVideoUrl();
 
                 /*for (int i = 0; i < link.length(); i++) {
                     char ch = link[i];
