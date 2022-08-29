@@ -68,7 +68,6 @@ public class Categories extends AppCompatActivity {
 
         //Linking component with User interface
         navi = findViewById(R.id.drawer_layout);
-        /*btnMenu = findViewById(R.id.button);*/
 
         img_menuIcon = findViewById(R.id.img_menu_icon);
         navView = findViewById(R.id.nav_view);
@@ -194,7 +193,8 @@ public class Categories extends AppCompatActivity {
                 //---------------------------------------Code Attribution------------------------------------------------
                 //Author:Coding in Flow
                 //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
-                adapter.setOnCollectionClickListerner(new recyclerCollectionAdapter.OnCollectionClickListerner() {
+
+                adapter.setOnCollectionClickListener(new recyclerCollectionAdapter.OnCollectionClickListener() {
                     @Override
                     public void onCollectionClick(int position) {
                         Intent i = new Intent(Categories.this, IndividualCategory.class);

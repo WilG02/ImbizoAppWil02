@@ -2,6 +2,9 @@ package com.varsitycollege.imbizoappwil02;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,18 +14,35 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+
+import java.util.ArrayList;
 
 public class IndividualCategory extends AppCompatActivity {
 
     VideoView video,audio;
     YouTubePlayerView youtubePlayerView;
     ImageView backAll,categoryImage;
+    TextView txt_info,txt_heading;
+
+    //Firebase Realtime Database reference
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef;
+
+    Collection collect;
+
+    ArrayList<Collection> data= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +63,9 @@ public class IndividualCategory extends AppCompatActivity {
         audio = findViewById(R.id.audioView);
         categoryImage=findViewById(R.id.img_categoryImg);
         backAll=findViewById(R.id.img_backToCat);
+        txt_info=findViewById(R.id.txt_Information);
+        txt_heading=findViewById(R.id.txt_singleCategory);
+
 
         backAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,12 +76,78 @@ public class IndividualCategory extends AppCompatActivity {
             }
         });
 
+        youtubePlayerView = findViewById(R.id.player);
+        getLifecycle().addObserver(youtubePlayerView);
+
         //---------------------------------------Code Attribution------------------------------------------------
-        //Author:CodingSTUFF
-        //Uses:Display image fore firebase storage using url
-        //Glide.with(getApplicationContext()).load(item.getImgURL()).into(categoryImage);
-        //Link:https://www.youtube.com/watch?v=iEcokZOv5UY
-        //-----------------------------------------------End------------------------------------------------------
+        //Author:Sarina Till
+        //Uses:Read data from firebase realtime database
+        // reference for data in firebase
+        myRef = database.getReference().child("Categories");
+
+        //get data from firebase whilst using reference
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                // instance of collection class
+                collect = new Collection();
+
+                //pulling data from realtime firebase
+                for (DataSnapshot collectFirebase : snapshot.getChildren()) {
+                    // snapshot is assigned to the collection instance
+                    collect = collectFirebase.getValue(Collection.class);
+                    //Add instance to arraylist collectionList
+                    ListUtils.CategoryDataList.add(collect);
+                }
+                //Link:https://www.youtube.com/watch?v=Ydn5cXn1j-0&list=PL480DYS-b_kdor_f0IFgS7iiEsOwxdx6w&index=26
+                //-----------------------------------------------End------------------------------------------------------
+
+                //---------------------------------------Code Attribution------------------------------------------------
+                //Author:CodingSTUFF
+                //Uses:Display image fore firebase storage using url
+                Glide.with(getApplicationContext()).load(ListUtils.CategoryDataList.get(1).getCategoryImageUrl()).into(categoryImage);
+                //Link:https://www.youtube.com/watch?v=iEcokZOv5UY
+                //-----------------------------------------------End------------------------------------------------------
+
+                txt_heading.setText(ListUtils.CategoryDataList.get(1).getCategoryName());
+                txt_info.setText(ListUtils.CategoryDataList.get(1).getCategoryInformation());
+
+                String link= ListUtils.CategoryDataList.get(1).getCategoryVideoUrl();
+
+                /*for (int i = 0; i < link.length(); i++) {
+                    char ch = link[i];
+                   if (link[i].equals("=")){
+
+                   }
+                }*/
+               /* youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                    @Override
+                    public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                        String videoId = "1EYfOvrJt74";
+                        youTubePlayer.loadVideo(videoId, 0);
+                    }
+                });*/
+
+                //https://www.youtube.com/watch?v=Zf9pOhlqRXo
+                video.setVideoURI(Uri.parse(link));
+
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
+        MediaController mediaController = new MediaController(this);
+        mediaController.setAnchorView(video);
+        video.setMediaController(mediaController);
+        video.requestFocus();
+        video.start();
+
+
 
         /*//Display video using a url
         //https://www.youtube.com/watch?v=Zf9pOhlqRXo
@@ -76,16 +165,8 @@ public class IndividualCategory extends AppCompatActivity {
         //Youtube player
         //https://github.com/PierfrancescoSoffritti/android-youtube-player
 
-        youtubePlayerView = findViewById(R.id.player);
-        getLifecycle().addObserver(youtubePlayerView);
 
-        youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
-            @Override
-            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                String videoId = "1EYfOvrJt74";
-                youTubePlayer.loadVideo(videoId, 0);
-            }
-        });
+
 
 
 
