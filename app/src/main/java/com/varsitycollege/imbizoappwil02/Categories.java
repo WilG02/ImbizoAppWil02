@@ -108,6 +108,8 @@ public class Categories extends AppCompatActivity {
 
                     case R.id.aptitude:
                         Toast.makeText(Categories.this, "Redirecting to aptitude test", Toast.LENGTH_SHORT).show();
+                        Intent redirectToTest = new Intent(Categories.this,aptitude_test.class);
+                        startActivity(redirectToTest);
                         break;
 
                     case R.id.about:

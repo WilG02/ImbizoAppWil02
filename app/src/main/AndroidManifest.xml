@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ImbizoAppWil02">
         <activity
+            android:name=".aptitude_test"
+            android:exported="false" />
+        <activity
             android:name=".IndividualCategory"
             android:exported="false" />
         <activity
