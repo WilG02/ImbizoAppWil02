@@ -43,7 +43,7 @@
         android:text="Currently there is a major percentage of South Africa’s youth who are
         unemployed because of the lack of basic entrepreneurial skills. Imbizo will provide free education and training for SA’s youth to obtain the necessary skills to acquire jobs. It will be able to enhance an individual’s confidence so that they can excel and tackle
         anything they can put their mind to do.It is there to be able to develop a person as a whole. There is a category list within the app which involves a variety of information in order to uplift and enhance a young person’s self-esteem."
-        android:textSize="22sp"
+        android:textSize="23sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
