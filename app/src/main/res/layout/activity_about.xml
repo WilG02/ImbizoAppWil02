@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pop_bg"
+    android:background="#E8E8DF"
     tools:context=".About">
 
     <ImageView
@@ -21,14 +21,13 @@
         android:id="@+id/txt_aboutHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="About"
-        android:shadowColor="#000000"
         android:shadowDx="5"
         android:shadowDy="4"
         android:shadowRadius="5"
+        android:text="About"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/black"
-        android:textSize="42sp"
+        android:textColor="#7D7F34"
+        android:textSize="48sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.456"
@@ -44,7 +43,8 @@
         android:text="Currently there is a major percentage of South Africa’s youth who are
         unemployed because of the lack of basic entrepreneurial skills. Imbizo will provide free education and training for SA’s youth to obtain the necessary skills to acquire jobs. It will be able to enhance an individual’s confidence so that they can excel and tackle
         anything they can put their mind to do.It is there to be able to develop a person as a whole. There is a category list within the app which involves a variety of information in order to uplift and enhance a young person’s self-esteem."
-        android:textSize="20sp"
+        android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

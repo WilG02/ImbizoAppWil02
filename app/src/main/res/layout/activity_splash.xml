@@ -5,7 +5,7 @@
     android:id="@+id/activity_splash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pop_bg"
+    android:background="#E8E8DF"
     android:orientation="vertical"
     tools:context=".Splash">
 
@@ -19,19 +19,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.067"
-        app:srcCompat="@drawable/imbizo_logo_splash" />
+        app:srcCompat="@drawable/imbizoLogo" />
 
     <TextView
         android:id="@+id/txt_aboutHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="IMBIZO FOUNDATION"
-        android:shadowColor="#000000"
         android:shadowDx="5"
         android:shadowDy="4"
         android:shadowRadius="5"
+        android:text="IMBIZO FOUNDATION"
         android:textAlignment="center"
+        android:textColor="#7D7F34"
         android:textSize="50sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

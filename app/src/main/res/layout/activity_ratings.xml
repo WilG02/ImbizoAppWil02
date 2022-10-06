@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pop_bg"
+    android:background="#E8E8DF"
     tools:context=".Ratings">
 
     <TextView
@@ -13,37 +13,37 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="33dp"
         android:layout_marginEnd="145dp"
-        android:text="Rating"
-        android:shadowColor="#000000"
         android:shadowDx="5"
         android:shadowDy="4"
         android:shadowRadius="5"
-        android:textColor="@color/black"
+        android:text="Rating"
+        android:textColor="#7D7F34"
         android:textSize="42sp"
-        android:textStyle="bold"
+        android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <WebView
         android:id="@+id/Feedbackwebview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_Rate"
-        android:layout_width="191dp"
-        android:layout_height="61dp"
+        android:layout_width="254dp"
+        android:layout_height="60dp"
         android:layout_marginStart="144dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="145dp"
         android:background="@drawable/button_background"
-        android:backgroundTint="#043C1A"
+        android:backgroundTint="#7D7F34"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:text="Submit "
         android:textAllCaps="false"
         android:textColor="#F8F6F6"
+        android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rating_Bar" />

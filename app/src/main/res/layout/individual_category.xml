@@ -14,9 +14,9 @@
         android:layout_height="100dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
-        android:gravity="start"
+        android:gravity="center"
         android:text="Category"
-        android:textColor="@color/black"
+        android:textColor="#7D7F34"
         android:textSize="42sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

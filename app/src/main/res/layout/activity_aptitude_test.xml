@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".aptitude_test"
-    android:background="@drawable/pop_bg">
+    android:background="#E8E8DF"
+    tools:context=".aptitude_test">
 
     <WebView
         android:id="@+id/Testwebview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
