@@ -8,24 +8,35 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class Register extends AppCompatActivity {
+public class Register extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText edt_name,edt_email,edt_password;
     Button btn_Register;
     private FirebaseAuth mAuth;
-    String name, email,password;
+    String name, email,password,admin,userId;
     TextView txt_LoginMessage;
+    Spinner spinner;
+    boolean isAdmin;
+    //Firebase realtime database reference
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
 
 
     @Override
@@ -48,6 +59,14 @@ public class Register extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         txt_LoginMessage=findViewById(R.id.txt_existingAccountMessage);
 
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //create a simple layout resource file for each spinner component
+        spinner.setAdapter(adapter);
+
+        //Apply OnItemSelectedListener to the Spinner instance to determine which item of the spinner is clicked.
+        spinner.setOnItemSelectedListener(this);
+
         txt_LoginMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,9 +79,20 @@ public class Register extends AppCompatActivity {
         btn_Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                userId = KeyGenerator.getRandomString(8);
                 name=edt_name.getText().toString();
                 email=edt_email.getText().toString();
                 password=edt_password.getText().toString();
+
+                if (admin.equals("Yes")){
+                    isAdmin = true;
+                }
+
+                if (admin.equals("No")){
+                    isAdmin = false;
+                }
+
+                Users user = new Users(userId,name,email,password,isAdmin);
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -70,18 +100,32 @@ public class Register extends AppCompatActivity {
                                 if (!email.isEmpty() && !password.isEmpty())
                                 {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(Register.this, "Welcome "+ name +" !", Toast.LENGTH_SHORT).show();
-                                        Intent i = new Intent(Register.this,Categories.class);
-                                        startActivity(i);
+                                        myRef.child("Users").child(mAuth.getCurrentUser().getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(Register.this, "Welcome "+ name +" !", Toast.LENGTH_SHORT).show();
+
+                                                if (isAdmin == false){
+                                                    Intent i = new Intent(Register.this,Categories.class);
+                                                    startActivity(i);
+                                                }
+
+                                                if (isAdmin == true){
+                                                    Intent i = new Intent(Register.this,adminHome.class);
+                                                    startActivity(i);
+                                                }
+
+                                            }
+                                        });
                                     }else{
-                                        Toast.makeText(Register.this, "Failed to login!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Register.this, "Failed to Register!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(Register.this,"Failed to login!",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Register.this,"Failed to Register!",Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -89,5 +133,26 @@ public class Register extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        try {
+            admin = String.valueOf(adapterView.getItemAtPosition(i));
+
+            if (admin.equals("Yes")) {
+                isAdmin = true;
+            }else{
+                isAdmin = false;
+            }
+        }catch (Exception e){
+
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        isAdmin = false;
+        admin = "No";
     }
 }

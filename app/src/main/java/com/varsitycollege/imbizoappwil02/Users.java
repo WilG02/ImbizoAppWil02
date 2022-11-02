@@ -5,6 +5,18 @@ public class Users {
     private String name;
     private String email;
     private String password;
+    private boolean admin;
+
+    public Users(String id, String name, String email, String password, boolean admin) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.admin = admin;
+    }
+
+    public Users() {
+    }
 
     public String getId() {
         return id;
@@ -38,14 +50,12 @@ public class Users {
         this.password = password;
     }
 
-    public Users(String id, String name, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
+    public boolean isAdmin() {
+        return admin;
     }
 
-    public Users() {
-
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
+
 }

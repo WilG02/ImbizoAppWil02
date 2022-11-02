@@ -41,6 +41,8 @@ public class Login extends AppCompatActivity {
     Button btn_Login,btn_googleLogin;
     private FirebaseAuth mAuth;
 
+    private String type;
+
     public static final String DEFUALT_IMAGE = "https://firebasestorage.googleapis.com/v0/b/vinyl-warehouse.appspot.com/o/default%2Ficon.png?alt=media&token=6495156e-9304-4be2-b2aa-06110afe1bee";
     public static final String SERVER_CLIENT_ID = "589837323767-h1qb0bjrlqkvphphlbad08kg2k8lamee.apps.googleusercontent.com";
     private SignInClient oneTapClient;
@@ -72,6 +74,12 @@ public class Login extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        Intent i = getIntent();
+        type = i.getStringExtra("TypeUser");
+
+        if (type.equals("Admin")){
+            btn_googleLogin.setVisibility(View.INVISIBLE);
+        }
         txt_registerMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +92,8 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                mAuth = FirebaseAuth.getInstance();
+
                 String password=edt_password.getText().toString();
                 String email=edt_email.getText().toString();
 
@@ -95,9 +105,16 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful())
                             {
                                 Toast.makeText(Login.this,"Welcome "+ mAuth.getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(Login.this,Categories.class);
-                                startActivity(i);
 
+                                if (type.equals("User")){
+                                    Intent k = new Intent(Login.this,Categories.class);
+                                    startActivity(k);
+                                }
+
+                                if (type.equals("Admin")){
+                                    Intent j = new Intent(Login.this,adminHome.class);
+                                    startActivity(j);
+                                }
                             }else
                             {
                                 Toast.makeText(Login.this,"Login Failed!"+ mAuth.getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
@@ -201,15 +218,14 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //Get login user
+       /* //Get login user
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         //if null then no user logged in
         //else login the user and go to main activity
         if (currentUser != null) {
             UpdateUI(currentUser);
-        }
-
+        }*/
     }
 
     private void UpdateUI(FirebaseUser firebaseUser) {

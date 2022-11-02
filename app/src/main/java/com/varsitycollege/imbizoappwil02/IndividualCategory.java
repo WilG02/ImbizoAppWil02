@@ -36,6 +36,8 @@ public class IndividualCategory extends AppCompatActivity {
     ImageView backAll,categoryImage;
     TextView txt_info,txt_heading;
 
+    Collection c;
+
     //Firebase Realtime Database reference
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
@@ -59,12 +61,17 @@ public class IndividualCategory extends AppCompatActivity {
         //-----------------------------------------------End------------------------------------------------------
         setContentView(R.layout.activity_individual_category);
 
+        Intent i = getIntent();
+        c = i.getParcelableExtra("Collection");
+
         video = findViewById(R.id.videoView);
         audio = findViewById(R.id.audioView);
         categoryImage=findViewById(R.id.img_categoryImg);
         backAll=findViewById(R.id.img_backToCat);
         txt_info=findViewById(R.id.txt_Information);
         txt_heading=findViewById(R.id.txt_singleCategory);
+
+        txt_heading.setText(c.getCategoryName());
 
 
         backAll.setOnClickListener(new View.OnClickListener() {

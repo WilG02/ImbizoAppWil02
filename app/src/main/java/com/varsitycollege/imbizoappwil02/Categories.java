@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,6 +53,9 @@ public class Categories extends AppCompatActivity {
     Collection collect;
 
     ArrayList<Collection> data= new ArrayList<>();
+
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +107,8 @@ public class Categories extends AppCompatActivity {
 
                 switch (id) {
                     case R.id.manage_profile:
+                        Intent redirectToProfile = new Intent(Categories.this,Profile.class);
+                        startActivity(redirectToProfile);
                         Toast.makeText(Categories.this, "Managing Profile", Toast.LENGTH_SHORT).show();
                         break;
 
@@ -134,10 +140,26 @@ public class Categories extends AppCompatActivity {
 
                     case R.id.sign_out:
                         //-------------------------------------------Kimaya-----------------------------------------------
-                        FirebaseAuth.getInstance().signOut();
+                        ListUtils.collectionList.clear();
+                        FirebaseUser user = mAuth.getCurrentUser();
+
+                        if (user != null) {
+                            String userEmail = user.getEmail();
+                            Toast.makeText(Categories.this, "Goodbye "+userEmail, Toast.LENGTH_SHORT).show();
+                            mAuth.getInstance().signOut();
+                            FirebaseAuth.getInstance().signOut();
+                        }
+
+                        Toast.makeText(Categories.this, "Goodbye" , Toast.LENGTH_SHORT).show();
                         Intent returnLogin = new Intent(Categories.this, Splash.class);
                         startActivity(returnLogin);
-                        /*Intent feedback = new Intent(Categories.this, Ratings.class);
+
+
+
+                        /* FirebaseAuth.getInstance().signOut();
+                        Intent returnLogin = new Intent(Categories.this, Splash.class);
+                        startActivity(returnLogin);
+                        *//*Intent feedback = new Intent(Categories.this, Ratings.class);
                         startActivity(feedback);*/
                         //-------------------------------------------Kimaya-----------------------------------------------
                         Toast.makeText(Categories.this, "Goodbye", Toast.LENGTH_SHORT).show();

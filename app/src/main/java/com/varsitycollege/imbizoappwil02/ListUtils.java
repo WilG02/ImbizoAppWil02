@@ -6,5 +6,6 @@ public class ListUtils {
 
     public static ArrayList<Collection> collectionList = new ArrayList<>();
     public static ArrayList<Collection> CategoryDataList = new ArrayList<>();
+    public static  ArrayList<String> categoryImageList = new ArrayList<>();
 
 }

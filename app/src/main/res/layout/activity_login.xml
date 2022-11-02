@@ -86,7 +86,7 @@
         android:layout_width="328dp"
         android:layout_height="58dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="84dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/button_background"
         android:backgroundTint="#043C1A"
@@ -98,25 +98,9 @@
         android:textSize="24sp"
         app:backgroundTint="#7D7F34"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.272"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_loginPassword" />
-
-    <TextView
-        android:id="@+id/txt_registerMessage"
-        android:layout_width="273dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center"
-        android:text="Don't Have An Account? Register!"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.562"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_google" />
 
     <Button
         android:id="@+id/btn_google"
@@ -139,8 +123,24 @@
         app:iconPadding="-40dp"
         app:layout_constraintBottom_toTopOf="@+id/txt_registerMessage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.214"
+        app:layout_constraintHorizontal_bias="0.47"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+    <TextView
+        android:id="@+id/txt_registerMessage"
+        android:layout_width="273dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:text="Don't Have An Account? Register!"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.593"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_google" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
