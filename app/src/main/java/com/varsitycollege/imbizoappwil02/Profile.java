@@ -9,7 +9,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Profile extends AppCompatActivity {
 
-
     TextView txtName,txtEmail;
     private FirebaseAuth mAuth;
     String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -19,7 +18,6 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
         txtName = findViewById(R.id.txtProfileName);
         txtEmail = findViewById(R.id.txtProfileEmail);
 

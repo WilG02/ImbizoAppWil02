@@ -9,6 +9,7 @@ import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -32,6 +33,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
@@ -40,6 +42,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class AddCategory extends AppCompatActivity {
 
@@ -51,6 +54,8 @@ public class AddCategory extends AppCompatActivity {
     Button btnCreate;
     ImageView imgGallery,imgCamera,imgAttached;
     EditText edtName,edtDescription;
+    Button uploadv;
+    ProgressDialog progressDialog;
 
     //Firebase realtime database Reference
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -78,6 +83,9 @@ public class AddCategory extends AppCompatActivity {
         edtName = findViewById(R.id.edtCatName);
         edtDescription = findViewById(R.id.edtCatDescription);
         imgAttached = findViewById(R.id.img_AttachedImage);
+        uploadv = findViewById(R.id.uploadv);
+
+
 
         imgGallery.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +147,7 @@ public class AddCategory extends AppCompatActivity {
         finish();
     }
 
-
+    Uri videouri;
     //Checking if the request is a camera or gallery request
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -154,9 +162,15 @@ public class AddCategory extends AppCompatActivity {
                 Uri contentUri = Uri.fromFile(f);
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
+                //Adding video upload progress bar
+                videouri = data.getData();
+                progressDialog.setTitle("Uploading...");
+                progressDialog.show();
+                uploadvideo();
 
                 //Method call to upload the data to firebase storage
                 UploadImageToFirebase(f.getName(), contentUri);
+
             }
         }
 
@@ -174,6 +188,60 @@ public class AddCategory extends AppCompatActivity {
             }
         }
     }
+    //---------------------------------------Code Attribution------------------------------------------------
+    //Author:GeeksForGeeks
+    //Uses:Upload video to firebase storage and Realtime-Database
+
+    private String getfiletype(Uri videouri) {
+        ContentResolver r = getContentResolver();
+        // get the file type ,in this case its mp4
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(r.getType(videouri));
+    }
+
+    private void uploadvideo() {
+        if (videouri != null) {
+            // save the selected video in Firebase storage
+            final StorageReference reference = FirebaseStorage.getInstance().getReference("Files/" + System.currentTimeMillis() + "." + getfiletype(videouri));
+            reference.putFile(videouri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                    while (!uriTask.isSuccessful()) ;
+                    // get the link of video
+                    String downloadUri = uriTask.getResult().toString();
+                    DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Video");
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("videolink", downloadUri);
+                    reference1.child("" + System.currentTimeMillis()).setValue(map);
+                    // Video uploaded successfully
+                    // Dismiss dialog
+                    progressDialog.dismiss();
+                    Toast.makeText(AddCategory.this, "Video Uploaded!!", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    // Error, Image not uploaded
+                    progressDialog.dismiss();
+                    Toast.makeText(AddCategory.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                // Progress Listener for loading
+                // percentage on the dialog box
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    // show the progress bar
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                }
+            });
+        }
+    }
+    //Link:https://www.geeksforgeeks.org/how-to-upload-a-video-in-firebase-database-using-android-studio/
+    //-----------------------------------------------End------------------------------------------------------
+
+
 
     //---------------------------------------Code Attribution------------------------------------------------
     //Author:SmallAcademy
@@ -269,6 +337,7 @@ public class AddCategory extends AppCompatActivity {
     //Link:https://www.youtube.com/watch?v=s1aOlr3vbbk&list=PLlGT4GXi8_8eopz0Gjkh40GG6O5KhL1V1&index=2
     //Link:https://www.youtube.com/watch?v=KaDwSvOpU5E&list=PLlGT4GXi8_8eopz0Gjkh40GG6O5KhL1V1&index=3
     //Link:https://www.youtube.com/watch?v=q5pqnT1n-4s&list=PLlGT4GXi8_8eopz0Gjkh40GG6O5KhL1V1&index=4
+    //Link:https://www.geeksforgeeks.org/how-to-upload-a-video-in-firebase-database-using-android-studio/
     //-----------------------------------------------End------------------------------------------------------
 
 
