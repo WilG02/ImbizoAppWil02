@@ -55,9 +55,8 @@ public class AddCategory extends AppCompatActivity {
     public static final int GALLERY_REQUEST_CODE = 105;
 
     Button btnCreate;
-    ImageView imgGallery,imgCamera,imgAttached,imgBackFCreate;
+    ImageView imgGallery,imgCamera,imgAttached,imgBackFCreate,imgUploadVideo,imgUploadPodcast;
     EditText edtName,edtDescription;
-    Button uploadv,uploadPodcast;
     ProgressDialog progressDialog;
 
     //Firebase realtime database Reference
@@ -92,9 +91,11 @@ public class AddCategory extends AppCompatActivity {
         edtName = findViewById(R.id.edtCatName);
         edtDescription = findViewById(R.id.edtCatDescription);
         imgAttached = findViewById(R.id.img_AttachedImage);
-        uploadv = findViewById(R.id.uploadv);
-        uploadPodcast = findViewById(R.id.uploadpod);
+        imgUploadVideo = findViewById(R.id.imgUploadVideo);
+        imgUploadPodcast = findViewById(R.id.imgUploadPodcast);
         imgBackFCreate = findViewById(R.id.imgBackFCreate);
+
+        imgAttached.setVisibility(View.INVISIBLE);
 
         imgBackFCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +111,7 @@ public class AddCategory extends AppCompatActivity {
             }
         });
 
-        uploadPodcast.setOnClickListener(new View.OnClickListener() {
+        imgUploadPodcast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressDialog = new ProgressDialog(AddCategory.this);
@@ -120,7 +121,7 @@ public class AddCategory extends AppCompatActivity {
         });
 
 
-        uploadv.setOnClickListener(new View.OnClickListener() {
+        imgUploadVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 progressDialog = new ProgressDialog(AddCategory.this);

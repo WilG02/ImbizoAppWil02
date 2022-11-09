@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +34,14 @@ public class adminHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //---------------------------------------Code Attribution------------------------------------------------
+        //Author:geeksforgeeks
+        //Uses:Hides the action bar
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide(); //Hide the action bar
+        //Link:https://www.geeksforgeeks.org/different-ways-to-hide-action-bar-in-android-with-examples/#:~:text=If%20you%20want%20to%20hide,AppCompat
+        //-----------------------------------------------End------------------------------------------------------
         setContentView(R.layout.activity_admin_home);
 
         ListUtils.collectionList.clear();
