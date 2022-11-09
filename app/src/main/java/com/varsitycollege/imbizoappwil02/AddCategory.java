@@ -63,6 +63,9 @@ public class AddCategory extends AppCompatActivity {
 
     String currentPhotoPath;
     User user;
+    boolean checkVideo =false;
+    boolean checkGalleryImage = false;
+    boolean checkCameraImage = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +91,9 @@ public class AddCategory extends AppCompatActivity {
         uploadv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(gallery, GALLERY_REQUEST_CODE);
+                progressDialog = new ProgressDialog(AddCategory.this);
+                choosevideo();
+                checkVideo=true;
             }
         });
 
@@ -100,6 +104,7 @@ public class AddCategory extends AppCompatActivity {
                 Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(gallery, GALLERY_REQUEST_CODE);
                 imgAttached.setVisibility(view.VISIBLE);
+                checkGalleryImage=true;
             }
         });
 
@@ -109,6 +114,7 @@ public class AddCategory extends AppCompatActivity {
             public void onClick(View view) {
                 askCameraPermissions(); //Calling method that asks user for camera permission
                 imgAttached.setVisibility(view.VISIBLE);
+                checkCameraImage=true;
             }
         });
 
@@ -154,7 +160,16 @@ public class AddCategory extends AppCompatActivity {
         finish();
     }
 
+    // choose a video from phone storage
+    private void choosevideo() {
+        Intent intent = new Intent();
+        intent.setType("video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+    }
+
     Uri videouri;
+
     //Checking if the request is a camera or gallery request
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -162,6 +177,7 @@ public class AddCategory extends AppCompatActivity {
         //If camera request
         if (requestCode == CAMERA_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
+
                 File f = new File(currentPhotoPath);
                 Log.d("tag", "Absolute URI of image is " + Uri.fromFile(f));
 
@@ -169,14 +185,21 @@ public class AddCategory extends AppCompatActivity {
                 Uri contentUri = Uri.fromFile(f);
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
-               /* //Adding video upload progress bar
-                videouri = data.getData();
-                progressDialog.setTitle("Uploading...");
-                progressDialog.show();
-                uploadvideo();*/
 
-                //Method call to upload the data to firebase storage
-                UploadImageToFirebase(f.getName(), contentUri);
+                if(checkCameraImage==true){
+                    //Method call to upload the data to firebase storage
+                    UploadImageToFirebase(f.getName(), contentUri);
+                    checkCameraImage=false;
+                }
+
+                /*if(checkVideo==true){
+                    //Adding video upload progress bar
+                    videouri = data.getData();
+                    progressDialog.setTitle("Uploading...");
+                    progressDialog.show();
+                    uploadvideo();
+                    checkVideo=false;
+                }*/
             }
         }
 
@@ -184,13 +207,25 @@ public class AddCategory extends AppCompatActivity {
         if (requestCode == GALLERY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
 
-                Uri contentUri = data.getData();//Creating content URI from the data
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());//Creating filename
-                String imageFileName = "JPEG_" + timeStamp + "." + getFileExt(contentUri);// Specifying the file type
-                Log.d("tag", "OnActivityResult: Gallery Image Uri:     " + imageFileName);//Displaying absolute Uri through ImageView
+                if (checkGalleryImage==true) {
+                    Uri contentUri = data.getData();//Creating content URI from the data
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());//Creating filename
+                    String imageFileName = "JPEG_" + timeStamp + "." + getFileExt(contentUri);// Specifying the file type
+                    Log.d("tag", "OnActivityResult: Gallery Image Uri:     " + imageFileName);//Displaying absolute Uri through ImageView
 
-                //Method call to upload image to Firebase storage
-                UploadImageToFirebase(imageFileName, contentUri);
+                    //Method call to upload image to Firebase storage
+                    UploadImageToFirebase(imageFileName, contentUri);
+                    checkGalleryImage=false;
+                }
+
+                if(checkVideo==true){
+                    //Adding video upload progress bar
+                    videouri = data.getData();
+                    progressDialog.setTitle("Uploading...");
+                    progressDialog.show();
+                    uploadvideo();
+                    checkVideo=false;
+                }
             }
         }
     }
@@ -208,7 +243,7 @@ public class AddCategory extends AppCompatActivity {
     private void uploadvideo() {
         if (videouri != null) {
             // save the selected video in Firebase storage
-            final StorageReference reference = FirebaseStorage.getInstance().getReference("Files/" + System.currentTimeMillis() + "." + getfiletype(videouri));
+            final StorageReference reference = FirebaseStorage.getInstance().getReference("Videos/" + System.currentTimeMillis() + "." + getfiletype(videouri));
             reference.putFile(videouri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -259,7 +294,7 @@ public class AddCategory extends AppCompatActivity {
         //Firebase storage reference
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
-        StorageReference image = storageReference.child("images/" + name);
+        StorageReference image = storageReference.child("Images/" + name);
 
         image.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             //Called when image upload is successful
