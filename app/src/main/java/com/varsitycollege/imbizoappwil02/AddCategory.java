@@ -85,6 +85,13 @@ public class AddCategory extends AppCompatActivity {
         imgAttached = findViewById(R.id.img_AttachedImage);
         uploadv = findViewById(R.id.uploadv);
 
+        uploadv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(gallery, GALLERY_REQUEST_CODE);
+            }
+        });
 
 
         imgGallery.setOnClickListener(new View.OnClickListener() {
