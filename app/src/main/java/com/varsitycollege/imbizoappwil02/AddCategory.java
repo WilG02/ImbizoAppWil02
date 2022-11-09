@@ -95,6 +95,7 @@ public class AddCategory extends AppCompatActivity {
         uploadPodcast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(AddCategory.this);
                 checkPodcast=true;
                 chooseAudio();
             }
@@ -116,7 +117,7 @@ public class AddCategory extends AppCompatActivity {
             public void onClick(View view) {
                 Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(gallery, GALLERY_REQUEST_CODE);
-                imgAttached.setVisibility(view.VISIBLE);
+                progressDialog = new ProgressDialog(AddCategory.this);
                 checkGalleryImage=true;
             }
         });
@@ -126,7 +127,8 @@ public class AddCategory extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 askCameraPermissions(); //Calling method that asks user for camera permission
-                imgAttached.setVisibility(view.VISIBLE);
+                /*imgAttached.setVisibility(view.VISIBLE);*/
+                progressDialog = new ProgressDialog(AddCategory.this);
                 checkCameraImage=true;
             }
         });
@@ -152,31 +154,52 @@ public class AddCategory extends AppCompatActivity {
 
     private void chooseAudio(){
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
+        intent.setType("audio/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, 10);
     }
 
     private void uploadPodcast(final String file, final Uri uri) {
-        StorageReference ref = FirebaseStorage.getInstance().getReference().child("Podcast/"+System.currentTimeMillis()+getAudiofiletype(uri));
-        ref.putFile(uri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uriTask.isSuccessful()) ;
+            StorageReference ref = FirebaseStorage.getInstance().getReference().child("Podcast/"+System.currentTimeMillis()+getAudiofiletype(uri));
+            ref.putFile(uri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                        if (uriTask.isSuccessful()) {
-                            audio_uri = null;
-                            Toast.makeText(AddCategory.this, "Uploaded Successfully!", Toast.LENGTH_SHORT).show();
+                            Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
+                            downloadUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+
+                                    ListUtils.categoryPodcastList.clear();
+
+                                    // get the url for image in firebase storage and add it to an Arraylist
+                                    String genFilePath = downloadUri.getResult().toString();
+                                    ListUtils.categoryPodcastList.add(genFilePath);
+
+                                    progressDialog.dismiss();
+
+                                    audio_uri = null;
+                                    Toast.makeText(AddCategory.this, "Podcast Uploaded!!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
                             Toast.makeText(AddCategory.this, "Upload Podcast Failed!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        }
+                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                            // show the progress bar
+                            double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                        }
+                    });
+
+
     }
 
     private String getAudiofiletype(Uri audiouri) {
@@ -253,24 +276,20 @@ public class AddCategory extends AppCompatActivity {
                 this.sendBroadcast(mediaScanIntent);
 
                 if(checkCameraImage==true){
+                    progressDialog.setTitle("Uploading...");
+                    progressDialog.show();
                     //Method call to upload the data to firebase storage
                     UploadImageToFirebase(f.getName(), contentUri);
                     checkCameraImage=false;
                 }
-                /*if(checkVideo==true){
-                    //Adding video upload progress bar
-                    videouri = data.getData();
-                    progressDialog.setTitle("Uploading...");
-                    progressDialog.show();
-                    uploadvideo();
-                    checkVideo=false;
-                }*/
             }
         }
             if (checkPodcast==true){
                 if (requestCode == 10) {
                     audio_uri = data.getData();
                     podcastfilepath=audio_uri.getEncodedPath();
+                    progressDialog.setTitle("Uploading...");
+                    progressDialog.show();
                     uploadPodcast(podcastfilepath,audio_uri);
                     checkPodcast=false;
                 }
@@ -288,6 +307,8 @@ public class AddCategory extends AppCompatActivity {
                     String imageFileName = "JPEG_" + timeStamp + "." + getFileExt(contentUri);// Specifying the file type
                     Log.d("tag", "OnActivityResult: Gallery Image Uri:     " + imageFileName);//Displaying absolute Uri through ImageView
 
+                    progressDialog.setTitle("Uploading...");
+                    progressDialog.show();
                     //Method call to upload image to Firebase storage
                     UploadImageToFirebase(imageFileName, contentUri);
                     checkGalleryImage=false;
@@ -396,6 +417,8 @@ public class AddCategory extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
 
+                        imgAttached.setVisibility(View.VISIBLE);
+
                         Picasso.get().load(uri).into(imgAttached); //Getting the Uri from firebase and using the picasso class to display the image
                         ListUtils.categoryImageList.clear();
 
@@ -404,7 +427,7 @@ public class AddCategory extends AppCompatActivity {
                         ListUtils.categoryImageList.add(genFilePath);
                     }
                 });
-
+                progressDialog.dismiss();
                 //When upload is successful the following message appears to the user
                 Toast.makeText(AddCategory.this, "Image is uploaded", Toast.LENGTH_SHORT).show();
             }
@@ -414,6 +437,15 @@ public class AddCategory extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(AddCategory.this, "Upload failed", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            // Progress Listener for loading
+            // percentage on the dialog box
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                // show the progress bar
+                double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                progressDialog.setMessage("Uploaded " + (int) progress + "%");
             }
         });
     }
@@ -471,8 +503,4 @@ public class AddCategory extends AppCompatActivity {
     //Link:https://www.youtube.com/watch?v=q5pqnT1n-4s&list=PLlGT4GXi8_8eopz0Gjkh40GG6O5KhL1V1&index=4
     //Link:https://www.geeksforgeeks.org/how-to-upload-a-video-in-firebase-database-using-android-studio/
     //-----------------------------------------------End------------------------------------------------------
-
-
-
-
 }
