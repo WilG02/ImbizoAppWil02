@@ -90,6 +90,29 @@ public class adminHome extends AppCompatActivity {
                 //Link:https://www.youtube.com/watch?v=__OMnFR-wZU
                 //-----------------------------------------------End------------------------------------------------------
 
+
+                //---------------------------------------Code Attribution------------------------------------------------
+                //Author:Coding in Flow
+                //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
+
+                adapter.setOnCollectionClickListener(new recyclerCollectionAdapter.OnCollectionClickListener() {
+                    @Override
+                    public void onCollectionClick(int position) {
+                        Intent i = new Intent(adminHome.this, IndividualCategory.class);
+
+                        //---------------------------------------Code Attribution------------------------------------------------
+                        //Author:Coding in Flow
+                        //Uses:Passing a collection object to the CollectionItem class using an intent
+                        i.putExtra("Collection",collectionList.get(position));
+                        //Link:https://www.youtube.com/watch?v=WBbsvqSu0is
+                        //-----------------------------------------------End------------------------------------------------------
+
+                        startActivity(i);
+                    }
+                });
+                //Link:https://www.youtube.com/watch?v=bhhs4bwYyhc&list=PLrnPJCHvNZuBtTYUuc5Pyo4V7xZ2HNtf4&index=4
+                //-----------------------------------------------End------------------------------------------------------
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

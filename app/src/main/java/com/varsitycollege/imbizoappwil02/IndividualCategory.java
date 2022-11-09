@@ -83,8 +83,8 @@ public class IndividualCategory extends AppCompatActivity {
             }
         });
 
-        youtubePlayerView = findViewById(R.id.player);
-        getLifecycle().addObserver(youtubePlayerView);
+        /*youtubePlayerView = findViewById(R.id.player);
+        getLifecycle().addObserver(youtubePlayerView);*/
 
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:Sarina Till
@@ -153,7 +153,6 @@ public class IndividualCategory extends AppCompatActivity {
         video.setMediaController(mediaController);
         video.requestFocus();
         video.start();
-
 
 
         /*//Display video using a url

@@ -228,7 +228,7 @@ public class Categories extends AppCompatActivity {
                         //---------------------------------------Code Attribution------------------------------------------------
                         //Author:Coding in Flow
                         //Uses:Passing a collection object to the CollectionItem class using an intent
-                        //i.putExtra("Collection",collectionList.get(position));
+                        i.putExtra("Collection",collectionList.get(position));
                         //Link:https://www.youtube.com/watch?v=WBbsvqSu0is
                         //-----------------------------------------------End------------------------------------------------------
 

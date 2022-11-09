@@ -38,6 +38,8 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
+    String type;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +54,17 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
         //-----------------------------------------------End------------------------------------------------------
         setContentView(R.layout.activity_register);
 
+
+        Intent i = getIntent();
+        type = i.getStringExtra("TypeUser");
+
         edt_name = findViewById(R.id.edt_name);
         edt_email = findViewById(R.id.edt_email);
         edt_password = findViewById(R.id.edt_password);
         btn_Register = findViewById(R.id.btn_register);
         mAuth = FirebaseAuth.getInstance();
         txt_LoginMessage=findViewById(R.id.txt_existingAccountMessage);
+        spinner = findViewById(R.id.spn_Admin);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.options, android.R.layout.simple_spinner_item);
@@ -71,6 +78,7 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
             @Override
             public void onClick(View view) {
                 Intent redirectToLogin = new Intent(Register.this,Login.class);
+                redirectToLogin.putExtra("TypeUser" , type);
                 startActivity(redirectToLogin);
             }
         });

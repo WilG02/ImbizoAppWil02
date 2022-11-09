@@ -80,10 +80,12 @@ public class Login extends AppCompatActivity {
         if (type.equals("Admin")){
             btn_googleLogin.setVisibility(View.INVISIBLE);
         }
+        
         txt_registerMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent redirectToRegister = new Intent(Login.this,Register.class);
+                redirectToRegister.putExtra("TypeUser" , type);
                 startActivity(redirectToRegister);
             }
         });
