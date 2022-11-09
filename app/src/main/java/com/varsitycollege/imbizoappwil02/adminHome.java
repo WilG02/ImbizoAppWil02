@@ -34,6 +34,8 @@ public class adminHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_home);
 
+        ListUtils.collectionList.clear();
+
         rcyCollectionAdmin = findViewById(R.id.rcyAllCategories);
         imgAddCat = findViewById(R.id.imgAddCategory);
 

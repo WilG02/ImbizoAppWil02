@@ -30,8 +30,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -52,7 +55,7 @@ public class AddCategory extends AppCompatActivity {
     public static final int GALLERY_REQUEST_CODE = 105;
 
     Button btnCreate;
-    ImageView imgGallery,imgCamera,imgAttached;
+    ImageView imgGallery,imgCamera,imgAttached,imgBackFCreate;
     EditText edtName,edtDescription;
     Button uploadv,uploadPodcast;
     ProgressDialog progressDialog;
@@ -67,7 +70,7 @@ public class AddCategory extends AppCompatActivity {
     boolean checkGalleryImage = false;
     boolean checkCameraImage = false;
     boolean checkPodcast = false;
-    String name,description,id,imageUrl,videoUrl;
+    String name,description,id,imageUrl,videoUrl,podcastUrl;
     String podcastfilepath;
 
     @Override
@@ -91,6 +94,21 @@ public class AddCategory extends AppCompatActivity {
         imgAttached = findViewById(R.id.img_AttachedImage);
         uploadv = findViewById(R.id.uploadv);
         uploadPodcast = findViewById(R.id.uploadpod);
+        imgBackFCreate = findViewById(R.id.imgBackFCreate);
+
+        imgBackFCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtName.setText("");
+                edtDescription.setText("");
+                ListUtils.categoryImageList.clear();
+                ListUtils.categoryVideoList.clear();
+                ListUtils.categoryPodcastList.clear();
+                ListUtils.collectionList.clear();
+                Intent i = new Intent(AddCategory.this,adminHome.class);
+                startActivity(i);
+            }
+        });
 
         uploadPodcast.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,8 +160,30 @@ public class AddCategory extends AppCompatActivity {
                 id = KeyGenerator.getRandomString(10);
                 imageUrl = ListUtils.categoryImageList.get(0);
                 videoUrl = ListUtils.categoryVideoList.get(0);
+                podcastUrl = ListUtils.categoryPodcastList.get(0);
 
-                Collection collection = new Collection();
+                Collection collection = new Collection(id,name,description,imageUrl,videoUrl,podcastUrl);
+
+                myRef = database.getReference().child("Categories");
+
+                myRef.child(collection.getCategoryId()).setValue(collection).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(AddCategory.this, collection.getCategoryName()+" added successfully!", Toast.LENGTH_SHORT).show();
+                        edtName.setText("");
+                        edtDescription.setText("");
+                        ListUtils.categoryImageList.clear();
+                        ListUtils.categoryVideoList.clear();
+                        ListUtils.categoryPodcastList.clear();
+                        Intent i = new Intent(AddCategory.this,adminHome.class);
+                        startActivity(i);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(AddCategory.this,"Failed to Add!",Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -212,6 +252,7 @@ public class AddCategory extends AppCompatActivity {
 
 
 
+    //link:https://stackoverflow.com/questions/58789591/how-to-upload-an-audio-file-to-firebase-storage
     //--------end audio
 
 

@@ -8,22 +8,6 @@
     tools:context=".AddCategory">
 
     <Button
-        android:id="@+id/uploadimg"
-        android:layout_width="179dp"
-        android:layout_height="49dp"
-        android:background="@drawable/button_background"
-        android:backgroundTint="#7D7F34"
-        android:shadowColor="#7D7F34"
-        android:text="Upload Image"
-        app:backgroundTint="#7D7F34"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56" />
-
-    <Button
         android:id="@+id/uploadpod"
         android:layout_width="179dp"
         android:layout_height="49dp"
@@ -145,7 +129,7 @@
         android:background="@drawable/button_background"
         android:backgroundTint="#7D7F34"
         android:shadowColor="#7D7F34"
-        android:text="Create"
+        android:text="ADD"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimaryWhite"
         android:textSize="24sp"
