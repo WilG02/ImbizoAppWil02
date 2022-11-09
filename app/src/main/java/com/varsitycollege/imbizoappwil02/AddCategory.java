@@ -169,15 +169,14 @@ public class AddCategory extends AppCompatActivity {
                 Uri contentUri = Uri.fromFile(f);
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
-                //Adding video upload progress bar
+               /* //Adding video upload progress bar
                 videouri = data.getData();
                 progressDialog.setTitle("Uploading...");
                 progressDialog.show();
-                uploadvideo();
+                uploadvideo();*/
 
                 //Method call to upload the data to firebase storage
                 UploadImageToFirebase(f.getName(), contentUri);
-
             }
         }
 
@@ -260,7 +259,7 @@ public class AddCategory extends AppCompatActivity {
         //Firebase storage reference
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
-        StorageReference image = storageReference.child("images/" + user.getUserID() + "/" + name);
+        StorageReference image = storageReference.child("images/" + name);
 
         image.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             //Called when image upload is successful
@@ -333,11 +332,11 @@ public class AddCategory extends AppCompatActivity {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this, //Creating a photo URI to get the URI for the file
-                        "com.example.android.fileprovider",
+                        "com.varsitycollege.imbizoappwil02.android.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
-                finish();
+                //finish();
             }
         }
     }

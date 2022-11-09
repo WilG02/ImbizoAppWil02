@@ -11,7 +11,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="172dp"
+        android:layout_marginStart="128dp"
         android:layout_marginTop="28dp"
         android:text="All Categories"
         android:textColor="#7D7F34"
@@ -21,11 +21,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyAllCategories"
-        android:layout_width="411dp"
-        android:layout_height="546dp"
+        android:layout_width="349dp"
+        android:layout_height="393dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
