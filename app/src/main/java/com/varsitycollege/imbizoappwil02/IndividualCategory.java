@@ -74,7 +74,7 @@ public class IndividualCategory extends AppCompatActivity {
         backAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(IndividualCategory.this,adminHome.class);
+                Intent i = new Intent(IndividualCategory.this,Categories.class);
                 ListUtils.collectionList.clear();
                 startActivity(i);
             }

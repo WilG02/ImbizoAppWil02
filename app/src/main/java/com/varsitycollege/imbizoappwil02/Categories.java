@@ -37,7 +37,6 @@ public class Categories extends AppCompatActivity {
     DrawerLayout navi;
     NavigationView navView;
     ImageView img_menuIcon;
-    ImageView img_next;
 
     //Recycler Component
     RecyclerView rcyCollection;
@@ -90,15 +89,6 @@ public class Categories extends AppCompatActivity {
             }
         });
 
-        img_next = findViewById(R.id.img_next);
-
-        img_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent next = new Intent(Categories.this,IndividualCategory.class);
-                startActivity(next);
-            }
-        });
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -207,7 +197,7 @@ public class Categories extends AppCompatActivity {
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 rcyCollection.setLayoutManager(layoutManager);
                 rcyCollection.setItemAnimator(new DefaultItemAnimator());
-                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(ListUtils.collectionList, Categories.this);
+                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(ListUtils.collectionList,getApplicationContext() );
                 //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
                 rcyCollection.setAdapter(adapter);
                 //recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList);

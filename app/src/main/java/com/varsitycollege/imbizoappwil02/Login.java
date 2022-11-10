@@ -110,6 +110,7 @@ public class Login extends AppCompatActivity {
 
                                 if (type.equals("User")){
                                     Intent k = new Intent(Login.this,Categories.class);
+                                    //Intent k = new Intent(Login.this,userHome.class);
                                     startActivity(k);
                                 }
 
