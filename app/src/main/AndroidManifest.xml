@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ImbizoAppWil02">
         <activity
+            android:name=".UpdateCategory"
+            android:exported="false" />
+        <activity
             android:name=".userHome"
             android:exported="false" />
         <activity

@@ -12,17 +12,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
@@ -33,14 +42,19 @@ public class IndividualCategory extends AppCompatActivity {
 
     VideoView video,audio;
     YouTubePlayerView youtubePlayerView;
-    ImageView backAll,categoryImage;
+    ImageView backAll,categoryImage,imgDelete,imgEdit;
     TextView txt_info,txt_heading;
+    Button btnSave;
 
     Collection c;
 
-    //Firebase Realtime Database reference
+    //Firebase Realtime database Reference
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef;
+    DatabaseReference myRef = database.getReference();
+    
+    //storage
+    StorageReference storage = FirebaseStorage.getInstance().getReference();
+  
 
     Collection collect;
 
@@ -68,6 +82,62 @@ public class IndividualCategory extends AppCompatActivity {
         backAll=findViewById(R.id.img_backToCat);
         txt_info=findViewById(R.id.txt_Information);
         txt_heading=findViewById(R.id.txt_singleCategory);
+        imgDelete = findViewById(R.id.imgDelete);
+        imgEdit = findViewById(R.id.imgEdit);
+        btnSave = findViewById(R.id.btn_Save);
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        imgEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+        //---------------------------------------Code Attribution------------------------------------------------
+        //Author:Foxandroid
+        //Uses:Delete data from firebase realtime database
+        imgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+               /* storage.child("Image/").child(c.getCategoryImageUrl()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(IndividualCategory.this, "Image Deleted!", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(IndividualCategory.this, "Failed Imaged Delete!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+*/
+
+                myRef.child("Categories").child(c.getCategoryId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(IndividualCategory.this, "Category Successfully Deleted!", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(IndividualCategory.this,adminHome.class);
+                            startActivity(i);
+                        }else {
+                            Toast.makeText(IndividualCategory.this, "Delete Failed!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+        //Link:https://www.youtube.com/watch?v=L3u6T8uzT58
+        //-----------------------------------------------End------------------------------------------------------
+
 
         txt_heading.setText(c.getCategoryName());
 
