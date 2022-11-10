@@ -52,8 +52,6 @@ public class Categories extends AppCompatActivity {
 
     Collection collect;
 
-    ArrayList<Collection> data= new ArrayList<>();
-
     private FirebaseAuth mAuth;
 
 
@@ -81,7 +79,9 @@ public class Categories extends AppCompatActivity {
         ImageView img = v.findViewById(R.id.imageView);
         img.setImageResource(R.drawable.imbizo_logo_splash);
 
-        rcyCollection=findViewById(R.id.rcy_Collection);
+        rcyCollection=findViewById(R.id.rcyCollection);
+        //Display category data
+        CategoriesData();
 
         img_menuIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,9 +99,6 @@ public class Categories extends AppCompatActivity {
                 startActivity(next);
             }
         });
-
-        //Display category data
-        CategoriesData();
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -178,6 +175,7 @@ public class Categories extends AppCompatActivity {
 //-------------------------------------------MUHAMMAD-----------------------------------------------
 
     }
+
     private void CategoriesData() {
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:Sarina Till
@@ -209,7 +207,7 @@ public class Categories extends AppCompatActivity {
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 rcyCollection.setLayoutManager(layoutManager);
                 rcyCollection.setItemAnimator(new DefaultItemAnimator());
-                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(ListUtils.collectionList, getApplicationContext());
+                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(ListUtils.collectionList, Categories.this);
                 //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
                 rcyCollection.setAdapter(adapter);
                 //recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList);
