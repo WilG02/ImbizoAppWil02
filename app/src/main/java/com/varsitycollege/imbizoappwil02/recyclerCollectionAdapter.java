@@ -35,9 +35,31 @@ public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerColl
         mListener =listener;
     }
 
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        private TextView txt_categoryName;
+        OnCollectionClickListener OnCollectClickListener;
+
+        public MyViewHolder(@NonNull View itemView,OnCollectionClickListener listener) {
+            super(itemView);
+            txt_categoryName= itemView.findViewById(R.id.txt_category);
+            this.OnCollectClickListener = OnCollectClickListener;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onCollectionClick(position);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public recyclerCollectionAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.individual_category,parent,false);
         return new MyViewHolder(itemView,mListener);
     }
@@ -51,26 +73,5 @@ public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerColl
     @Override
     public int getItemCount() {
         return tempCollectionList.size();
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView txt_categoryName;
-        OnCollectionClickListener OnCollectionClickListener;
-        public MyViewHolder(@NonNull View itemView,OnCollectionClickListener listener) {
-            super(itemView);
-            txt_categoryName= itemView.findViewById(R.id.txt_category);
-            this.OnCollectionClickListener = OnCollectionClickListener;
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(listener != null){
-                        int position = getAbsoluteAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            listener.onCollectionClick(position);
-                        }
-                    }
-                }
-            });
-        }
     }
 }

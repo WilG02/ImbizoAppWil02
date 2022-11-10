@@ -70,6 +70,8 @@ public class Categories extends AppCompatActivity {
         //-----------------------------------------------End------------------------------------------------------
         setContentView(R.layout.activity_categories);
 
+        ListUtils.collectionList.clear();
+
         //Linking component with User interface
         navi = findViewById(R.id.drawer_layout);
 
@@ -80,7 +82,6 @@ public class Categories extends AppCompatActivity {
         img.setImageResource(R.drawable.imbizo_logo_splash);
 
         rcyCollection=findViewById(R.id.rcy_Collection);
-        ListUtils.collectionList.clear();
 
         img_menuIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +99,9 @@ public class Categories extends AppCompatActivity {
                 startActivity(next);
             }
         });
+
+        //Display category data
+        CategoriesData();
 
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -172,10 +176,8 @@ public class Categories extends AppCompatActivity {
         });
 //----------------------------------------------END-------------------------------------------------
 //-------------------------------------------MUHAMMAD-----------------------------------------------
-        //Display category data
-        CategoriesData();
-    }
 
+    }
     private void CategoriesData() {
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:Sarina Till
@@ -216,6 +218,7 @@ public class Categories extends AppCompatActivity {
                 //Link:https://www.youtube.com/watch?v=__OMnFR-wZU
                 //-----------------------------------------------End------------------------------------------------------
 
+
                 //---------------------------------------Code Attribution------------------------------------------------
                 //Author:Coding in Flow
                 //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
@@ -228,7 +231,7 @@ public class Categories extends AppCompatActivity {
                         //---------------------------------------Code Attribution------------------------------------------------
                         //Author:Coding in Flow
                         //Uses:Passing a collection object to the CollectionItem class using an intent
-                        i.putExtra("Collection",collectionList.get(position));
+                        i.putExtra("Collection",ListUtils.collectionList.get(position));
                         //Link:https://www.youtube.com/watch?v=WBbsvqSu0is
                         //-----------------------------------------------End------------------------------------------------------
 
@@ -237,6 +240,7 @@ public class Categories extends AppCompatActivity {
                 });
                 //Link:https://www.youtube.com/watch?v=bhhs4bwYyhc&list=PLrnPJCHvNZuBtTYUuc5Pyo4V7xZ2HNtf4&index=4
                 //-----------------------------------------------End------------------------------------------------------
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -245,4 +249,72 @@ public class Categories extends AppCompatActivity {
 
         });
     }
+
+   /* private void CategoriesData() {
+        //---------------------------------------Code Attribution------------------------------------------------
+        //Author:Sarina Till
+        //Uses:Read data from firebase realtime database
+        // reference for data in firebase
+        myRef = database.getReference().child("Categories");
+
+        //get data from firebase whilst using reference
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                // instance of collection class
+                collect = new Collection();
+
+                //pulling data from realtime firebase
+                for (DataSnapshot collectFirebase : snapshot.getChildren()) {
+                    // snapshot is assigned to the collection instance
+                    collect = collectFirebase.getValue(Collection.class);
+                    //Add instance to arraylist collectionList
+                    ListUtils.collectionList.add(collect);
+                }
+                //Link:https://www.youtube.com/watch?v=Ydn5cXn1j-0&list=PL480DYS-b_kdor_f0IFgS7iiEsOwxdx6w&index=26
+                //-----------------------------------------------End------------------------------------------------------
+
+                //---------------------------------------Code Attribution------------------------------------------------
+                //Author:Ben O'Brien
+                //Uses:set the recycleCollectionAdapter and display users data in the recyclerview
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                rcyCollection.setLayoutManager(layoutManager);
+                rcyCollection.setItemAnimator(new DefaultItemAnimator());
+                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(ListUtils.collectionList, getApplicationContext());
+                rcyCollection.setAdapter(adapter);
+                //Link:https://www.youtube.com/watch?v=__OMnFR-wZU
+                //-----------------------------------------------End------------------------------------------------------
+
+                //---------------------------------------Code Attribution------------------------------------------------
+                //Author:Coding in Flow
+                //Uses:When a specfic item in recyclerview is clicked on,redirect user to their list of items in collection
+
+                adapter.setOnCollectionClickListener(new recyclerCollectionAdapter.OnCollectionClickListener() {
+                    @Override
+                    public void onCollectionClick(int position) {
+                        Intent i = new Intent(Categories.this, IndividualCategory.class);
+
+                        //---------------------------------------Code Attribution------------------------------------------------
+                        //Author:Coding in Flow
+                        //Uses:Passing a collection object to the CollectionItem class using an intent
+                        i.putExtra("Collection",ListUtils.collectionList.get(position));
+                        //Link:https://www.youtube.com/watch?v=WBbsvqSu0is
+                        //-----------------------------------------------End------------------------------------------------------
+
+                        startActivity(i);
+                    }
+                });
+                //Link:https://www.youtube.com/watch?v=bhhs4bwYyhc&list=PLrnPJCHvNZuBtTYUuc5Pyo4V7xZ2HNtf4&index=4
+                //-----------------------------------------------End------------------------------------------------------
+
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+    }*/
 }

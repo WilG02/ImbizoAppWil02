@@ -49,8 +49,6 @@ public class IndividualCategory extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:geeksforgeeks
         //Uses:Hides the action bar
@@ -73,18 +71,41 @@ public class IndividualCategory extends AppCompatActivity {
 
         txt_heading.setText(c.getCategoryName());
 
-
         backAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(IndividualCategory.this,Categories.class);
+                Intent i = new Intent(IndividualCategory.this,adminHome.class);
                 ListUtils.collectionList.clear();
                 startActivity(i);
             }
         });
 
-        /*youtubePlayerView = findViewById(R.id.player);
-        getLifecycle().addObserver(youtubePlayerView);*/
+
+        //---------------------------------------Code Attribution------------------------------------------------
+        //Author:CodingSTUFF
+        //Uses:Display image fore firebase storage using url
+        Glide.with(getApplicationContext()).load(c.getCategoryImageUrl()).into(categoryImage);
+        //Link:https://www.youtube.com/watch?v=iEcokZOv5UY
+        //-----------------------------------------------End------------------------------------------------------
+
+        txt_heading.setText(c.getCategoryName());
+        txt_info.setText(c.getCategoryInformation());
+
+        //https://www.youtube.com/watch?v=Zf9pOhlqRXo
+        String link= c.getCategoryVideoUrl();
+        video.setVideoURI(Uri.parse(link));
+        video.setMediaController(new MediaController(this));
+        video.requestFocus();
+        video.start();
+
+        audio.setVideoURI(Uri.parse(c.getCategoryPodcastUrl()));
+        audio.setMediaController(new MediaController(this));
+        audio.requestFocus();
+        audio.start();
+
+
+      /*  *//*youtubePlayerView = findViewById(R.id.player);
+        getLifecycle().addObserver(youtubePlayerView);*//*
 
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:Sarina Till
@@ -122,19 +143,19 @@ public class IndividualCategory extends AppCompatActivity {
 
                 String link= ListUtils.CategoryDataList.get(0).getCategoryVideoUrl();
 
-                /*for (int i = 0; i < link.length(); i++) {
+                *//*for (int i = 0; i < link.length(); i++) {
                     char ch = link[i];
                    if (link[i].equals("=")){
 
                    }
-                }*/
-               /* youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                }*//*
+               *//* youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                     @Override
                     public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                         String videoId = "1EYfOvrJt74";
                         youTubePlayer.loadVideo(videoId, 0);
                     }
-                });*/
+                });*//*
 
                 //https://www.youtube.com/watch?v=Zf9pOhlqRXo
                 video.setVideoURI(Uri.parse(link));
@@ -152,7 +173,7 @@ public class IndividualCategory extends AppCompatActivity {
         mediaController.setAnchorView(video);
         video.setMediaController(mediaController);
         video.requestFocus();
-        video.start();
+        video.start();*/
 
 
         /*//Display video using a url
@@ -170,12 +191,5 @@ public class IndividualCategory extends AppCompatActivity {
         //https://www.youtube.com/watch?v=gXWXKjR-qII
         //Youtube player
         //https://github.com/PierfrancescoSoffritti/android-youtube-player
-
-
-
-
-
-
-
     }
 }
