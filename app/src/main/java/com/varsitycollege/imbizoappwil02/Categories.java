@@ -214,7 +214,7 @@ public class Categories extends AppCompatActivity {
                 adapter.setOnCollectionClickListener(new recyclerCollectionAdapter.OnCollectionClickListener() {
                     @Override
                     public void onCollectionClick(int position) {
-                        Intent i = new Intent(Categories.this, IndividualCategory.class);
+                        Intent i = new Intent(Categories.this, CategoryDisplay.class);
 
                         //---------------------------------------Code Attribution------------------------------------------------
                         //Author:Coding in Flow
