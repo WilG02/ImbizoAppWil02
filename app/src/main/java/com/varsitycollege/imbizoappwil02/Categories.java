@@ -122,7 +122,9 @@ public class Categories extends AppCompatActivity {
                         break;
 
                     case R.id.privacy_policy:
-                        Toast.makeText(Categories.this, "Privacy Policy", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Categories.this, "Privacy Policy", Toast.LENGTH_SHORT).show();
+                        Intent redirectToPrivacy = new Intent(Categories.this,Privacy_policy.class);
+                        startActivity(redirectToPrivacy);
                         break;
 
                     case R.id.contact_us:

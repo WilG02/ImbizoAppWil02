@@ -79,7 +79,8 @@ public class Ratings extends AppCompatActivity {
         } else {
             super.onBackPressed();
             {
-
+                Intent i = new Intent(Ratings.this,Categories.class);
+                startActivity(i);
             }
         }}
 
