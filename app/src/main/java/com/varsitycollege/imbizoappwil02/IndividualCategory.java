@@ -44,8 +44,6 @@ public class IndividualCategory extends AppCompatActivity {
     YouTubePlayerView youtubePlayerView;
     ImageView backAll,categoryImage,imgDelete,imgEdit;
     TextView txt_info,txt_heading;
-    Button btnSave;
-
     Collection c;
 
     //Firebase Realtime database Reference
@@ -54,11 +52,7 @@ public class IndividualCategory extends AppCompatActivity {
     
     //storage
     StorageReference storage = FirebaseStorage.getInstance().getReference();
-  
-
     Collection collect;
-
-    ArrayList<Collection> data= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,19 +78,13 @@ public class IndividualCategory extends AppCompatActivity {
         txt_heading=findViewById(R.id.txt_singleCategory);
         imgDelete = findViewById(R.id.imgDelete);
         imgEdit = findViewById(R.id.imgEdit);
-        btnSave = findViewById(R.id.btn_Save);
-
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent i = new Intent(IndividualCategory.this,UpdateCategory.class);
+                i.putExtra("Collection",c);
+                startActivity(i);
             }
         });
 
@@ -144,7 +132,7 @@ public class IndividualCategory extends AppCompatActivity {
         backAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(IndividualCategory.this,Categories.class);
+                Intent i = new Intent(IndividualCategory.this,adminHome.class);
                 ListUtils.collectionList.clear();
                 startActivity(i);
             }

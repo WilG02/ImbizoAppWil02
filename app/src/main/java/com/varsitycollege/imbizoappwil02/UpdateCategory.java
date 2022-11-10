@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.style.UpdateAppearance;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -27,14 +28,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -47,15 +46,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-public class AddCategory extends AppCompatActivity {
+public class UpdateCategory extends AppCompatActivity {
 
     //Static variables
     public static final int CAMERA_REQUEST_CODE = 102; //Request code for camera
     public static final int CAMERA_PERM_CODE = 101; //Request code for camera permissions
     public static final int GALLERY_REQUEST_CODE = 105;
 
-    Button btnCreate;
-    ImageView imgGallery,imgCamera,imgAttached,imgBackFCreate,imgUploadVideo,imgUploadPodcast;
+    Button btnUpdate;
+    ImageView imgGallery,imgCamera,imgAttached,
+            imgBackFUpdate,imgUploadVideo,imgUploadPodcast;
     EditText edtName,edtDescription;
     ProgressDialog progressDialog;
 
@@ -69,8 +69,16 @@ public class AddCategory extends AppCompatActivity {
     boolean checkGalleryImage = false;
     boolean checkCameraImage = false;
     boolean checkPodcast = false;
-    String name,description,id,imageUrl,videoUrl,podcastUrl;
+
     String podcastfilepath;
+
+    // what is saved
+    String name,description,id,imageUrl,videoUrl,podcastUrl;
+
+    //changes
+    String nameUpdate,descriptionUpdate,imageUrlUpdate,videoUrlUpdate,podcastUrlUpdate;
+
+    Collection c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,21 +91,63 @@ public class AddCategory extends AppCompatActivity {
         getSupportActionBar().hide(); //Hide the action bar
         //Link:https://www.geeksforgeeks.org/different-ways-to-hide-action-bar-in-android-with-examples/#:~:text=If%20you%20want%20to%20hide,AppCompat
         //-----------------------------------------------End------------------------------------------------------
-        setContentView(R.layout.activity_add_category);
+        setContentView(R.layout.activity_update_category);
 
-        btnCreate = findViewById(R.id.btn_CreateCategory);
-        imgGallery = findViewById(R.id.imgGalleryImage);
-        imgCamera = findViewById(R.id.imgCameraImage);
-        edtName = findViewById(R.id.edtCatName);
-        edtDescription = findViewById(R.id.edtCatDescription);
-        imgAttached = findViewById(R.id.img_AttachedImage);
-        imgUploadVideo = findViewById(R.id.imgUploadVideo);
-        imgUploadPodcast = findViewById(R.id.imgUploadPodcast);
-        imgBackFCreate = findViewById(R.id.imgBackFCreate);
+        Intent i = getIntent();
+        c = i.getParcelableExtra("Collection");
+
+        btnUpdate = findViewById(R.id.btnUpdateCategory);
+        imgGallery = findViewById(R.id.imgGalleryImageUpdate);
+        imgCamera = findViewById(R.id.imgCameraImageUpdate);
+        edtName = findViewById(R.id.edtCategoryUpdateName);
+        edtDescription = findViewById(R.id.edtCategoryUpdateDescription);
+        imgAttached = findViewById(R.id.imgAttachedImageDisplay);
+        imgUploadVideo = findViewById(R.id.imgUploadVideoUpdate);
+        imgUploadPodcast = findViewById(R.id.imgUploadPodcastUpdate);
+        imgBackFUpdate = findViewById(R.id.imgBackFUpdate);
 
         imgAttached.setVisibility(View.INVISIBLE);
+        edtName.setText(c.getCategoryName());
+        edtDescription.setText(c.getCategoryInformation());
 
-        imgBackFCreate.setOnClickListener(new View.OnClickListener() {
+        imgCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                askCameraPermissions(); //Calling method that asks user for camera permission
+                progressDialog = new ProgressDialog(UpdateCategory.this);
+                checkCameraImage=true;
+            }
+        });
+
+        imgGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(gallery, GALLERY_REQUEST_CODE);
+                progressDialog = new ProgressDialog(UpdateCategory.this);
+                checkGalleryImage=true;
+            }
+        });
+
+        imgUploadPodcast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(UpdateCategory.this);
+                checkPodcast=true;
+                chooseAudio();
+            }
+        });
+
+        imgUploadVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(UpdateCategory.this);
+                choosevideo();
+                checkVideo=true;
+            }
+        });
+
+        imgBackFUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 edtName.setText("");
@@ -106,91 +156,156 @@ public class AddCategory extends AppCompatActivity {
                 ListUtils.categoryVideoList.clear();
                 ListUtils.categoryPodcastList.clear();
                 ListUtils.collectionList.clear();
-                Intent i = new Intent(AddCategory.this,adminHome.class);
+                Intent i = new Intent(UpdateCategory.this,adminHome.class);
+                i.putExtra("Collection",c);
                 startActivity(i);
             }
         });
 
-        imgUploadPodcast.setOnClickListener(new View.OnClickListener() {
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog = new ProgressDialog(AddCategory.this);
-                checkPodcast=true;
-                chooseAudio();
+
+                if (edtName.getText().toString() == null){
+                    nameUpdate = c.getCategoryName();
+                }else{
+                    nameUpdate = edtName.getText().toString();
+                }
+
+                if (edtDescription.getText().toString() == null){
+                    descriptionUpdate = c.getCategoryInformation();
+                }else{
+                    descriptionUpdate = edtDescription.getText().toString();
+                }
+
+                if (ListUtils.categoryImageList.size() == 0){
+                    imageUrlUpdate = c.getCategoryImageUrl();
+                }else{
+                    imageUrlUpdate = ListUtils.categoryImageList.get(0);
+                }
+
+                if (ListUtils.categoryVideoList.size() == 0){
+                    videoUrlUpdate = c.getCategoryVideoUrl();
+                }else{
+                    videoUrlUpdate = ListUtils.categoryVideoList.get(0);
+                }
+
+                if (ListUtils.categoryPodcastList.size() == 0){
+                    podcastUrlUpdate = c.getCategoryPodcastUrl();
+                }else{
+                    podcastUrlUpdate = ListUtils.categoryPodcastList.get(0);
+                }
+
+                //---------------------------------------Code Attribution------------------------------------------------
+                //Author:Foxandroid
+                //Uses:Update data in Firebase realtime database
+                HashMap categoryUpdate = new HashMap();
+                categoryUpdate.put("categoryId",c.getCategoryId());
+                categoryUpdate.put("categoryImageUrl",imageUrlUpdate);
+                categoryUpdate.put("categoryInformation",descriptionUpdate);
+                categoryUpdate.put("categoryName",nameUpdate);
+                categoryUpdate.put("categoryPodcastUrl",podcastUrlUpdate);
+                categoryUpdate.put("categoryVideoUrl",videoUrlUpdate);
+
+                Collection collection = new Collection(c.getCategoryId(),nameUpdate,descriptionUpdate,imageUrlUpdate,videoUrlUpdate,podcastUrl);
+
+                myRef.child("Categories").child(c.getCategoryId()).updateChildren(categoryUpdate).addOnCompleteListener(new OnCompleteListener() {
+                            @Override
+                            public void onComplete(@NonNull Task task) {
+                                if (task.isSuccessful()){
+                                    Toast.makeText(UpdateCategory.this, "Update Successful!", Toast.LENGTH_SHORT).show();
+                                   /* edtName.setText("");
+                                    edtDescription.setText("");
+                                    ListUtils.categoryImageList.clear();
+                                    ListUtils.categoryVideoList.clear();
+                                    ListUtils.categoryPodcastList.clear();
+                                    ListUtils.collectionList.clear();*/
+                                    Intent i = new Intent(UpdateCategory.this,adminHome.class);
+                                    //i.putExtra("Collection",collection);
+                                    startActivity(i);
+                                }else{
+                                    edtName.setText("");
+                                    edtDescription.setText("");
+                                    ListUtils.categoryImageList.clear();
+                                    ListUtils.categoryVideoList.clear();
+                                    ListUtils.categoryPodcastList.clear();
+                                }
+                            }});
+                //Link:https://www.youtube.com/watch?v=oNNHR-LeTnI
+                //-----------------------------------------------End------------------------------------------------------
             }
         });
-
-
-        imgUploadVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                progressDialog = new ProgressDialog(AddCategory.this);
-                choosevideo();
-                checkVideo=true;
-            }
-        });
-
-
-        imgGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(gallery, GALLERY_REQUEST_CODE);
-                progressDialog = new ProgressDialog(AddCategory.this);
-                checkGalleryImage=true;
-            }
-        });
-
-
-        imgCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                askCameraPermissions(); //Calling method that asks user for camera permission
-                /*imgAttached.setVisibility(view.VISIBLE);*/
-                progressDialog = new ProgressDialog(AddCategory.this);
-                checkCameraImage=true;
-            }
-        });
-
-        btnCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                name = edtName.getText().toString();
-                description =edtDescription.getText().toString();
-                id = KeyGenerator.getRandomString(10);
-                imageUrl = ListUtils.categoryImageList.get(0);
-                videoUrl = ListUtils.categoryVideoList.get(0);
-                podcastUrl = ListUtils.categoryPodcastList.get(0);
-
-                Collection collection = new Collection(id,name,description,imageUrl,videoUrl,podcastUrl);
-
-                myRef = database.getReference().child("Categories");
-
-                myRef.child(collection.getCategoryId()).setValue(collection).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(AddCategory.this, collection.getCategoryName()+" added successfully!", Toast.LENGTH_SHORT).show();
-                        edtName.setText("");
-                        edtDescription.setText("");
-                        ListUtils.categoryImageList.clear();
-                        ListUtils.categoryVideoList.clear();
-                        ListUtils.categoryPodcastList.clear();
-                        Intent i = new Intent(AddCategory.this,adminHome.class);
-                        startActivity(i);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddCategory.this,"Failed to Add!",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
     }
 
-    //-------Audio
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //If camera request
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                File f = new File(currentPhotoPath);
+                Log.d("tag", "Absolute URI of image is " + Uri.fromFile(f));
+
+                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                Uri contentUri = Uri.fromFile(f);
+                mediaScanIntent.setData(contentUri);
+                this.sendBroadcast(mediaScanIntent);
+
+                if(checkCameraImage==true){
+                    progressDialog.setTitle("Uploading...");
+                    progressDialog.show();
+                    //Method call to upload the data to firebase storage
+                    UploadImageToFirebase(f.getName(), contentUri);
+                    checkCameraImage=false;
+                }
+            }
+        }
+        if (checkPodcast==true){
+            if (requestCode == 10) {
+                audio_uri = data.getData();
+                podcastfilepath=audio_uri.getEncodedPath();
+                progressDialog.setTitle("Uploading...");
+                progressDialog.show();
+                uploadPodcast(podcastfilepath,audio_uri);
+                checkPodcast=false;
+            }
+            checkPodcast=false;
+        }
+
+
+        //if gallery request
+        if (requestCode == GALLERY_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                if (checkGalleryImage==true) {
+                    Uri contentUri = data.getData();//Creating content URI from the data
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());//Creating filename
+                    String imageFileName = "JPEG_" + timeStamp + "." + getFileExt(contentUri);// Specifying the file type
+                    Log.d("tag", "OnActivityResult: Gallery Image Uri:     " + imageFileName);//Displaying absolute Uri through ImageView
+
+                    progressDialog.setTitle("Uploading...");
+                    progressDialog.show();
+                    //Method call to upload image to Firebase storage
+                    UploadImageToFirebase(imageFileName, contentUri);
+                    checkGalleryImage=false;
+                }
+
+                if(checkVideo==true){
+                    //Adding video upload progress bar
+                    videouri = data.getData();
+                    progressDialog.setTitle("Uploading...");
+                    progressDialog.show();
+                    uploadvideo();
+                    checkVideo=false;
+                }
+            }
+        }
+    }
+
+
+    //--------- audio -------------
+
     Uri audio_uri = null;
 
     private void chooseAudio(){
@@ -202,43 +317,43 @@ public class AddCategory extends AppCompatActivity {
 
     private void uploadPodcast(final String file, final Uri uri) {
 
-            StorageReference ref = FirebaseStorage.getInstance().getReference().child("Podcast/"+System.currentTimeMillis()+getAudiofiletype(uri));
-            ref.putFile(uri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+        StorageReference ref = FirebaseStorage.getInstance().getReference().child("Podcast/"+System.currentTimeMillis()+getAudiofiletype(uri));
+        ref.putFile(uri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                            Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
-                            downloadUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
+                        Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
+                        downloadUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
 
-                                    ListUtils.categoryPodcastList.clear();
+                                ListUtils.categoryPodcastList.clear();
 
-                                    // get the url for image in firebase storage and add it to an Arraylist
-                                    String genFilePath = downloadUri.getResult().toString();
-                                    ListUtils.categoryPodcastList.add(genFilePath);
+                                // get the url for image in firebase storage and add it to an Arraylist
+                                String genFilePath = downloadUri.getResult().toString();
+                                ListUtils.categoryPodcastList.add(genFilePath);
 
-                                    progressDialog.dismiss();
+                                progressDialog.dismiss();
 
-                                    audio_uri = null;
-                                    Toast.makeText(AddCategory.this, "Podcast Uploaded!!", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddCategory.this, "Upload Podcast Failed!", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                            // show the progress bar
-                            double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
-                        }
-                    });
+                                audio_uri = null;
+                                Toast.makeText(UpdateCategory.this, "Podcast Uploaded!!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(UpdateCategory.this, "Upload Podcast Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        // show the progress bar
+                        double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                        progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                    }
+                });
     }
 
     private String getAudiofiletype(Uri audiouri) {
@@ -247,9 +362,80 @@ public class AddCategory extends AppCompatActivity {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(r.getType(audiouri));
     }
-    //link:https://stackoverflow.com/questions/58789591/how-to-upload-an-audio-file-to-firebase-storage
-    //--------end audio
 
+    //link:https://stackoverflow.com/questions/58789591/how-to-upload-an-audio-file-to-firebase-storage
+    //----------audio end------------
+
+
+    //---------video-------------
+
+    // choose a video from phone storage
+    private void choosevideo() {
+        Intent intent = new Intent();
+        intent.setType("video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+    }
+    Uri videouri;
+
+    //---------------------------------------Code Attribution------------------------------------------------
+    //Author:GeeksForGeeks
+    //Uses:Upload video to firebase storage and Realtime-Database
+
+    private String getfiletype(Uri videouri) {
+        ContentResolver r = getContentResolver();
+        // get the file type ,in this case its mp4
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(r.getType(videouri));
+    }
+
+    private void uploadvideo() {
+        if (videouri != null) {
+            // save the selected video in Firebase storage
+            final StorageReference reference = FirebaseStorage.getInstance().getReference("Videos/" + System.currentTimeMillis() + "." + getfiletype(videouri));
+            reference.putFile(videouri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
+                    downloadUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+
+                            ListUtils.categoryVideoList.clear();
+
+                            // get the url for image in firebase storage and add it to an Arraylist
+                            String genFilePath = downloadUri.getResult().toString();
+                            ListUtils.categoryVideoList.add(genFilePath);
+
+                            progressDialog.dismiss();
+                            Toast.makeText(UpdateCategory.this, "Video Uploaded!!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                  }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    // Error, Image not uploaded
+                    progressDialog.dismiss();
+                    Toast.makeText(UpdateCategory.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                // Progress Listener for loading
+                // percentage on the dialog box
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    // show the progress bar
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                }
+            });
+        }
+    }
+    //Link:https://www.geeksforgeeks.org/how-to-upload-a-video-in-firebase-database-using-android-studio/
+    //-----------------------------------------------End------------------------------------------------------
+    //----------video end------------
+
+    //-----------camera & gallery-----------
 
     //---------------------------------------Code Attribution------------------------------------------------
     //Author:SmallAcademy
@@ -285,153 +471,6 @@ public class AddCategory extends AppCompatActivity {
         finish();
     }
 
-    // choose a video from phone storage
-    private void choosevideo() {
-        Intent intent = new Intent();
-        intent.setType("video/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, GALLERY_REQUEST_CODE);
-    }
-
-    Uri videouri;
-
-    //Checking if the request is a camera or gallery request
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //If camera request
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-
-                File f = new File(currentPhotoPath);
-                Log.d("tag", "Absolute URI of image is " + Uri.fromFile(f));
-
-                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                Uri contentUri = Uri.fromFile(f);
-                mediaScanIntent.setData(contentUri);
-                this.sendBroadcast(mediaScanIntent);
-
-                if(checkCameraImage==true){
-                    progressDialog.setTitle("Uploading...");
-                    progressDialog.show();
-                    //Method call to upload the data to firebase storage
-                    UploadImageToFirebase(f.getName(), contentUri);
-                    checkCameraImage=false;
-                }
-            }
-        }
-            if (checkPodcast==true){
-                if (requestCode == 10) {
-                    audio_uri = data.getData();
-                    podcastfilepath=audio_uri.getEncodedPath();
-                    progressDialog.setTitle("Uploading...");
-                    progressDialog.show();
-                    uploadPodcast(podcastfilepath,audio_uri);
-                    checkPodcast=false;
-                }
-                checkPodcast=false;
-            }
-
-
-        //if gallery request
-        if (requestCode == GALLERY_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-
-                if (checkGalleryImage==true) {
-                    Uri contentUri = data.getData();//Creating content URI from the data
-                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());//Creating filename
-                    String imageFileName = "JPEG_" + timeStamp + "." + getFileExt(contentUri);// Specifying the file type
-                    Log.d("tag", "OnActivityResult: Gallery Image Uri:     " + imageFileName);//Displaying absolute Uri through ImageView
-
-                    progressDialog.setTitle("Uploading...");
-                    progressDialog.show();
-                    //Method call to upload image to Firebase storage
-                    UploadImageToFirebase(imageFileName, contentUri);
-                    checkGalleryImage=false;
-                }
-
-                if(checkVideo==true){
-                    //Adding video upload progress bar
-                    videouri = data.getData();
-                    progressDialog.setTitle("Uploading...");
-                    progressDialog.show();
-                    uploadvideo();
-                    checkVideo=false;
-                }
-            }
-        }
-    }
-    //---------------------------------------Code Attribution------------------------------------------------
-    //Author:GeeksForGeeks
-    //Uses:Upload video to firebase storage and Realtime-Database
-
-    private String getfiletype(Uri videouri) {
-        ContentResolver r = getContentResolver();
-        // get the file type ,in this case its mp4
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(r.getType(videouri));
-    }
-
-    private void uploadvideo() {
-        if (videouri != null) {
-            // save the selected video in Firebase storage
-            final StorageReference reference = FirebaseStorage.getInstance().getReference("Videos/" + System.currentTimeMillis() + "." + getfiletype(videouri));
-            reference.putFile(videouri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
-                    downloadUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-
-                            ListUtils.categoryVideoList.clear();
-
-                            // get the url for image in firebase storage and add it to an Arraylist
-                            String genFilePath = downloadUri.getResult().toString();
-                            ListUtils.categoryVideoList.add(genFilePath);
-
-                            progressDialog.dismiss();
-                            Toast.makeText(AddCategory.this, "Video Uploaded!!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    /*Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                    while (!uriTask.isSuccessful()) ;
-                    // get the link of video
-                    String downloadUri = uriTask.getResult().toString();
-                    DatabaseReference reference1 = FirebaseDatabase.getInstance().getReference("Video");
-                    HashMap<String, String> map = new HashMap<>();
-                    map.put("videolink", downloadUri);
-                    reference1.child("" + System.currentTimeMillis()).setValue(map);*/
-                    // Video uploaded successfully
-                    // Dismiss dialog
-                   /* progressDialog.dismiss();
-                    Toast.makeText(AddCategory.this, "Video Uploaded!!", Toast.LENGTH_SHORT).show();*/
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    // Error, Image not uploaded
-                    progressDialog.dismiss();
-                    Toast.makeText(AddCategory.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                // Progress Listener for loading
-                // percentage on the dialog box
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    // show the progress bar
-                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                    progressDialog.setMessage("Uploaded " + (int) progress + "%");
-                }
-            });
-        }
-    }
-    //Link:https://www.geeksforgeeks.org/how-to-upload-a-video-in-firebase-database-using-android-studio/
-    //-----------------------------------------------End------------------------------------------------------
-
-
-
     //---------------------------------------Code Attribution------------------------------------------------
     //Author:SmallAcademy
     //Uses:Upload image to firebase storage
@@ -465,14 +504,14 @@ public class AddCategory extends AppCompatActivity {
                 });
                 progressDialog.dismiss();
                 //When upload is successful the following message appears to the user
-                Toast.makeText(AddCategory.this, "Image is uploaded", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateCategory.this, "Image is uploaded", Toast.LENGTH_SHORT).show();
             }
 
             //Called if uploading image has failed
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AddCategory.this, "Upload failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateCategory.this, "Upload failed", Toast.LENGTH_SHORT).show();
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             // Progress Listener for loading
@@ -537,6 +576,11 @@ public class AddCategory extends AppCompatActivity {
     //Link:https://www.youtube.com/watch?v=s1aOlr3vbbk&list=PLlGT4GXi8_8eopz0Gjkh40GG6O5KhL1V1&index=2
     //Link:https://www.youtube.com/watch?v=KaDwSvOpU5E&list=PLlGT4GXi8_8eopz0Gjkh40GG6O5KhL1V1&index=3
     //Link:https://www.youtube.com/watch?v=q5pqnT1n-4s&list=PLlGT4GXi8_8eopz0Gjkh40GG6O5KhL1V1&index=4
-    //Link:https://www.geeksforgeeks.org/how-to-upload-a-video-in-firebase-database-using-android-studio/
     //-----------------------------------------------End------------------------------------------------------
+
+
+
+
+    //------------camera & gallery end----------
+
 }
