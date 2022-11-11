@@ -2,6 +2,7 @@ package com.varsitycollege.imbizoappwil02;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,6 +67,9 @@ public class IndividualCategory extends AppCompatActivity {
         //Link:https://www.geeksforgeeks.org/different-ways-to-hide-action-bar-in-android-with-examples/#:~:text=If%20you%20want%20to%20hide,AppCompat
         //-----------------------------------------------End------------------------------------------------------
         setContentView(R.layout.activity_individual_category);
+
+        //Code to prevent dark mode on users phone
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         Intent i = getIntent();
         c = i.getParcelableExtra("Collection");

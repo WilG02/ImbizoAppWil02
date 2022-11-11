@@ -1,6 +1,7 @@
 package com.varsitycollege.imbizoappwil02;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,9 @@ public class Privacy_policy extends AppCompatActivity {
         //Link:https://www.geeksforgeeks.org/different-ways-to-hide-action-bar-in-android-with-examples/#:~:text=If%20you%20want%20to%20hide,AppCompat
         //-----------------------------------------------End------------------------------------------------------
         setContentView(R.layout.activity_privacy_policy);
+
+        //Code to prevent dark mode on users phone
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:Coding in Flow

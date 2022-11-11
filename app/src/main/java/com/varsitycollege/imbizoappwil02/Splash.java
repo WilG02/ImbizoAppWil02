@@ -1,6 +1,7 @@
 package com.varsitycollege.imbizoappwil02;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +27,9 @@ public class Splash extends AppCompatActivity {
         //Link:https://www.geeksforgeeks.org/different-ways-to-hide-action-bar-in-android-with-examples/#:~:text=If%20you%20want%20to%20hide,AppCompat
         //-----------------------------------------------End------------------------------------------------------
         setContentView(R.layout.activity_splash);
+
+        //Code to prevent dark mode on users phone
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         // Declare an imageView to show the animation.
         imageView=(ImageView)findViewById(R.id.imageView);

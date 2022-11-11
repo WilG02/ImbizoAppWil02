@@ -61,6 +61,7 @@
         <entry key="..\:/Users/lab_services_student/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/individual_category.xml" value="0.176" />
         <entry key="..\:/Users/lab_services_student/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/nav_header.xml" value="0.2441123188405797" />
         <entry key="..\:/Users/lab_services_student/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/menu/menu_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/drawable/search_bg.xml" value="0.209" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_about.xml" value="0.1" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_add_category.xml" value="0.20652173913043478" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_admin_home.xml" value="0.25416666666666665" />
@@ -74,7 +75,10 @@
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_ratings.xml" value="0.1" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_update_category.xml" value="0.33" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_user_home.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/individual_category.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/menu/menu_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/menu/search_menu.xml" value="0.253125" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/xml/file_paths.xml" value="0.24010416666666667" />
       </map>
     </option>

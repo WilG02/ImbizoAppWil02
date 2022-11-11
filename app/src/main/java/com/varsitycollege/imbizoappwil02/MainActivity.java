@@ -2,6 +2,7 @@ package com.varsitycollege.imbizoappwil02;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.content.IntentSender;
@@ -48,5 +49,7 @@ public class MainActivity extends AppCompatActivity {
         //-----------------------------------------------End------------------------------------------------------
         setContentView(R.layout.activity_main);
 
+        //Code to prevent dark mode on users phone
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
-    }
+}

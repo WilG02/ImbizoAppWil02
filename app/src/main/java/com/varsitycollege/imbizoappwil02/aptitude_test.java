@@ -1,6 +1,7 @@
 package com.varsitycollege.imbizoappwil02;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ public class aptitude_test extends AppCompatActivity {
         //-----------------------------------------------End------------------------------------------------------
         setContentView(R.layout.activity_aptitude_test);
 
+        //Code to prevent dark mode on users phone
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:Coding in Flow

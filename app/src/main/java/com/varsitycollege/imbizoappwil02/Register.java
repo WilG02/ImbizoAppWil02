@@ -2,6 +2,7 @@ package com.varsitycollege.imbizoappwil02;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -54,6 +55,8 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
         //-----------------------------------------------End------------------------------------------------------
         setContentView(R.layout.activity_register);
 
+        //Code to prevent dark mode on users phone
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         Intent i = getIntent();
         type = i.getStringExtra("TypeUser");

@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".userHome"
-    android:background="#E8E8DF">
+    android:background="#E8E8DF"
+    tools:context=".userHome">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="28dp"
-        android:text="All Categories"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="48dp"
+        android:text="Categories"
         android:textColor="#7D7F34"
-        android:textSize="24sp"
+        android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +24,7 @@
         android:layout_width="349dp"
         android:layout_height="393dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="44dp"
         android:clickable="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"

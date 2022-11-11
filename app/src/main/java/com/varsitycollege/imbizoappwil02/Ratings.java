@@ -1,6 +1,7 @@
 package com.varsitycollege.imbizoappwil02;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,6 +34,9 @@ public class Ratings extends AppCompatActivity {
         //Link:https://www.geeksforgeeks.org/different-ways-to-hide-action-bar-in-android-with-examples/#:~:text=If%20you%20want%20to%20hide,AppCompat
         //-----------------------------------------------End------------------------------------------------------
         setContentView(R.layout.activity_ratings);
+
+        //Code to prevent dark mode on users phone
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         img_backFromFeedback=findViewById(R.id.img_returnFromFeedback);
         img_backFromFeedback.setOnClickListener(new View.OnClickListener() {
