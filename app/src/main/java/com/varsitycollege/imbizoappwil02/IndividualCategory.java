@@ -100,7 +100,7 @@ public class IndividualCategory extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 
-               /* storage.child("Image/").child(c.getCategoryImageUrl()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                /*storage.child("Image/").child(c.getCategoryImageName()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(IndividualCategory.this, "Image Deleted!", Toast.LENGTH_SHORT).show();
@@ -111,7 +111,32 @@ public class IndividualCategory extends AppCompatActivity {
                         Toast.makeText(IndividualCategory.this, "Failed Imaged Delete!", Toast.LENGTH_SHORT).show();
                     }
                 });
-*/
+
+                storage.child("Image/").child(c.getCategoryImageName()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(IndividualCategory.this, "Image Deleted!", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(IndividualCategory.this, "Failed Imaged Delete!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                storage.child("Image/").child(c.getCategoryImageName()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(IndividualCategory.this, "Image Deleted!", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(IndividualCategory.this, "Failed Imaged Delete!", Toast.LENGTH_SHORT).show();
+                    }
+                });*/
+
+
 
                 myRef.child("Categories").child(c.getCategoryId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

@@ -77,7 +77,8 @@ public class UpdateCategory extends AppCompatActivity {
     String name,description,id,imageUrl,videoUrl,podcastUrl;
 
     //changes
-    String nameUpdate,descriptionUpdate,imageUrlUpdate,videoUrlUpdate,podcastUrlUpdate;
+    String nameUpdate,descriptionUpdate,imageUrlUpdate,
+            videoUrlUpdate,podcastUrlUpdate,imageNameUpdate,videoNameUpdate,podcastNameUpdate;
 
     Collection c;
 
@@ -184,20 +185,26 @@ public class UpdateCategory extends AppCompatActivity {
 
                 if (ListUtils.categoryImageList.size() == 0){
                     imageUrlUpdate = c.getCategoryImageUrl();
+                    imageNameUpdate = c.getCategoryImageName();
                 }else{
                     imageUrlUpdate = ListUtils.categoryImageList.get(0);
+                    imageNameUpdate = ListUtils.categoryImageList.get(1);
                 }
 
                 if (ListUtils.categoryVideoList.size() == 0){
                     videoUrlUpdate = c.getCategoryVideoUrl();
+                    videoNameUpdate = c.getCategoryVideoName();
                 }else{
                     videoUrlUpdate = ListUtils.categoryVideoList.get(0);
+                    videoNameUpdate =ListUtils.categoryVideoList.get(1);
                 }
 
                 if (ListUtils.categoryPodcastList.size() == 0){
                     podcastUrlUpdate = c.getCategoryPodcastUrl();
+                    podcastNameUpdate = c.getCategoryPodcastName();
                 }else{
                     podcastUrlUpdate = ListUtils.categoryPodcastList.get(0);
+                    podcastNameUpdate = ListUtils.categoryPodcastList.get(1);
                 }
 
                 //---------------------------------------Code Attribution------------------------------------------------
@@ -211,7 +218,7 @@ public class UpdateCategory extends AppCompatActivity {
                 categoryUpdate.put("categoryPodcastUrl",podcastUrlUpdate);
                 categoryUpdate.put("categoryVideoUrl",videoUrlUpdate);
 
-                Collection collection = new Collection(c.getCategoryId(),nameUpdate,descriptionUpdate,imageUrlUpdate,videoUrlUpdate,podcastUrl);
+                Collection collection = new Collection(c.getCategoryId(),nameUpdate,descriptionUpdate,imageUrlUpdate,videoUrlUpdate,podcastUrlUpdate);
 
                 myRef.child("Categories").child(c.getCategoryId()).updateChildren(categoryUpdate).addOnCompleteListener(new OnCompleteListener() {
                             @Override
@@ -224,6 +231,11 @@ public class UpdateCategory extends AppCompatActivity {
                                     ListUtils.categoryVideoList.clear();
                                     ListUtils.categoryPodcastList.clear();
                                     ListUtils.collectionList.clear();*/
+
+
+
+
+
                                     Intent i = new Intent(UpdateCategory.this,adminHome.class);
                                     //i.putExtra("Collection",collection);
                                     startActivity(i);

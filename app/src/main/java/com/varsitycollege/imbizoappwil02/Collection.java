@@ -11,6 +11,9 @@ public class Collection implements Parcelable {
     private String CategoryImageUrl;
     private String CategoryVideoUrl;
     private String CategoryPodcastUrl;
+    private String CategoryImageName;
+    private String CategoryVideoName;
+    private String CategoryPodcastName;
 
     //Default Constructor
     public Collection() {
@@ -26,6 +29,20 @@ public class Collection implements Parcelable {
         CategoryPodcastUrl = categoryPodcastUrl;
     }
 
+
+    public Collection(String categoryId, String categoryName, String categoryInformation, String categoryImageUrl, String categoryVideoUrl, String categoryPodcastUrl, String categoryImageName, String categoryVideoName, String categoryPodcastName) {
+        CategoryId = categoryId;
+        CategoryName = categoryName;
+        CategoryInformation = categoryInformation;
+        CategoryImageUrl = categoryImageUrl;
+        CategoryVideoUrl = categoryVideoUrl;
+        CategoryPodcastUrl = categoryPodcastUrl;
+        CategoryImageName = categoryImageName;
+        CategoryVideoName = categoryVideoName;
+        CategoryPodcastName = categoryPodcastName;
+    }
+
+
     protected Collection(Parcel in) {
         CategoryId = in.readString();
         CategoryName = in.readString();
@@ -33,6 +50,9 @@ public class Collection implements Parcelable {
         CategoryImageUrl = in.readString();
         CategoryVideoUrl = in.readString();
         CategoryPodcastUrl = in.readString();
+        CategoryImageName = in.readString();
+        CategoryVideoName = in.readString();
+        CategoryPodcastName = in.readString();
     }
 
     public static final Creator<Collection> CREATOR = new Creator<Collection>() {
@@ -95,18 +115,46 @@ public class Collection implements Parcelable {
         CategoryPodcastUrl = categoryPodcastUrl;
     }
 
+    public String getCategoryImageName() {
+        return CategoryImageName;
+    }
+
+    public void setCategoryImageName(String categoryImageName) {
+        CategoryImageName = categoryImageName;
+    }
+
+    public String getCategoryVideoName() {
+        return CategoryVideoName;
+    }
+
+    public void setCategoryVideoName(String categoryVideoName) {
+        CategoryVideoName = categoryVideoName;
+    }
+
+    public String getCategoryPodcastName() {
+        return CategoryPodcastName;
+    }
+
+    public void setCategoryPodcastName(String categoryPodcastName) {
+        CategoryPodcastName = categoryPodcastName;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(CategoryId);
-        parcel.writeString(CategoryName);
-        parcel.writeString(CategoryInformation);
-        parcel.writeString(CategoryImageUrl);
-        parcel.writeString(CategoryVideoUrl);
-        parcel.writeString(CategoryPodcastUrl);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(CategoryId);
+        dest.writeString(CategoryName);
+        dest.writeString(CategoryInformation);
+        dest.writeString(CategoryImageUrl);
+        dest.writeString(CategoryVideoUrl);
+        dest.writeString(CategoryPodcastUrl);
+        dest.writeString(CategoryImageName);
+        dest.writeString(CategoryVideoName);
+        dest.writeString(CategoryPodcastName);
     }
 }

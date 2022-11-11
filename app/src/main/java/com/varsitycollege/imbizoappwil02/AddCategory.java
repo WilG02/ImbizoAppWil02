@@ -70,7 +70,7 @@ public class AddCategory extends AppCompatActivity {
     boolean checkGalleryImage = false;
     boolean checkCameraImage = false;
     boolean checkPodcast = false;
-    String name,description,id,imageUrl,videoUrl,podcastUrl;
+    String name,description,id,imageUrl,videoUrl,podcastUrl,imageName,videoName,podcastName;
     String podcastfilepath;
 
     @Override
@@ -166,8 +166,11 @@ public class AddCategory extends AppCompatActivity {
                 imageUrl = ListUtils.categoryImageList.get(0);
                 videoUrl = ListUtils.categoryVideoList.get(0);
                 podcastUrl = ListUtils.categoryPodcastList.get(0);
+                imageName = ListUtils.categoryImageList.get(1);
+                videoName = ListUtils.categoryVideoList.get(1);
+                podcastName = ListUtils.categoryPodcastList.get(1);
 
-                Collection collection = new Collection(id,name,description,imageUrl,videoUrl,podcastUrl);
+                Collection collection = new Collection(id,name,description,imageUrl,videoUrl,podcastUrl,imageName,videoName,podcastName);
 
                 myRef = database.getReference().child("Categories");
 
@@ -222,6 +225,8 @@ public class AddCategory extends AppCompatActivity {
                                     // get the url for image in firebase storage and add it to an Arraylist
                                     String genFilePath = downloadUri.getResult().toString();
                                     ListUtils.categoryPodcastList.add(genFilePath);
+                                    ListUtils.categoryPodcastList.add(System.currentTimeMillis()+getAudiofiletype(uri));
+
 
                                     progressDialog.dismiss();
 
@@ -393,6 +398,7 @@ public class AddCategory extends AppCompatActivity {
                             // get the url for image in firebase storage and add it to an Arraylist
                             String genFilePath = downloadUri.getResult().toString();
                             ListUtils.categoryVideoList.add(genFilePath);
+                            ListUtils.categoryVideoList.add(System.currentTimeMillis() + "." + getfiletype(videouri));
 
                             progressDialog.dismiss();
                             Toast.makeText(AddCategory.this, "Video Uploaded!!", Toast.LENGTH_SHORT).show();
@@ -465,6 +471,8 @@ public class AddCategory extends AppCompatActivity {
                         // get the url for image in firebase storage and add it to an Arraylist
                         String genFilePath = downloadUri.getResult().toString();
                         ListUtils.categoryImageList.add(genFilePath);
+                        ListUtils.categoryImageList.add(name);
+
                     }
                 });
                 progressDialog.dismiss();
