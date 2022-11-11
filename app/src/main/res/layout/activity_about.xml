@@ -7,6 +7,11 @@
     android:background="#E8E8DF"
     tools:context=".About">
 
+    <WebView
+        android:id="@+id/aboutwebview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ImageView
         android:id="@+id/img_returnFromAbout"
         android:layout_width="50dp"

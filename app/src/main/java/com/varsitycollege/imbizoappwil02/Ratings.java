@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class Ratings extends AppCompatActivity {
 
     ImageView img_backFromFeedback;
-    private WebView Feedbackwebview;
+    private WebView feedbackwebview;
 
     RatingBar ratingBar;
     Button btnRate;
@@ -61,6 +61,7 @@ public class Ratings extends AppCompatActivity {
         //Author:Coding in Flow
         //Uses:Opening feeback google form in the application
 
+        feedbackwebview = (WebView) findViewById(R.id.Feedbackwebview);
         WebView myWebView = (WebView) findViewById(R.id.Feedbackwebview);
         myWebView.setWebViewClient(new WebViewClient()); //Loads in the application
         myWebView.loadUrl("https://forms.gle/kmxWg66fgqd3xMXc7"); //Url of the loaded website
@@ -74,8 +75,8 @@ public class Ratings extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        if (Feedbackwebview.canGoBack()) {
-            Feedbackwebview.goBack();
+        if (feedbackwebview.canGoBack()) {
+            feedbackwebview.goBack();
         } else {
             super.onBackPressed();
             {

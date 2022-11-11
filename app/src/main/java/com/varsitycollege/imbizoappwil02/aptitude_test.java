@@ -2,6 +2,7 @@ package com.varsitycollege.imbizoappwil02;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,8 +28,9 @@ public class aptitude_test extends AppCompatActivity {
 
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:Coding in Flow
-        //Uses:Opening feeback google form in the application
+        //Uses:Opening aptitude test
 
+        testWebview = (WebView) findViewById(R.id.Testwebview);
         WebView myWebView = (WebView) findViewById(R.id.Testwebview);
         myWebView.setWebViewClient(new WebViewClient()); //Loads in the application
         myWebView.loadUrl("https://forms.gle/kmxWg66fgqd3xMXc7"); //Url of the loaded website
@@ -47,7 +49,8 @@ public class aptitude_test extends AppCompatActivity {
         } else {
             super.onBackPressed();
             {
-
+                Intent i = new Intent(aptitude_test.this,Categories.class);
+                startActivity(i);
             }
         }}
 

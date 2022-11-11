@@ -29,7 +29,7 @@ public class Privacy_policy extends AppCompatActivity {
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:Coding in Flow
         //Uses:Opening privacy google form in the application
-
+        Privacywebview = (WebView) findViewById(R.id.Privacywebview);
         WebView myWebView = (WebView) findViewById(R.id.Privacywebview);
         myWebView.setWebViewClient(new WebViewClient()); //Loads in the application
         myWebView.loadUrl("https://www.termsfeed.com/live/27e7bf63-9772-4daa-88f2-909397e54e27"); //Url of the loaded website
@@ -38,6 +38,10 @@ public class Privacy_policy extends AppCompatActivity {
         setContentView(myWebView);
 
         myWebView.loadUrl("https://www.termsfeed.com/live/27e7bf63-9772-4daa-88f2-909397e54e27");
+
+        //Link:https://www.youtube.com/watch?v=TUXui5ItBkM
+        //-----------------------------------------------End------------------------------------------------------
+
     }
 
     @Override
@@ -51,8 +55,4 @@ public class Privacy_policy extends AppCompatActivity {
                 startActivity(i);
             }
         }}
-
-//Link:https://www.youtube.com/watch?v=TUXui5ItBkM
-//-----------------------------------------------End------------------------------------------------------
-
 }

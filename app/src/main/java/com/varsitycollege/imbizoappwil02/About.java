@@ -7,12 +7,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 
 public class About extends AppCompatActivity {
 
     ImageView img_backFromAbout;
+    private WebView aboutwebview;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,5 +40,33 @@ public class About extends AppCompatActivity {
             }
         });
 
+        //---------------------------------------Code Attribution------------------------------------------------
+        //Author:Coding in Flow
+        //Uses:Opening about,imbizo foundation website
+
+        aboutwebview = (WebView) findViewById(R.id.aboutwebview);
+        WebView myWebView = (WebView) findViewById(R.id.aboutwebview);
+        myWebView.setWebViewClient(new WebViewClient()); //Loads in the application
+        myWebView.loadUrl("https://www.imbizofoundation.com/"); //Url of the loaded website
+
+        myWebView = new WebView(About.this);
+        setContentView(myWebView);
+
+        myWebView.loadUrl("https://www.imbizofoundation.com/");
+
+        //Link:https://www.youtube.com/watch?v=TUXui5ItBkM
+        //-----------------------------------------------End------------------------------------------------------
+
     }
+    @Override
+    public void onBackPressed() {
+        if (aboutwebview.canGoBack()) {
+            aboutwebview.goBack();
+        } else {
+            super.onBackPressed();
+            {
+                Intent i = new Intent(About.this,Categories.class);
+                startActivity(i);
+            }
+        }}
 }
