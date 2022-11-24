@@ -160,7 +160,7 @@ public class AddCategory extends AppCompatActivity {
             }
         });
 
-        imgAddVideoLink.setOnClickListener(new View.OnClickListener() {
+       /* imgAddVideoLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               //  if (ListUtils.categoryVideoList.get(1) == null) {
@@ -182,8 +182,10 @@ public class AddCategory extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String name = input.getText().toString();
-                            edtVideoLink= name;
-                        }
+                            edtVideoLink = name;
+                            if (!edtVideoLink.contains("youtube")){
+                                Toast.makeText(AddCategory.this, "Please enter in a youtube URL!", Toast.LENGTH_SHORT).show();                            }
+                            }
                     });
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
@@ -196,28 +198,84 @@ public class AddCategory extends AppCompatActivity {
                     //-----------------------------------------------End------------------------------------------------------
                 }
            // }
-        });
+        });*/
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                name = edtName.getText().toString();
-                description =edtDescription.getText().toString();
-                id = KeyGenerator.getRandomString(10);
-                imageUrl = ListUtils.categoryImageList.get(0);
-                videoUrl = ListUtils.categoryVideoList.get(0);
-                podcastUrl = ListUtils.categoryPodcastList.get(0);
-                imageName = ListUtils.categoryImageList.get(1);
-                videoName = ListUtils.categoryVideoList.get(1);
-                /*videoName = "link";
-                videoUrl = edtVideoLink;*/
+                Validation val = new Validation();
 
-                podcastName = ListUtils.categoryPodcastList.get(1);
+                //try{
+                    name = edtName.getText().toString();
+                    description =edtDescription.getText().toString();
+                    id = KeyGenerator.getRandomString(10);
+                    imageUrl = ListUtils.categoryImageList.get(0);
+                    videoUrl = ListUtils.categoryVideoList.get(0);
+                    podcastUrl = ListUtils.categoryPodcastList.get(0);
+                    imageName = ListUtils.categoryImageList.get(1);
+                    videoName = ListUtils.categoryVideoList.get(1);
+                    podcastName = ListUtils.categoryPodcastList.get(1);
 
-                /*if (videoUrl.equals("") || edtVideoLink.equals("") ){
+                    //---------------------------------------Code Attribution------------------------------------------------
+                    //Author:GeeksforGeeks
+                    //Uses:validate if the input is empty and display field error, so the user know which component is an error
+
+                    //name
+                    if (edtName.length()==0){
+                        edtName.setError("This field is required!");
+                        // Link:https://www.geeksforgeeks.org/implement-form-validation-error-to-edittext-in-android/
+                        // -----------------------------------------------End------------------------------------------------------
+                    }else{
+                        try {
+                            if(val.isNullOrEmpty(edtName.getText().toString())==true || val.isAlphabet(edtName.getText().toString())== false){
+                                Toast.makeText(AddCategory.this, "Enter in letter only!", Toast.LENGTH_SHORT).show();
+                            }
+                        }catch (Exception e){
+                        }
+                        //obtaining the user input entered to create a new collection
+                        name = edtName.getText().toString();
+                    }
+
+
+                    //description
+                    if (edtDescription.length()==0){
+                        edtDescription.setError("This field is required!");
+                        // Link:https://www.geeksforgeeks.org/implement-form-validation-error-to-edittext-in-android/
+                        // -----------------------------------------------End------------------------------------------------------
+                    }else{
+                        try {
+                            if(val.isNullOrEmpty(edtDescription.getText().toString())==true || val.isAlphabet(edtDescription.getText().toString())== false){
+                                Toast.makeText(AddCategory.this, "Enter in letter only!", Toast.LENGTH_SHORT).show();
+                            }
+                        }catch (Exception e){
+                        }
+                        //obtaining the user input entered to create a new collection
+                        description =edtDescription.getText().toString();
+                    }
+
+
+                    //Image
+                    if (ListUtils.categoryImageList.size()<=0) {
+                        Toast.makeText(AddCategory.this, "Please attach image!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    //Video
+                    if (ListUtils.categoryVideoList.size()<=0) {
+                        Toast.makeText(AddCategory.this, "Please attach video!", Toast.LENGTH_SHORT).show();
+                    }
+
+                   /* if (!edtVideoLink.equals("")){
+                        videoName = "";
+                        videoUrl = edtVideoLink;
+                    }
+
+*/
+
+
+                /*  if (ListUtils.categoryVideoList.size()<=0 && edtVideoLink.equals("") ){
                     Toast.makeText(AddCategory.this, "Please upload a video or enter in a url!", Toast.LENGTH_SHORT).show();
-                }else{
+                  }else{
                     if (videoUrl.equals("")){
                         videoUrl = edtVideoLink;
                         videoName ="";
@@ -228,28 +286,45 @@ public class AddCategory extends AppCompatActivity {
                         videoName =ListUtils.categoryVideoList.get(1);
                     }
                 }*/
-                Collection collection = new Collection(id,name,description,imageUrl,videoUrl,podcastUrl,imageName,videoName,podcastName);
 
-                myRef = database.getReference().child("Categories");
+                    //Audio
+                    if (ListUtils.categoryPodcastList.size()<=0) {
+                        Toast.makeText(AddCategory.this, "Please attach podcast!", Toast.LENGTH_SHORT).show();
+                    }
 
-                myRef.child(collection.getCategoryId()).setValue(collection).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(AddCategory.this, collection.getCategoryName()+" added successfully!", Toast.LENGTH_SHORT).show();
-                        edtName.setText("");
-                        edtDescription.setText("");
-                        ListUtils.categoryImageList.clear();
-                        ListUtils.categoryVideoList.clear();
-                        ListUtils.categoryPodcastList.clear();
-                        Intent i = new Intent(AddCategory.this,adminHome.class);
-                        startActivity(i);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddCategory.this,"Failed to Add!",Toast.LENGTH_SHORT).show();
-                    }
-                });
+                 /*   //validated the inputs, if they are valid then collection is created and written to firebase realtime database
+                    if (val.isNullOrEmpty(edtName.getText().toString())==true || val.isAlphabet(edtName.getText().toString())== false
+                            || val.isNullOrEmpty(edtDescription.getText().toString())==true || val.isAlphabet(edtDescription.getText().toString())== false){
+                        Toast.makeText(AddCategory.this, "Please check your inputs!", Toast.LENGTH_SHORT).show();
+                    }else{*/
+                        Collection collection = new Collection(id,name,description,imageUrl,videoUrl,podcastUrl,imageName,videoName,podcastName);
+
+                        myRef = database.getReference().child("Categories");
+
+                        myRef.child(collection.getCategoryId()).setValue(collection).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(AddCategory.this, collection.getCategoryName()+" added successfully!", Toast.LENGTH_SHORT).show();
+                                edtName.setText("");
+                                edtDescription.setText("");
+                                ListUtils.categoryImageList.clear();
+                                ListUtils.categoryVideoList.clear();
+                                ListUtils.categoryPodcastList.clear();
+                                Intent i = new Intent(AddCategory.this,adminHome.class);
+                                startActivity(i);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(AddCategory.this,"Failed to Add!",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    //}
+
+                   /* }catch(Exception e){
+                    Toast.makeText(AddCategory.this, "Add Category Fail!", Toast.LENGTH_SHORT).show();
+                }*/
+
             }
         });
 

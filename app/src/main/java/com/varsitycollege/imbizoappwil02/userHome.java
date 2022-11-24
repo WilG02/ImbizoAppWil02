@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class userHome extends AppCompatActivity  {
 
@@ -215,6 +216,8 @@ public class userHome extends AppCompatActivity  {
                 }
                 //Link:https://www.youtube.com/watch?v=Ydn5cXn1j-0&list=PL480DYS-b_kdor_f0IFgS7iiEsOwxdx6w&index=26
                 //-----------------------------------------------End------------------------------------------------------
+
+               // ListUtils.CategoryOrderedAsecList = ListUtils.collectionList.OrderBy(x=>x.CategoryName);
 
                 //---------------------------------------Code Attribution------------------------------------------------
                 //Author:Ben O'Brien

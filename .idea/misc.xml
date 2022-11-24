@@ -61,25 +61,27 @@
         <entry key="..\:/Users/lab_services_student/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/individual_category.xml" value="0.176" />
         <entry key="..\:/Users/lab_services_student/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/layout/nav_header.xml" value="0.2441123188405797" />
         <entry key="..\:/Users/lab_services_student/AndroidStudioProjects/ImbizoAppWil02/app/src/main/res/menu/menu_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/drawable-v24/button_background.xml" value="0.219" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/drawable/recyclerbg.xml" value="0.219" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/drawable/search_bg.xml" value="0.209" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_about.xml" value="0.1" />
-        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_add_category.xml" value="0.20652173913043478" />
-        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_admin_home.xml" value="0.1" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_add_category.xml" value="0.25" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_admin_home.xml" value="0.25" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_aptitude_test.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_categories.xml" value="0.1" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_categories.xml" value="0.33" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_category_display.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_contact_info.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_contact_info.xml" value="0.33" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_individual_category.xml" value="0.33" />
-        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_login.xml" value="0.1896551724137931" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_main.xml" value="0.23731884057971014" />
-        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_privacy_policy.xml" value="0.1" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_privacy_policy.xml" value="0.25" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_ratings.xml" value="0.1" />
-        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_splash.xml" value="0.23731884057971014" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_update_category.xml" value="0.33" />
-        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_user_home.xml" value="0.1" />
+        <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/activity_user_home.xml" value="0.25" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/individual_category.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/layout/nav_header.xml" value="0.23731884057971014" />
         <entry key="..\:/Users/makro/AndroidStudioProjects/ImbizoApp02/app/src/main/res/menu/menu_admin.xml" value="0.25416666666666665" />

@@ -39,7 +39,7 @@
         android:gravity="center"
         android:text="Get in touch with Imbizo Foundation to learn more about our work and how you can get involved."
         android:textColor="#7D7F34"
-        android:textSize="18dp"
+        android:textSize="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvContactInfo" />
 
@@ -52,9 +52,9 @@
         android:gravity="center"
         android:text="christy@imbizofoundation.com"
         android:textColor="@color/black"
-        android:textSize="21dp"
+        android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/tvInfo"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

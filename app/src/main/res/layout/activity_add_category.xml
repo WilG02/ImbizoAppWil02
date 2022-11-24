@@ -7,19 +7,18 @@
     android:background="#E8E8DF"
     tools:context=".AddCategory">
 
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="36dp"
         android:text="Add Category"
         android:textColor="#7D7F34"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/imgBackFCreate"
         app:layout_constraintTop_toTopOf="parent" />
-
-
 
     <TextView
         android:id="@+id/textView5"
@@ -35,8 +34,8 @@
         android:id="@+id/edtCatName"
         android:layout_width="240dp"
         android:layout_height="46dp"
-        android:layout_marginStart="57dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="60dp"
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
@@ -165,6 +164,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="19dp"
         android:layout_marginTop="67dp"
+        android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/imgUploadVideo"
         app:layout_constraintTop_toBottomOf="@+id/imgCameraImage"
         app:srcCompat="@drawable/ic_baseline_insert_link_24" />
