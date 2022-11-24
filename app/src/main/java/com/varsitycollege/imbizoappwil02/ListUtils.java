@@ -10,4 +10,6 @@ public class ListUtils {
     public static ArrayList<String> categoryVideoList = new ArrayList<>();
     public static ArrayList<String> categoryPodcastList = new ArrayList<>();
     public static ArrayList<Users> usersList = new ArrayList<Users>();
+    public static ArrayList<Users> userLoggedList = new ArrayList<Users>();
+
 }

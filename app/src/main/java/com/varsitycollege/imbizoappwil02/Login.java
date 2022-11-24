@@ -167,6 +167,7 @@ public class Login extends AppCompatActivity {
 
                                 for (Users item:ListUtils.usersList) {
                                     if (email.equals(item.getEmail())){
+                                        ListUtils.userLoggedList.add(item);
                                         if (item.getAdmin()==true){
                                             Intent k = new Intent(Login.this,adminHome.class);
                                             k.putExtra("TypeUser" ,"Admin");
