@@ -3,6 +3,8 @@ package com.varsitycollege.imbizoappwil02;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +32,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class userHome extends AppCompatActivity  {
+
+    //navigation drawer components
+    DrawerLayout navi;
+    NavigationView navView;
+    ImageView img_menuIcon;
+
+    private FirebaseAuth mAuth;
+
+    String type;
 
     //implements recyclerCollectionAdapter.CollectionClickListener
     //Firebase Realtime Database reference
@@ -40,14 +54,14 @@ public class userHome extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*//---------------------------------------Code Attribution------------------------------------------------
+        //---------------------------------------Code Attribution------------------------------------------------
         //Author:geeksforgeeks
         //Uses:Hides the action bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getSupportActionBar().hide(); //Hide the action bar
         //Link:https://www.geeksforgeeks.org/different-ways-to-hide-action-bar-in-android-with-examples/#:~:text=If%20you%20want%20to%20hide,AppCompat
-        //-----------------------------------------------End------------------------------------------------------*/
+        //-----------------------------------------------End------------------------------------------------------
         setContentView(R.layout.activity_user_home);
 
         //Code to prevent dark mode on users phone
@@ -55,8 +69,94 @@ public class userHome extends AppCompatActivity  {
 
         ListUtils.collectionList.clear();
 
+        Intent i = getIntent();
+        type = i.getStringExtra("TypeUser");
+
+        //Linking component with User interface
+        navi = findViewById(R.id.drawer_layoutU);
+
+        img_menuIcon = findViewById(R.id.img_menu_iconU);
+        navView = findViewById(R.id.nav_viewU);
+        View v = navView.getHeaderView(0);
+        ImageView img = v.findViewById(R.id.imageView);
+        img.setImageResource(R.drawable.imbizologo);
+
         rcyCollection = findViewById(R.id.rcyAllCategoriesDisplay);
         CategoriesData();
+
+        img_menuIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navi.openDrawer(GravityCompat.START);
+            }
+        });
+
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                navi.closeDrawer(GravityCompat.START);
+
+                switch (id) {
+                    case R.id.manage_profile:
+                        Intent redirectToProfile = new Intent(userHome.this,Profile.class);
+                        redirectToProfile.putExtra("TypeUser" ,type);
+                        startActivity(redirectToProfile);
+                        break;
+
+                    case R.id.aptitude:
+                        Intent redirectToTest = new Intent(userHome.this,aptitude_test.class);
+                        redirectToTest.putExtra("TypeUser" ,type);
+                        startActivity(redirectToTest);
+                        break;
+
+                    case R.id.about:
+                        Intent redirectToAbout = new Intent(userHome.this,About.class);
+                        redirectToAbout.putExtra("TypeUser" ,type);
+                        startActivity(redirectToAbout);
+                        break;
+
+                    case R.id.feedback:
+                        Intent redirectToFeedback = new Intent(userHome.this,Ratings.class);
+                        redirectToFeedback.putExtra("TypeUser" ,type);
+                        startActivity(redirectToFeedback);
+                        break;
+
+                    case R.id.privacy_policy:
+                        Intent redirectToPrivacy = new Intent(userHome.this,Privacy_policy.class);
+                        redirectToPrivacy.putExtra("TypeUser" ,type);
+                        startActivity(redirectToPrivacy);
+                        break;
+
+                    case R.id.contact_us:
+                        Intent redirectToContact = new Intent(userHome.this,ContactInfo.class);
+                        redirectToContact.putExtra("TypeUser" ,type);
+                        startActivity(redirectToContact);
+                        break;
+
+                    case R.id.sign_out:
+                        //-------------------------------------------Kimaya-----------------------------------------------
+                        ListUtils.collectionList.clear();
+                        FirebaseUser user = mAuth.getCurrentUser();
+
+                        if (user != null) {
+                            String userEmail = user.getEmail();
+                            Toast.makeText(userHome.this, "Goodbye "+userEmail, Toast.LENGTH_SHORT).show();
+                            mAuth.getInstance().signOut();
+                            FirebaseAuth.getInstance().signOut();
+                        }
+
+                        FirebaseAuth.getInstance().signOut();
+                        Intent returnLogin = new Intent(userHome.this, Splash.class);
+                        startActivity(returnLogin);
+                     break;
+                    default:
+                        return true;
+                }
+                return true;
+            }
+        });
+
 
        /* userSearch = findViewById(R.id.userSearch);
         userSearch.clearFocus();
