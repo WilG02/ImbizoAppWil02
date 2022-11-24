@@ -1,5 +1,6 @@
 package com.varsitycollege.imbizoappwil02;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -17,6 +18,8 @@ import android.widget.VideoView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ public class CategoryDisplay extends AppCompatActivity {
     YouTubePlayerView youtubePlayerView;
     ImageView backAll,categoryImage;
     TextView txt_info,txt_heading;
+    YouTubePlayerView youtubeplayer;
 
     Collection c;
 
@@ -37,6 +41,23 @@ public class CategoryDisplay extends AppCompatActivity {
     Collection collect;
 
     ArrayList<Collection> data= new ArrayList<>();
+
+    String videoId="";
+
+    private String videoId(String url){
+        String id ="";
+        if (url.contains("youtube")){
+            String[] fields = url.split("=");
+            videoId = fields[1];
+            id = fields[1];
+            //catInfoList.Add(new Category(fields[1],(Int32.Parse(fields[0]))));
+          /* for (int k = 1;k>=youtubeVideo.length();k++){
+               String[] fields = item.Split(';');
+               catInfoList.Add(new Category(fields[1],(Int32.Parse(fields[0]))));
+           }*/
+        }
+        return id;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +84,7 @@ public class CategoryDisplay extends AppCompatActivity {
         backAll=findViewById(R.id.img_backToCatFDisplay);
         txt_info=findViewById(R.id.txt_descriptionDisplay);
         txt_heading=findViewById(R.id.txt_categoryNameDisplay);
+        youtubeplayer=findViewById(R.id.YoutubevideoPlayer);
 
         txt_heading.setText(c.getCategoryName());
 
@@ -76,6 +98,33 @@ public class CategoryDisplay extends AppCompatActivity {
         });
 
 
+        if (c.getCategoryVideoUrl().contains("youtube")){
+            youtubeplayer.setVisibility(View.VISIBLE);
+            video.setVisibility(View.INVISIBLE);
+        }else{
+            youtubeplayer.setVisibility(View.INVISIBLE);
+            video.setVisibility(View.VISIBLE);
+            //https://www.youtube.com/watch?v=Zf9pOhlqRXo
+            String link= c.getCategoryVideoUrl();
+            video.setVideoURI(Uri.parse(link));
+            video.setMediaController(new MediaController(this));
+            video.requestFocus();
+            video.start();
+        }
+
+        //https://www.youtube.com/watch?v=gXWXKjR-qII
+        //Youtube player
+        //https://github.com/PierfrancescoSoffritti/android-youtube-player
+
+        getLifecycle().addObserver(youtubeplayer);
+        youtubeplayer.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                videoId = videoId(c.getCategoryVideoUrl());
+                youTubePlayer.loadVideo(videoId, 0);
+            }
+        });
+
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:CodingSTUFF
         //Uses:Display image fore firebase storage using url
@@ -86,12 +135,12 @@ public class CategoryDisplay extends AppCompatActivity {
         txt_heading.setText(c.getCategoryName());
         txt_info.setText(c.getCategoryInformation());
 
-        //https://www.youtube.com/watch?v=Zf9pOhlqRXo
+       /* //https://www.youtube.com/watch?v=Zf9pOhlqRXo
         String link= c.getCategoryVideoUrl();
         video.setVideoURI(Uri.parse(link));
         video.setMediaController(new MediaController(this));
         video.requestFocus();
-        video.start();
+        video.start();*/
 
         audio.setVideoURI(Uri.parse(c.getCategoryPodcastUrl()));
         audio.setMediaController(new MediaController(this));

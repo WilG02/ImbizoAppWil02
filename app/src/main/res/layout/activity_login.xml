@@ -68,7 +68,7 @@
         android:ems="10"
         android:gravity="center"
         android:hint="Password"
-        android:inputType="textPersonName"
+        android:inputType="textVisiblePassword"
         android:minHeight="48dp"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
@@ -142,5 +142,16 @@
         app:layout_constraintHorizontal_bias="0.593"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_google" />
+
+    <ImageView
+        android:id="@+id/imgPasswordShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="270dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edt_loginPassword"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_show_eye" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

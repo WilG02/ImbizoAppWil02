@@ -159,4 +159,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgUploadVideo" />
 
+    <ImageView
+        android:id="@+id/imgAddLink"
+        android:layout_width="53dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="67dp"
+        app:layout_constraintStart_toEndOf="@+id/imgUploadVideo"
+        app:layout_constraintTop_toBottomOf="@+id/imgCameraImage"
+        app:srcCompat="@drawable/ic_baseline_insert_link_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

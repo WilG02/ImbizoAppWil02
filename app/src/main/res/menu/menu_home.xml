@@ -5,9 +5,9 @@
     android:background ="@color/white">
 
     <item   android:id="@+id/manage_profile"
-        android:title="Manage Profile" />
+        android:title="Profile" />
     <item   android:id="@+id/aptitude"
-        android:title="Link to Aptitude Test" />
+        android:title="Aptitude Test" />
     <item android:id="@+id/about"
         android:title="About"/>
     <item android:id="@+id/feedback"

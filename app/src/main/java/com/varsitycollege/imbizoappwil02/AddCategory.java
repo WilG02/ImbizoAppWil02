@@ -2,6 +2,7 @@ package com.varsitycollege.imbizoappwil02;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -12,12 +13,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -56,7 +59,7 @@ public class AddCategory extends AppCompatActivity {
     public static final int GALLERY_REQUEST_CODE = 105;
 
     Button btnCreate;
-    ImageView imgGallery,imgCamera,imgAttached,imgBackFCreate,imgUploadVideo,imgUploadPodcast;
+    ImageView imgGallery,imgCamera,imgAttached,imgBackFCreate,imgUploadVideo,imgUploadPodcast,imgAddVideoLink;
     EditText edtName,edtDescription;
     ProgressDialog progressDialog;
 
@@ -70,8 +73,8 @@ public class AddCategory extends AppCompatActivity {
     boolean checkGalleryImage = false;
     boolean checkCameraImage = false;
     boolean checkPodcast = false;
-    String name,description,id,imageUrl,videoUrl,podcastUrl,imageName,videoName,podcastName;
-    String podcastfilepath;
+    String name,description,id,imageUrl,videoUrl,podcastUrl,imageName,videoName,podcastName,edtVideoLink;
+    String podcastfilepath,enteredUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +101,7 @@ public class AddCategory extends AppCompatActivity {
         imgUploadVideo = findViewById(R.id.imgUploadVideo);
         imgUploadPodcast = findViewById(R.id.imgUploadPodcast);
         imgBackFCreate = findViewById(R.id.imgBackFCreate);
+        imgAddVideoLink=findViewById(R.id.imgAddLink);
 
         imgAttached.setVisibility(View.INVISIBLE);
 
@@ -156,6 +160,44 @@ public class AddCategory extends AppCompatActivity {
             }
         });
 
+        imgAddVideoLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  if (ListUtils.categoryVideoList.get(1) == null) {
+                    //---------------------------------------Code Attribution------------------------------------------------
+                    //Author:Stackoverflow,Aaron
+                    //Use:Display alert to the user to enter in the name of location
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddCategory.this);
+
+                    builder.setTitle("Video Url");
+
+                    // Set up the input
+                    final EditText input = new EditText(AddCategory.this);
+                    // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+
+                    // Set up the buttons
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String name = input.getText().toString();
+                            edtVideoLink= name;
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                    //Link:https://stackoverflow.com/questions/10903754/input-text-dialog-android
+                    //-----------------------------------------------End------------------------------------------------------
+                }
+           // }
+        });
+
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,12 +206,28 @@ public class AddCategory extends AppCompatActivity {
                 description =edtDescription.getText().toString();
                 id = KeyGenerator.getRandomString(10);
                 imageUrl = ListUtils.categoryImageList.get(0);
-                videoUrl = ListUtils.categoryVideoList.get(0);
+                //videoUrl = ListUtils.categoryVideoList.get(0);
                 podcastUrl = ListUtils.categoryPodcastList.get(0);
                 imageName = ListUtils.categoryImageList.get(1);
-                videoName = ListUtils.categoryVideoList.get(1);
+                //videoName = ListUtils.categoryVideoList.get(1);
+                videoName = "link";
+                videoUrl = edtVideoLink;
+
                 podcastName = ListUtils.categoryPodcastList.get(1);
 
+                if (videoUrl.equals("") || edtVideoLink.equals("") ){
+                    Toast.makeText(AddCategory.this, "Please upload a video or enter in a url!", Toast.LENGTH_SHORT).show();
+                }else{
+                    if (videoUrl.equals("")){
+                        videoUrl = edtVideoLink;
+                        videoName ="";
+                    }
+
+                    if (edtVideoLink.equals("")){
+                        videoUrl=ListUtils.categoryVideoList.get(0);
+                        videoName =ListUtils.categoryVideoList.get(1);
+                    }
+                }
                 Collection collection = new Collection(id,name,description,imageUrl,videoUrl,podcastUrl,imageName,videoName,podcastName);
 
                 myRef = database.getReference().child("Categories");

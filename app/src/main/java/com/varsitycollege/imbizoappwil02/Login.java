@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -40,12 +42,13 @@ public class Login extends AppCompatActivity {
 
     EditText edt_email,edt_password;
     Button btn_Login,btn_googleLogin;
+    ImageView showPassword;
     private FirebaseAuth mAuth;
 
     private String type;
 
     public static final String DEFUALT_IMAGE = "https://firebasestorage.googleapis.com/v0/b/vinyl-warehouse.appspot.com/o/default%2Ficon.png?alt=media&token=6495156e-9304-4be2-b2aa-06110afe1bee";
-    public static final String SERVER_CLIENT_ID = "589837323767-h1qb0bjrlqkvphphlbad08kg2k8lamee.apps.googleusercontent.com";
+    public static final String SERVER_CLIENT_ID = "429038680676-0vop3gdi451m47244uliibe51h64dv3q.apps.googleusercontent.com";
     private SignInClient oneTapClient;
 
     private static final int REQ_ONE_TAP = 2;
@@ -75,6 +78,18 @@ public class Login extends AppCompatActivity {
         edt_password = findViewById(R.id.edt_loginPassword);
         btn_Login = findViewById(R.id.btn_login);
         btn_googleLogin = findViewById(R.id.btn_google);
+        showPassword = findViewById(R.id.imgPasswordShow);
+
+        showPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (edt_password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                    edt_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else{
+                    edt_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -83,6 +98,8 @@ public class Login extends AppCompatActivity {
 
         if (type.equals("Admin")){
             btn_googleLogin.setVisibility(View.INVISIBLE);
+        }else{
+            btn_googleLogin.setVisibility(View.VISIBLE);
         }
         
         txt_registerMessage.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +108,27 @@ public class Login extends AppCompatActivity {
                 Intent redirectToRegister = new Intent(Login.this,Register.class);
                 redirectToRegister.putExtra("TypeUser" , type);
                 startActivity(redirectToRegister);
+            }
+        });
+
+
+        //get client
+        oneTapClient = Identity.getSignInClient(this);
+
+        signInRequest = BeginSignInRequest.builder()
+                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                        .setSupported(true)
+                        // Your server's client ID, not your Android client ID.
+                        .setServerClientId(SERVER_CLIENT_ID)
+                        // Only show accounts previously used to sign in.
+                        .setFilterByAuthorizedAccounts(false)
+                        .build())
+                .build();
+
+        btn_googleLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn();
             }
         });
 
@@ -135,27 +173,6 @@ public class Login extends AppCompatActivity {
                     });
 
                 }
-            }
-        });
-
-
-        //get client
-        oneTapClient = Identity.getSignInClient(this);
-
-        signInRequest = BeginSignInRequest.builder()
-                .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                        .setSupported(true)
-                        // Your server's client ID, not your Android client ID.
-                        .setServerClientId(SERVER_CLIENT_ID)
-                        // Only show accounts previously used to sign in.
-                        .setFilterByAuthorizedAccounts(false)
-                        .build())
-                .build();
-
-        btn_googleLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signIn();
             }
         });
     }

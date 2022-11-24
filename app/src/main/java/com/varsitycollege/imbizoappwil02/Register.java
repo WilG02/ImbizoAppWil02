@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +43,7 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
     DatabaseReference myRef = database.getReference();
 
     String type;
-
+    ImageView showPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,20 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
 
         //Code to prevent dark mode on users phone
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        showPassword = findViewById(R.id.imgShowPasswordReg);
+
+        showPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (edt_password.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                    edt_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else{
+                    edt_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
+
 
         Intent i = getIntent();
         type = i.getStringExtra("TypeUser");
