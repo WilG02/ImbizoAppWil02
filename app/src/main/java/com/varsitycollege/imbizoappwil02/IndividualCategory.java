@@ -55,6 +55,23 @@ public class IndividualCategory extends AppCompatActivity {
     StorageReference storage = FirebaseStorage.getInstance().getReference();
     Collection collect;
 
+    String videoId="";
+
+    private String videoId(String url){
+        String id ="";
+        if (url.contains("youtube")){
+            String[] fields = url.split("=");
+            videoId = fields[1];
+            id = fields[1];
+            //catInfoList.Add(new Category(fields[1],(Int32.Parse(fields[0]))));
+          /* for (int k = 1;k>=youtubeVideo.length();k++){
+               String[] fields = item.Split(';');
+               catInfoList.Add(new Category(fields[1],(Int32.Parse(fields[0]))));
+           }*/
+        }
+        return id;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +99,7 @@ public class IndividualCategory extends AppCompatActivity {
         txt_heading=findViewById(R.id.txt_singleCategory);
         imgDelete = findViewById(R.id.imgDelete);
         imgEdit = findViewById(R.id.imgEdit);
+        youtubePlayerView = findViewById(R.id.player);
 
         imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +110,33 @@ public class IndividualCategory extends AppCompatActivity {
             }
         });
 
+        if (c.getCategoryVideoUrl().contains("youtube")){
+            youtubePlayerView.setVisibility(View.VISIBLE);
+            video.setVisibility(View.INVISIBLE);
+        }else{
+            youtubePlayerView.setVisibility(View.INVISIBLE);
+            video.setVisibility(View.VISIBLE);
+            //https://www.youtube.com/watch?v=Zf9pOhlqRXo
+            String link= c.getCategoryVideoUrl();
+            video.setVideoURI(Uri.parse(link));
+            video.setMediaController(new MediaController(this));
+            video.requestFocus();
+            video.start();
+        }
+
+        //https://www.youtube.com/watch?v=gXWXKjR-qII
+        //Youtube player
+        //https://github.com/PierfrancescoSoffritti/android-youtube-player
+
+        getLifecycle().addObserver(youtubePlayerView);
+        youtubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                videoId = videoId(c.getCategoryVideoUrl());
+                youTubePlayer.loadVideo(videoId, 0);
+            }
+        });
+
 
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:Foxandroid
@@ -99,44 +144,47 @@ public class IndividualCategory extends AppCompatActivity {
         imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
-                /*storage.child("Image/").child(c.getCategoryImageName()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(IndividualCategory.this, "Image Deleted!", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(IndividualCategory.this, "Failed Imaged Delete!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (!c.getCategoryImageName().equals("")){
+                    storage.child("Images/").child(c.getCategoryImageName()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(IndividualCategory.this, "Image Deleted!", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(IndividualCategory.this, "Failed Image Delete!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
-                storage.child("Image/").child(c.getCategoryImageName()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(IndividualCategory.this, "Image Deleted!", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(IndividualCategory.this, "Failed Imaged Delete!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (!c.getCategoryVideoName().equals("")){
+                    storage.child("Videos/").child(c.getCategoryVideoName()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(IndividualCategory.this, "video Deleted!", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(IndividualCategory.this, "Failed video Delete!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
-                storage.child("Image/").child(c.getCategoryImageName()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(IndividualCategory.this, "Image Deleted!", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(IndividualCategory.this, "Failed Imaged Delete!", Toast.LENGTH_SHORT).show();
-                    }
-                });*/
-
-
+                if (!c.getCategoryPodcastName().equals("")){
+                    storage.child("Podcast/").child(c.getCategoryPodcastName()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(IndividualCategory.this, "podcast Deleted!", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(IndividualCategory.this, "Failed podcast Delete!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
                 myRef.child("Categories").child(c.getCategoryId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -179,12 +227,6 @@ public class IndividualCategory extends AppCompatActivity {
         txt_info.setText(c.getCategoryInformation());
 
         //https://www.youtube.com/watch?v=Zf9pOhlqRXo
-        String link= c.getCategoryVideoUrl();
-        video.setVideoURI(Uri.parse(link));
-        video.setMediaController(new MediaController(this));
-        video.requestFocus();
-        video.start();
-
         audio.setVideoURI(Uri.parse(c.getCategoryPodcastUrl()));
         audio.setMediaController(new MediaController(this));
         audio.requestFocus();

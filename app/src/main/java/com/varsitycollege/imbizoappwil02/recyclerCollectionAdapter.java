@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerCollectionAdapter.MyViewHolder> implements Filterable {
+public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerCollectionAdapter.MyViewHolder> {
+        //implements Filterable {
 
     //Global Variable
     ArrayList<Collection> tempCollectionList;
@@ -23,16 +24,16 @@ public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerColl
 
 
     //------
-    CollectionClickListener collectionClickListener;
+    /*CollectionClickListener collectionClickListener;
     public ArrayList<Collection> getTempCollectionListFilter = new ArrayList<>();
-    ArrayList<Collection> collections = new ArrayList<>();
+    ArrayList<Collection> collections = new ArrayList<>();*/
 
     //------
 
     //Constructor
     public recyclerCollectionAdapter(ArrayList<Collection> collectList,Context context)
     {
-        this.getTempCollectionListFilter = collectList;
+       // this.getTempCollectionListFilter = collectList;
         this.tempCollectionList = collectList;
         this.context =context;
     }
@@ -48,7 +49,7 @@ public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerColl
         notifyDataSetChanged();
     }
 
-    @Override
+  /*  @Override
     public Filter getFilter() {
         Filter filter = new Filter() {
             @Override
@@ -63,9 +64,9 @@ public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerColl
                         //if to check what  search must match
                         //item.getCategoryDescription().toLowerCase().contains(searchText)
                         if (item.getCategoryName().toLowerCase().contains(searchText)){
-                            /*if (collections.size()>1){
+                            if (collections.size()>1){
                                 collections.add(item);
-                            }*/
+                            }
                             //else{
                                 collections.add(item);
                             //}
@@ -84,8 +85,7 @@ public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerColl
             }
         };
         return filter;
-    }
-
+    }*/
 
     //---------
     //https://www.youtube.com/watch?v=MWlxFccYit8
@@ -100,7 +100,7 @@ public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerColl
     {
         this.tempCollectionList = collectList;
         this.context =context;
-        this.collectionClickListener = collectionClickListener;
+        //this.collectionClickListener = collectionClickListener;
     }
 
 
@@ -155,12 +155,12 @@ public class recyclerCollectionAdapter extends RecyclerView.Adapter<recyclerColl
         String name = tempCollectionList.get(position).getCategoryName();
         holder.txt_categoryName.setText(name);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 collectionClickListener.selectedCollection(collection);
             }
-        });
+        });*/
     }
 
     @Override

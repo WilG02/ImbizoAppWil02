@@ -55,9 +55,6 @@ dependencies {
     //Implementation to display the image in an ImageView
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-    //Implementation to display the image in an ImageView
-    implementation 'com.squareup.picasso:picasso:2.71828'
-
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:30.0.2')
 }

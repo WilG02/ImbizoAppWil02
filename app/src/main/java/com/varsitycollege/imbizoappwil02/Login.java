@@ -113,7 +113,7 @@ public class Login extends AppCompatActivity {
                                 Toast.makeText(Login.this,"Welcome "+ mAuth.getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
 
                                 if (type.equals("User")){
-                                    Intent k = new Intent(Login.this,userHome.class);
+                                    Intent k = new Intent(Login.this,Categories.class);
                                     //Intent k = new Intent(Login.this,userHome.class);
                                     startActivity(k);
                                 }

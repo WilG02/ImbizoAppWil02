@@ -26,8 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class userHome extends AppCompatActivity implements recyclerCollectionAdapter.CollectionClickListener {
+public class userHome extends AppCompatActivity  {
 
+    //implements recyclerCollectionAdapter.CollectionClickListener
     //Firebase Realtime Database reference
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
@@ -130,7 +131,8 @@ public class userHome extends AppCompatActivity implements recyclerCollectionAda
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 rcyCollection.setLayoutManager(layoutManager);
                 rcyCollection.setItemAnimator(new DefaultItemAnimator());
-                adapter = new recyclerCollectionAdapter(ListUtils.collectionList, getApplicationContext(),userHome.this::selectedCollection);
+                adapter = new recyclerCollectionAdapter(ListUtils.collectionList, getApplicationContext());
+                //adapter = new recyclerCollectionAdapter(ListUtils.collectionList, getApplicationContext(),userHome.this::selectedCollection);
                 //                recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList, getApplicationContext());
                 rcyCollection.setAdapter(adapter);
                 //recyclerCollectionAdapter adapter = new recyclerCollectionAdapter(collectionList);
@@ -171,7 +173,7 @@ public class userHome extends AppCompatActivity implements recyclerCollectionAda
         });
     }
 
-    @Override
+/*    @Override
     public void selectedCollection(Collection collect) {
         Toast.makeText(this, "Selected collection " + collect.getCategoryName(), Toast.LENGTH_SHORT).show();
         Intent i = new Intent(userHome.this,CategoryDisplay.class);
@@ -211,5 +213,5 @@ public class userHome extends AppCompatActivity implements recyclerCollectionAda
         });
 
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 }

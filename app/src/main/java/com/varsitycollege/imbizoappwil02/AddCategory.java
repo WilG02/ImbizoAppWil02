@@ -64,7 +64,7 @@ public class AddCategory extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
 
-    String currentPhotoPath;
+    String currentPhotoPath,currentVideoPath,currentPodcastPath;
     User user;
     boolean checkVideo =false;
     boolean checkGalleryImage = false;
@@ -207,29 +207,31 @@ public class AddCategory extends AppCompatActivity {
         startActivityForResult(intent, 10);
     }
 
-    private void uploadPodcast(final String file, final Uri uri) {
+    private void uploadPodcast(String name, Uri contentUri) {
 
-            StorageReference ref = FirebaseStorage.getInstance().getReference().child("Podcast/"+System.currentTimeMillis()+getAudiofiletype(uri));
-            ref.putFile(uri)
+        //Firebase storage reference
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorageReference audioRef = storageReference.child("Podcasts/" + name);
+        //String podcastName = System.currentTimeMillis()+getAudiofiletype(uri);
+        //StorageReference ref = FirebaseStorage.getInstance().getReference().child("Podcast/"+podcastName);
+
+        audioRef.putFile(contentUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                             Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
                             downloadUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
 
                                     ListUtils.categoryPodcastList.clear();
-
                                     // get the url for image in firebase storage and add it to an Arraylist
                                     String genFilePath = downloadUri.getResult().toString();
                                     ListUtils.categoryPodcastList.add(genFilePath);
-                                    ListUtils.categoryPodcastList.add(System.currentTimeMillis()+getAudiofiletype(uri));
-
+                                    ListUtils.categoryPodcastList.add(name);
 
                                     progressDialog.dismiss();
-
                                     audio_uri = null;
                                     Toast.makeText(AddCategory.this, "Podcast Uploaded!!", Toast.LENGTH_SHORT).show();
                                 }
@@ -252,7 +254,7 @@ public class AddCategory extends AppCompatActivity {
 
     private String getAudiofiletype(Uri audiouri) {
         ContentResolver r = getContentResolver();
-        // get the file type ,in this case its mp4
+        // get the file type ,in this case its mp3
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(r.getType(audiouri));
     }
@@ -331,12 +333,45 @@ public class AddCategory extends AppCompatActivity {
         }
             if (checkPodcast==true){
                 if (requestCode == 10) {
-                    audio_uri = data.getData();
+
+                    Uri contentUri = data.getData();
+
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    String audioFileName = "MP3_" + timeStamp + "_" + getfiletype(contentUri);
+                    /*File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);//Getting the storage directory where the file is being stored
+                    File audio = null;
+                    try {
+                        audio = File.createTempFile(
+                                audioFileName,
+                                ".mp3", //Extension used for the video
+                                storageDir   //Directory to save the video
+                        );
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    // Save a file: path for use with ACTION_VIEW intents
+                    currentPodcastPath = audio.getAbsolutePath(); //Getting absolute path where video is saved*/
+
+                    progressDialog.setTitle("Uploading...");
+                    progressDialog.show();
+
+                   /* File f = new File(currentPodcastPath);
+                    Uri podcastUri = Uri.fromFile(f);*/
+
+                    uploadPodcast(audioFileName,contentUri);
+
+
+
+
+                   // audio_uri =
+                   /*
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());//Creating filename
+                    String audioFileName = "MP3_" + timeStamp + "." + getAudiofiletype(audio_uri);// Specifying the file type
                     podcastfilepath=audio_uri.getEncodedPath();
                     progressDialog.setTitle("Uploading...");
                     progressDialog.show();
-                    uploadPodcast(podcastfilepath,audio_uri);
-                    checkPodcast=false;
+                    uploadPodcast(audioFileName,podcastUri);
+                    checkPodcast=false;*/
                 }
                 checkPodcast=false;
             }
@@ -360,19 +395,63 @@ public class AddCategory extends AppCompatActivity {
                 }
 
                 if(checkVideo==true){
+
+                    Uri contentUri = data.getData();//Creating content URI from the data
                     //Adding video upload progress bar
                     videouri = data.getData();
                     progressDialog.setTitle("Uploading...");
                     progressDialog.show();
-                    uploadvideo();
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    String videoFileName = "MP4_" + timeStamp + "_" + getfiletype(contentUri);
+
+                        try {
+                            uploadvideo(videoFileName,contentUri);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                     checkVideo=false;
                 }
             }
         }
     }
+
+
+  /*  //Method creates an video file name
+    private File createAudioFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "MP4_" + timeStamp + "_" + getAudiofiletype();
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);//Getting the storage directory where the file is being stored
+        File video = File.createTempFile(
+                imageFileName,
+                ".mp4", //Extension used for the video
+                storageDir   //Directory to save the video
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        currentVideoPath = video.getAbsolutePath(); //Getting absolute path where video is saved
+        return video;
+    }*/
+
+
+
     //---------------------------------------Code Attribution------------------------------------------------
     //Author:GeeksForGeeks
     //Uses:Upload video to firebase storage and Realtime-Database
+
+    //Method creates an video file name
+    private File createVideoFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "MP4_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);//Getting the storage directory where the file is being stored
+        File video = File.createTempFile(
+                imageFileName,
+                ".mp4", //Extension used for the video
+                storageDir   //Directory to save the video
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        currentVideoPath = video.getAbsolutePath(); //Getting absolute path where video is saved
+        return video;
+    }
 
     private String getfiletype(Uri videouri) {
         ContentResolver r = getContentResolver();
@@ -381,11 +460,18 @@ public class AddCategory extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(r.getType(videouri));
     }
 
-    private void uploadvideo() {
-        if (videouri != null) {
+    private void uploadvideo(String name, Uri contentUri) throws IOException {
+        //Firebase storage reference
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorageReference videoRef = storageReference.child("Videos/" + name);
+       // File videoFile = createVideoFile();
+        //String videoName = createVideoFile().getName();
+                //System.currentTimeMillis() + "." + getfiletype(videouri);
+        if (contentUri != null) {
             // save the selected video in Firebase storage
-            final StorageReference reference = FirebaseStorage.getInstance().getReference("Videos/" + System.currentTimeMillis() + "." + getfiletype(videouri));
-            reference.putFile(videouri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            //final StorageReference reference = FirebaseStorage.getInstance().getReference("Videos/");
+            videoRef.putFile(contentUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
@@ -398,7 +484,7 @@ public class AddCategory extends AppCompatActivity {
                             // get the url for image in firebase storage and add it to an Arraylist
                             String genFilePath = downloadUri.getResult().toString();
                             ListUtils.categoryVideoList.add(genFilePath);
-                            ListUtils.categoryVideoList.add(System.currentTimeMillis() + "." + getfiletype(videouri));
+                            ListUtils.categoryVideoList.add(name);
 
                             progressDialog.dismiss();
                             Toast.makeText(AddCategory.this, "Video Uploaded!!", Toast.LENGTH_SHORT).show();
