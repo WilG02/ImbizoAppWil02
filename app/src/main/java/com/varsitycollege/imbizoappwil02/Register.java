@@ -87,6 +87,10 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
 
         //spinner.setVisibility(View.INVISIBLE);
 
+        if (type.equals("Admin")){
+            txt_LoginMessage.setVisibility(View.INVISIBLE);
+        }
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //create a simple layout resource file for each spinner component
@@ -113,13 +117,13 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
                 email=edt_email.getText().toString();
                 password=edt_password.getText().toString();
 
-                if (admin.equals("Yes")){
+               /* if (admin.equals("Yes")){
                     isAdmin = true;
                 }
 
                 if (admin.equals("No")){
                     isAdmin = false;
-                }
+                }*/
 
                 if (type.equals("Admin")){
                     isAdmin = true;
@@ -137,13 +141,14 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
                                 if (!email.isEmpty() && !password.isEmpty())
                                 {
                                     if (task.isSuccessful()) {
-                                        myRef.child("Users").child(mAuth.getCurrentUser().getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        //mAuth.getCurrentUser().getUid()
+                                        myRef.child("Users").child(userId).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
                                                 Toast.makeText(Register.this, "Welcome "+ name +" !", Toast.LENGTH_SHORT).show();
 
                                                 if (isAdmin == false){
-                                                    Intent i = new Intent(Register.this,Categories.class);
+                                                    Intent i = new Intent(Register.this,userHome.class);
                                                     startActivity(i);
                                                 }
 
@@ -165,7 +170,6 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
                                     Toast.makeText(Register.this,"Failed to Register!",Toast.LENGTH_SHORT).show();
                                 }
                             });
-
             }
         });
 

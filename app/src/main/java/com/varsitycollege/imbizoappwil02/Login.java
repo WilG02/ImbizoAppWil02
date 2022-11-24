@@ -3,6 +3,9 @@ package com.varsitycollege.imbizoappwil02;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.IntentSender;
@@ -35,6 +38,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -44,6 +52,9 @@ public class Login extends AppCompatActivity {
     Button btn_Login,btn_googleLogin;
     ImageView showPassword;
     private FirebaseAuth mAuth;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef;
 
     private String type;
 
@@ -56,6 +67,8 @@ public class Login extends AppCompatActivity {
     public static ArrayList<User> usersList = new ArrayList<>();
 
     TextView txt_registerMessage;
+
+    Users userLogin = new Users();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +145,8 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        getUsers();
+
         btn_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,7 +165,23 @@ public class Login extends AppCompatActivity {
                             {
                                 Toast.makeText(Login.this,"Welcome "+ mAuth.getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
 
-                                if (type.equals("User")){
+                                for (Users item:ListUtils.usersList) {
+                                    if (email.equals(item.getEmail())){
+                                        if (item.getAdmin()==true){
+                                            Intent k = new Intent(Login.this,adminHome.class);
+                                            k.putExtra("TypeUser" ,"Admin");
+                                            startActivity(k);
+                                        }
+
+                                        if(item.getAdmin()==false){
+                                            Intent j = new Intent(Login.this,userHome.class);
+                                            j.putExtra("TypeUser" ,"User");
+                                            startActivity(j);
+                                        }
+                                    }
+                                }
+
+                              /*  if (type.equals("User")){
                                     Intent k = new Intent(Login.this,userHome.class);
                                     //Intent k = new Intent(Login.this,userHome.class);
                                     k.putExtra("TypeUser" ,type);
@@ -161,7 +192,7 @@ public class Login extends AppCompatActivity {
                                     Intent j = new Intent(Login.this,adminHome.class);
                                     j.putExtra("TypeUser" ,type);
                                     startActivity(j);
-                                }
+                                }*/
                             }else
                             {
                                 Toast.makeText(Login.this,"Login Failed!"+ mAuth.getCurrentUser().getEmail(),Toast.LENGTH_SHORT).show();
@@ -176,6 +207,39 @@ public class Login extends AppCompatActivity {
 
                 }
             }
+        });
+    }
+
+    private void getUsers(){
+        //---------------------------------------Code Attribution------------------------------------------------
+        //Author:Sarina Till
+        //Uses:Read data from firebase realtime database
+        // reference for data in firebase
+        myRef = database.getReference().child("Users");
+
+        //get data from firebase whilst using reference
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                // instance of collection class
+                userLogin = new Users();
+
+                //pulling data from realtime firebase
+                for (DataSnapshot collectFirebase : snapshot.getChildren()) {
+                    // snapshot is assigned to the collection instance
+                    userLogin = collectFirebase.getValue(Users.class);
+                    //Add instance to arraylist collectionList
+                    ListUtils.usersList.add(userLogin);
+                }
+                //Link:https://www.youtube.com/watch?v=Ydn5cXn1j-0&list=PL480DYS-b_kdor_f0IFgS7iiEsOwxdx6w&index=26
+                //-----------------------------------------------End------------------------------------------------------
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
         });
     }
 

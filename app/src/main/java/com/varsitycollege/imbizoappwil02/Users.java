@@ -50,7 +50,7 @@ public class Users {
         this.password = password;
     }
 
-    public boolean isAdmin() {
+    public boolean getAdmin() {
         return admin;
     }
 

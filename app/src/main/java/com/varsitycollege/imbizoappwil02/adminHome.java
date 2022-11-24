@@ -140,9 +140,9 @@ public class adminHome extends AppCompatActivity {
                     case R.id.addAdmin:
                         // j.putExtra("TypeUser" ,type);
                         //Toast.makeText(adminHome.this, "Contact our helpline", Toast.LENGTH_SHORT).show();
-                        Intent redirectToAddContact= new Intent(adminHome.this,Register.class);
-                        redirectToAddContact.putExtra("TypeUser" ,type);
-                        startActivity(redirectToAddContact);
+                        Intent redirectToAdd= new Intent(adminHome.this,Register.class);
+                        redirectToAdd.putExtra("TypeUser" ,type);
+                        startActivity(redirectToAdd);
                         break;
 
                     case R.id.sign_outA:

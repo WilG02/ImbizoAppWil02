@@ -137,15 +137,6 @@ public class userHome extends AppCompatActivity  {
                     case R.id.sign_out:
                         //-------------------------------------------Kimaya-----------------------------------------------
                         ListUtils.collectionList.clear();
-                        FirebaseUser user = mAuth.getCurrentUser();
-
-                        if (user != null) {
-                            String userEmail = user.getEmail();
-                            Toast.makeText(userHome.this, "Goodbye "+userEmail, Toast.LENGTH_SHORT).show();
-                            mAuth.getInstance().signOut();
-                            FirebaseAuth.getInstance().signOut();
-                        }
-
                         FirebaseAuth.getInstance().signOut();
                         Intent returnLogin = new Intent(userHome.this, Splash.class);
                         startActivity(returnLogin);
