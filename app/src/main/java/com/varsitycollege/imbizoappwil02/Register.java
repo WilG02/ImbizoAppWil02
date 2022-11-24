@@ -85,7 +85,7 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
         txt_LoginMessage=findViewById(R.id.txt_existingAccountMessage);
         spinner = findViewById(R.id.spn_Admin);
 
-        spinner.setVisibility(View.INVISIBLE);
+        //spinner.setVisibility(View.INVISIBLE);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.options, android.R.layout.simple_spinner_item);

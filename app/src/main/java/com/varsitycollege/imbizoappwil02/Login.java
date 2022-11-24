@@ -98,6 +98,7 @@ public class Login extends AppCompatActivity {
 
         if (type.equals("Admin")){
             btn_googleLogin.setVisibility(View.INVISIBLE);
+            txt_registerMessage.setVisibility(View.INVISIBLE);
         }else{
             btn_googleLogin.setVisibility(View.VISIBLE);
         }
@@ -110,7 +111,6 @@ public class Login extends AppCompatActivity {
                 startActivity(redirectToRegister);
             }
         });
-
 
         //get client
         oneTapClient = Identity.getSignInClient(this);
