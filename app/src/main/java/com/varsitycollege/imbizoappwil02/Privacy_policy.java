@@ -14,6 +14,7 @@ public class Privacy_policy extends AppCompatActivity {
 
     private WebView Privacywebview;
 
+    String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,9 @@ public class Privacy_policy extends AppCompatActivity {
 
         //Code to prevent dark mode on users phone
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        Intent i = getIntent();
+        type = i.getStringExtra("TypeUser");
 
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:Coding in Flow
@@ -55,8 +59,18 @@ public class Privacy_policy extends AppCompatActivity {
         } else {
             super.onBackPressed();
             {
-                Intent i = new Intent(Privacy_policy.this,Categories.class);
-                startActivity(i);
+                if (type.equals("User")){
+                    Intent k = new Intent(Privacy_policy.this,userHome.class);
+                    //Intent k = new Intent(Login.this,userHome.class);
+                    k.putExtra("TypeUser",type);
+                    startActivity(k);
+                }
+
+                if (type.equals("Admin")){
+                    Intent j = new Intent(Privacy_policy.this,adminHome.class);
+                    j.putExtra("TypeUser" ,type);
+                    startActivity(j);
+                }
             }
         }}
 }

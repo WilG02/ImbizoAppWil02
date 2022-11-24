@@ -22,6 +22,9 @@ public class Ratings extends AppCompatActivity {
 
     RatingBar ratingBar;
     Button btnRate;
+
+    String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +41,25 @@ public class Ratings extends AppCompatActivity {
         //Code to prevent dark mode on users phone
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
+        Intent i = getIntent();
+        type = i.getStringExtra("TypeUser");
+
         img_backFromFeedback=findViewById(R.id.img_returnFromFeedback);
         img_backFromFeedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Ratings.this,Categories.class);
-                startActivity(i);
+                if (type.equals("User")){
+                    Intent k = new Intent(Ratings.this,userHome.class);
+                    //Intent k = new Intent(Login.this,userHome.class);
+                    k.putExtra("TypeUser",type);
+                    startActivity(k);
+                }
+
+                if (type.equals("Admin")){
+                    Intent j = new Intent(Ratings.this,adminHome.class);
+                    j.putExtra("TypeUser" ,type);
+                    startActivity(j);
+                }
             }
         });
 
@@ -84,8 +100,18 @@ public class Ratings extends AppCompatActivity {
         } else {
             super.onBackPressed();
             {
-                Intent i = new Intent(Ratings.this,Categories.class);
-                startActivity(i);
+                if (type.equals("User")){
+                    Intent k = new Intent(Ratings.this,userHome.class);
+                    //Intent k = new Intent(Login.this,userHome.class);
+                    k.putExtra("TypeUser",type);
+                    startActivity(k);
+                }
+
+                if (type.equals("Admin")){
+                    Intent j = new Intent(Ratings.this,adminHome.class);
+                    j.putExtra("TypeUser" ,type);
+                    startActivity(j);
+                }
             }
         }}
 

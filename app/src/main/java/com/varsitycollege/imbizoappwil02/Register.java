@@ -74,7 +74,6 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
             }
         });
 
-
         Intent i = getIntent();
         type = i.getStringExtra("TypeUser");
 
@@ -85,6 +84,8 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
         mAuth = FirebaseAuth.getInstance();
         txt_LoginMessage=findViewById(R.id.txt_existingAccountMessage);
         spinner = findViewById(R.id.spn_Admin);
+
+        spinner.setVisibility(View.INVISIBLE);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.options, android.R.layout.simple_spinner_item);
@@ -117,6 +118,14 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
                 }
 
                 if (admin.equals("No")){
+                    isAdmin = false;
+                }
+
+                if (type.equals("Admin")){
+                    isAdmin = true;
+                }
+
+                if (type.equals("User")){
                     isAdmin = false;
                 }
 

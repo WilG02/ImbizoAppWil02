@@ -9,17 +9,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
+public class ContactInfo extends AppCompatActivity {
 
-public class Profile extends AppCompatActivity {
-
-    TextView txtName,txtEmail;
-    private FirebaseAuth mAuth;
-    String user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    ImageView imgbackAllCategories;
-
+    ImageView imgFContact;
     String type;
 
     @Override
@@ -33,44 +26,50 @@ public class Profile extends AppCompatActivity {
         getSupportActionBar().hide(); //Hide the action bar
         //Link:https://www.geeksforgeeks.org/different-ways-to-hide-action-bar-in-android-with-examples/#:~:text=If%20you%20want%20to%20hide,AppCompat
         //-----------------------------------------------End------------------------------------------------------
-        setContentView(R.layout.activity_profile);
-
-
-        Intent i = getIntent();
-        type = i.getStringExtra("TypeUser");
+        setContentView(R.layout.activity_contact_info);
 
         //Code to prevent dark mode on users phone
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        txtName = findViewById(R.id.txtProfileName);
-        txtEmail = findViewById(R.id.txtProfileEmail);
-        imgbackAllCategories = findViewById(R.id.imgbackAllCategories);
+        Intent i = getIntent();
+        type = i.getStringExtra("TypeUser");
 
-        imgbackAllCategories.setOnClickListener(new View.OnClickListener() {
+        imgFContact = findViewById(R.id.imgBackFContact);
+
+        imgFContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ListUtils.collectionList.clear();
-
                 if (type.equals("User")){
-                    Intent k = new Intent(Profile.this,userHome.class);
+                    Intent k = new Intent(ContactInfo.this,userHome.class);
                     //Intent k = new Intent(Login.this,userHome.class);
                     k.putExtra("TypeUser",type);
                     startActivity(k);
                 }
 
                 if (type.equals("Admin")){
-                    Intent j = new Intent(Profile.this,adminHome.class);
+                    Intent j = new Intent(ContactInfo.this,adminHome.class);
                     j.putExtra("TypeUser" ,type);
                     startActivity(j);
                 }
-              /*  Intent i = new Intent(Profile.this,Categories.class);
-                startActivity(i);*/
             }
         });
+    }
 
-        txtName.setText(user_id);
-        //txtEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+    @Override
+    public void onBackPressed() {
+        if (type.equals("User")) {
+            Intent k = new Intent(ContactInfo.this, userHome.class);
+            //Intent k = new Intent(Login.this,userHome.class);
+            k.putExtra("TypeUser", type);
+            startActivity(k);
+        }
 
+        if (type.equals("Admin")) {
+            Intent j = new Intent(ContactInfo.this, adminHome.class);
+            j.putExtra("TypeUser", type);
+            startActivity(j);
+        }
 
     }
+
 }

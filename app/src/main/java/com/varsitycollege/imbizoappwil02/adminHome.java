@@ -3,17 +3,24 @@ package com.varsitycollege.imbizoappwil02;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +30,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class adminHome extends AppCompatActivity {
+
+    //navigation drawer components
+    DrawerLayout naviA;
+    NavigationView navViewA;
+    ImageView img_menuIconA;
+
     //Firebase Realtime Database reference
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
@@ -31,6 +44,11 @@ public class adminHome extends AppCompatActivity {
     ArrayList<Collection> collectionList = new ArrayList<Collection>();
 
     ImageView imgAddCat;
+
+    private FirebaseAuth mAuth;
+
+    String type;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +67,121 @@ public class adminHome extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         ListUtils.collectionList.clear();
+
+        Intent i = getIntent();
+        type = i.getStringExtra("TypeUser");
+
+        //Linking component with User interface
+        naviA = findViewById(R.id.drawerAdmin_layout);
+        img_menuIconA = findViewById(R.id.img_adminmenu_icon);
+        navViewA = findViewById(R.id.navAdmin_view);
+        View v = navViewA.getHeaderView(0);
+        ImageView img = v.findViewById(R.id.imageView);
+        img.setImageResource(R.drawable.imbizologo);
+
+        img_menuIconA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                naviA.openDrawer(GravityCompat.START);
+            }
+        });
+
+
+        navViewA.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                naviA.closeDrawer(GravityCompat.START);
+
+                switch (id) {
+                    case R.id.profileA:
+                        Intent redirectToProfile = new Intent(adminHome.this,Profile.class);
+                        redirectToProfile.putExtra("TypeUser" ,type);
+                        startActivity(redirectToProfile);
+                        //Toast.makeText(adminHome.this, "Managing Profile", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.aptitudeTestA:
+                        //Toast.makeText(adminHome.this, "Redirecting to aptitude test", Toast.LENGTH_SHORT).show();
+                        Intent redirectToTest = new Intent(adminHome.this,aptitude_test.class);
+                        redirectToTest.putExtra("TypeUser" ,type);
+                        startActivity(redirectToTest);
+                        break;
+
+                    case R.id.aboutA:
+                        //Toast.makeText(Categories.this, "About", Toast.LENGTH_SHORT).show();
+                        Intent redirectToAbout = new Intent(adminHome.this,About.class);
+                        redirectToAbout.putExtra("TypeUser" ,type);
+                        startActivity(redirectToAbout);
+                        break;
+
+                    case R.id.feedbackA:
+                        //Toast.makeText(Categories.this, "Feedback", Toast.LENGTH_SHORT).show();
+                        Intent redirectToFeedback = new Intent(adminHome.this,Ratings.class);
+                        redirectToFeedback.putExtra("TypeUser" ,type);
+                        startActivity(redirectToFeedback);
+                        break;
+
+                    case R.id.privacy_policyA:
+                        //Toast.makeText(Categories.this, "Privacy Policy", Toast.LENGTH_SHORT).show();
+                        Intent redirectToPrivacy = new Intent(adminHome.this,Privacy_policy.class);
+                        redirectToPrivacy.putExtra("TypeUser" ,type);
+                        startActivity(redirectToPrivacy);
+                        break;
+
+                    case R.id.contact_usA:
+                       // j.putExtra("TypeUser" ,type);
+                       // Toast.makeText(adminHome.this, "Contact our helpline", Toast.LENGTH_SHORT).show();
+                        Intent redirectToContact = new Intent(adminHome.this,ContactInfo.class);
+                        redirectToContact.putExtra("TypeUser" ,type);
+                        startActivity(redirectToContact);
+                        break;
+
+                    case R.id.addAdmin:
+                        // j.putExtra("TypeUser" ,type);
+                        //Toast.makeText(adminHome.this, "Contact our helpline", Toast.LENGTH_SHORT).show();
+                        Intent redirectToAddContact= new Intent(adminHome.this,Register.class);
+                        redirectToAddContact.putExtra("TypeUser" ,type);
+                        startActivity(redirectToAddContact);
+                        break;
+
+                    case R.id.sign_outA:
+                        //-------------------------------------------Kimaya-----------------------------------------------
+                        ListUtils.collectionList.clear();
+                        //FirebaseUser user = mAuth.getCurrentUser();
+
+                     /*   if (user != null) {
+                            String userEmail = user.getEmail();
+                            Toast.makeText(adminHome.this, "Goodbye "+userEmail, Toast.LENGTH_SHORT).show();
+                            mAuth.getInstance().signOut();
+                            FirebaseAuth.getInstance().signOut();
+                        }*/
+
+                        //mAuth.getInstance().signOut();
+                        FirebaseAuth.getInstance().signOut();
+                        //Toast.makeText(adminHome.this, "Goodbye" , Toast.LENGTH_SHORT).show();
+                        Intent returnLogin = new Intent(adminHome.this, Splash.class);
+                        startActivity(returnLogin);
+
+
+
+                        /* FirebaseAuth.getInstance().signOut();
+                        Intent returnLogin = new Intent(Categories.this, Splash.class);
+                        startActivity(returnLogin);
+                        *//*Intent feedback = new Intent(Categories.this, Ratings.class);
+                        startActivity(feedback);*/
+                        //-------------------------------------------Kimaya-----------------------------------------------
+                        //Toast.makeText(adminHome.this, "Goodbye", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        return true;
+                }
+                return true;
+            }
+        });
+
+
+
 
         rcyCollectionAdmin = findViewById(R.id.rcyAllCategories);
         imgAddCat = findViewById(R.id.imgAddCategory);

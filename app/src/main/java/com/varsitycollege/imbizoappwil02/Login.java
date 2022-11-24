@@ -153,11 +153,13 @@ public class Login extends AppCompatActivity {
                                 if (type.equals("User")){
                                     Intent k = new Intent(Login.this,Categories.class);
                                     //Intent k = new Intent(Login.this,userHome.class);
+                                    k.putExtra("TypeUser" ,type);
                                     startActivity(k);
                                 }
 
                                 if (type.equals("Admin")){
                                     Intent j = new Intent(Login.this,adminHome.class);
+                                    j.putExtra("TypeUser" ,type);
                                     startActivity(j);
                                 }
                             }else

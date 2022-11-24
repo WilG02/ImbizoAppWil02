@@ -13,6 +13,8 @@ import android.webkit.WebViewClient;
 public class aptitude_test extends AppCompatActivity {
 
     private WebView testWebview;
+    String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,9 @@ public class aptitude_test extends AppCompatActivity {
 
         //Code to prevent dark mode on users phone
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        Intent i = getIntent();
+        type = i.getStringExtra("TypeUser");
 
         //---------------------------------------Code Attribution------------------------------------------------
         //Author:Coding in Flow
@@ -52,8 +57,18 @@ public class aptitude_test extends AppCompatActivity {
         } else {
             super.onBackPressed();
             {
-                Intent i = new Intent(aptitude_test.this,Categories.class);
-                startActivity(i);
+                if (type.equals("User")){
+                    Intent k = new Intent(aptitude_test.this,userHome.class);
+                    //Intent k = new Intent(Login.this,userHome.class);
+                    k.putExtra("TypeUser",type);
+                    startActivity(k);
+                }
+
+                if (type.equals("Admin")){
+                    Intent j = new Intent(aptitude_test.this,adminHome.class);
+                    j.putExtra("TypeUser" ,type);
+                    startActivity(j);
+                }
             }
         }}
 

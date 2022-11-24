@@ -206,16 +206,16 @@ public class AddCategory extends AppCompatActivity {
                 description =edtDescription.getText().toString();
                 id = KeyGenerator.getRandomString(10);
                 imageUrl = ListUtils.categoryImageList.get(0);
-                //videoUrl = ListUtils.categoryVideoList.get(0);
+                videoUrl = ListUtils.categoryVideoList.get(0);
                 podcastUrl = ListUtils.categoryPodcastList.get(0);
                 imageName = ListUtils.categoryImageList.get(1);
-                //videoName = ListUtils.categoryVideoList.get(1);
-                videoName = "link";
-                videoUrl = edtVideoLink;
+                videoName = ListUtils.categoryVideoList.get(1);
+                /*videoName = "link";
+                videoUrl = edtVideoLink;*/
 
                 podcastName = ListUtils.categoryPodcastList.get(1);
 
-                if (videoUrl.equals("") || edtVideoLink.equals("") ){
+                /*if (videoUrl.equals("") || edtVideoLink.equals("") ){
                     Toast.makeText(AddCategory.this, "Please upload a video or enter in a url!", Toast.LENGTH_SHORT).show();
                 }else{
                     if (videoUrl.equals("")){
@@ -227,7 +227,7 @@ public class AddCategory extends AppCompatActivity {
                         videoUrl=ListUtils.categoryVideoList.get(0);
                         videoName =ListUtils.categoryVideoList.get(1);
                     }
-                }
+                }*/
                 Collection collection = new Collection(id,name,description,imageUrl,videoUrl,podcastUrl,imageName,videoName,podcastName);
 
                 myRef = database.getReference().child("Categories");

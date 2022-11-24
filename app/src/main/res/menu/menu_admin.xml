@@ -4,18 +4,20 @@
     tools:showIn="navigation_view"
     android:background ="@color/white">
 
-    <item   android:id="@+id/manage_profile"
+    <item   android:id="@+id/profileA"
         android:title="Profile"/>
-    <item   android:id="@+id/aptitude"
+    <item   android:id="@+id/aptitudeTestA"
         android:title="Aptitude Test" />
-    <item android:id="@+id/about"
+    <item android:id="@+id/aboutA"
         android:title="About"/>
-    <item android:id="@+id/feedback"
+    <item android:id="@+id/feedbackA"
         android:title="Feedback"/>
-    <item   android:id="@+id/privacy_policy"
+    <item   android:id="@+id/privacy_policyA"
         android:title="Privacy Policy" />
-    <item   android:id="@+id/contact_us"
-        android:title="Contact Us" />
-    <item android:id="@+id/sign_out"
+    <item   android:id="@+id/contact_usA"
+        android:title="Contact Information" />
+    <item android:id="@+id/addAdmin"
+        android:title="Add Admin"/>
+    <item android:id="@+id/sign_outA"
         android:title="Sign Out"/>
 </menu>

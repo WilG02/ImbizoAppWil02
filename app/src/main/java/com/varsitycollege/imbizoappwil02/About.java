@@ -18,6 +18,7 @@ public class About extends AppCompatActivity {
     ImageView img_backFromAbout;
     private WebView aboutwebview;
 
+    String type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +36,25 @@ public class About extends AppCompatActivity {
         //Code to prevent dark mode on users phone
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
+        Intent i = getIntent();
+        type = i.getStringExtra("TypeUser");
+
         img_backFromAbout=findViewById(R.id.img_returnFromAbout);
         img_backFromAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(About.this,Categories.class);
-                startActivity(i);
+                if (type.equals("User")){
+                    Intent k = new Intent(About.this,userHome.class);
+                    //Intent k = new Intent(Login.this,userHome.class);
+                    k.putExtra("TypeUser",type);
+                    startActivity(k);
+                }
+
+                if (type.equals("Admin")){
+                    Intent j = new Intent(About.this,adminHome.class);
+                    j.putExtra("TypeUser" ,type);
+                    startActivity(j);
+                }
             }
         });
 
@@ -69,8 +83,18 @@ public class About extends AppCompatActivity {
         } else {
             super.onBackPressed();
             {
-                Intent i = new Intent(About.this,Categories.class);
-                startActivity(i);
+                if (type.equals("User")){
+                    Intent k = new Intent(About.this,userHome.class);
+                    //Intent k = new Intent(Login.this,userHome.class);
+                    k.putExtra("TypeUser",type);
+                    startActivity(k);
+                }
+
+                if (type.equals("Admin")){
+                    Intent j = new Intent(About.this,adminHome.class);
+                    j.putExtra("TypeUser" ,type);
+                    startActivity(j);
+                }
             }
         }}
 }

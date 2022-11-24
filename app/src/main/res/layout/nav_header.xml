@@ -11,12 +11,13 @@
         android:id="@+id/imageView"
         android:layout_width="239dp"
         android:layout_height="209dp"
+        android:paddingHorizontal="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.279"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@drawable/imbizoLogo" />
+        app:layout_constraintVertical_bias="0.003"
+        tools:srcCompat="@drawable/imbizologo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

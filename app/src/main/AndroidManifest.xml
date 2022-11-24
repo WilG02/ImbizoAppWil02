@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ImbizoAppWil02">
         <activity
+            android:name=".ContactInfo"
+            android:exported="false" />
+        <activity
             android:name=".Privacy_policy"
             android:exported="false" />
         <activity
